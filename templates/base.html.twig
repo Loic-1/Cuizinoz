@@ -18,8 +18,7 @@
 <body>
     <header>
         {% if app.user %}
-        <a href="{{ path('app_login') }}">Se connecter</a>
-        <a href="{{ path('app_register') }}">S'enregistrer</a>
+        <a href="{{ path('friends_user', {user: app.user.id}) }}">Liste des amis</a>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
         <p>Bienvenue {{app.user.pseudo}}</p>
         {% else %}

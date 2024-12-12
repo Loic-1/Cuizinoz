@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+{{ friends|length }}
+
+{{ dump(friends) }}
+
+{% for friend in friends %}
+    {{ friend.follower.pseudo }}
+{% endfor %}
+
+{% endblock %}
