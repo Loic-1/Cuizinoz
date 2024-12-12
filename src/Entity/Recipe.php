@@ -46,11 +46,29 @@ class Recipe
     #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true)]
     private Collection $photos;
 
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
+    /**
+     * @var Collection<int, Contain>
+     */
+    #[ORM\OneToMany(targetEntity: Contain::class, mappedBy: 'recipe', orphanRemoval: true)]
+    private Collection $contains;
+
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', orphanRemoval: true)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
         $this->compilations = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->contains = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +202,78 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($photo->getRecipe() === $this) {
                 $photo->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contain>
+     */
+    public function getContains(): Collection
+    {
+        return $this->contains;
+    }
+
+    public function addContain(Contain $contain): static
+    {
+        if (!$this->contains->contains($contain)) {
+            $this->contains->add($contain);
+            $contain->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContain(Contain $contain): static
+    {
+        if ($this->contains->removeElement($contain)) {
+            // set the owning side to null (unless already changed)
+            if ($contain->getRecipe() === $this) {
+                $contain->setRecipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecipe() === $this) {
+                $comment->setRecipe(null);
             }
         }
 
