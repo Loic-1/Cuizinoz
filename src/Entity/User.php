@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -50,6 +52,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $registrationDate = null;
+
+    /**
+     * @var Collection<int, Compilation>
+     */
+    #[ORM\OneToMany(targetEntity: Compilation::class, mappedBy: 'User')]
+    private Collection $compilations;
+
+    /**
+     * @var Collection<int, Save>
+     */
+    #[ORM\OneToMany(targetEntity: Save::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $saves;
+
+    /**
+     * @var Collection<int, Favorite>
+     */
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $favorites;
+
+    public function __construct()
+    {
+        $this->compilations = new ArrayCollection();
+        $this->saves = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -182,6 +209,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRegistrationDate(\DateTimeInterface $registrationDate): static
     {
         $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compilation>
+     */
+    public function getCompilations(): Collection
+    {
+        return $this->compilations;
+    }
+
+    public function addCompilation(Compilation $compilation): static
+    {
+        if (!$this->compilations->contains($compilation)) {
+            $this->compilations->add($compilation);
+            $compilation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompilation(Compilation $compilation): static
+    {
+        if ($this->compilations->removeElement($compilation)) {
+            // set the owning side to null (unless already changed)
+            if ($compilation->getUser() === $this) {
+                $compilation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Save>
+     */
+    public function getSaves(): Collection
+    {
+        return $this->saves;
+    }
+
+    public function addSave(Save $save): static
+    {
+        if (!$this->saves->contains($save)) {
+            $this->saves->add($save);
+            $save->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSave(Save $save): static
+    {
+        if ($this->saves->removeElement($save)) {
+            // set the owning side to null (unless already changed)
+            if ($save->getUser() === $this) {
+                $save->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favorite>
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Favorite $favorite): static
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
+            $favorite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Favorite $favorite): static
+    {
+        if ($this->favorites->removeElement($favorite)) {
+            // set the owning side to null (unless already changed)
+            if ($favorite->getUser() === $this) {
+                $favorite->setUser(null);
+            }
+        }
 
         return $this;
     }
