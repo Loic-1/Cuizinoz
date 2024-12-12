@@ -30,7 +30,7 @@ class Compilation
     /**
      * @var Collection<int, Save>
      */
-    #[ORM\OneToMany(targetEntity: Save::class, mappedBy: 'compilation', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Save::class, mappedBy: 'compilation', orphanRemoval: true)] // si Compilation meurt, alors toutes les saves de cette Compilation mourront
     private Collection $saves;
 
     /**

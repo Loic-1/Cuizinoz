@@ -31,7 +31,7 @@ class Recipe
     /**
      * @var Collection<int, Favorite>
      */
-    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'recipe', orphanRemoval: true)] // Si Recipe meurt, alors ses favorites mourront
     private Collection $favorites;
 
     /**
@@ -43,7 +43,7 @@ class Recipe
     /**
      * @var Collection<int, Photo>
      */
-    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true)] // Si Recipe meurt, alors ses photos mourront
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
@@ -53,13 +53,13 @@ class Recipe
     /**
      * @var Collection<int, Contain>
      */
-    #[ORM\OneToMany(targetEntity: Contain::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Contain::class, mappedBy: 'recipe', orphanRemoval: true)] // Si Recipe meurt, alors ses contains mourront
     private Collection $contains;
 
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'recipe', orphanRemoval: true)] // Si Recipe meurt, alors ses comments mourront
     private Collection $comments;
 
     public function __construct()

@@ -27,7 +27,7 @@ class Ingredient
     /**
      * @var Collection<int, Contain>
      */
-    #[ORM\OneToMany(targetEntity: Contain::class, mappedBy: 'ingredient', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Contain::class, mappedBy: 'ingredient', orphanRemoval: true)] // Si Ingredient meurt alors ses contains mourront
     private Collection $contains;
 
     public function __construct()

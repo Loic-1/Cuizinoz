@@ -24,7 +24,7 @@ class Category
     /**
      * @var Collection<int, Recipe>
      */
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category', orphanRemoval: true)] // orphanRemoval: si Category meurt alors toutes ses recipes meurent
     private Collection $recipes;
 
     public function __construct()
