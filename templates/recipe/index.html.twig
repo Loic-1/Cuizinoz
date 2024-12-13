@@ -24,7 +24,7 @@
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
             {% else %}
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="#" alt="Pas encore de photo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas encore de photo">
             </a>
             {% endif %}
 
