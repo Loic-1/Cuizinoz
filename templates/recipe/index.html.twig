@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecipeController!{% endblock %}
+{% block title %}Nos recettes{% endblock %}
 
 {% block body %}
 
@@ -13,23 +13,31 @@
     <div class="recipe_card">
 
         <figure class="recipe_image_container">
+
             {% if recipe.photos|length > 0 %}
 
             {# affiche la première photo de la collection photos de recipe #}
-            <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+            </a>
 
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
             {% else %}
-
-            <img src="#" alt="Pas encore de photo">
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                <img src="#" alt="Pas encore de photo">
+            </a>
             {% endif %}
+
         </figure>
         <div class="recipe_infos">
             <p>{{ recipe.name }}</p>
             <p>Une recette de {{ recipe.user.pseudo }}</p>
             <p>{{ recipe.category.name }}</p>
             {# <p>Note: {{ recipe.note }} (temp)</p> #}
-            <i class="fa-regular fa-heart"></i>
+            <div class="recipe_actions">
+                <i class="fa-regular fa-heart"></i>
+                <i class="fa-solid fa-plus"></i>
+            </div>
         </div>
     </div>
     {% endfor %}
