@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
-use App\Form\AddRecipeType;
+use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,18 +20,21 @@ class RecipeController extends AbstractController
         // trouver toutes les recettes
         $recipes = $recipeRepository->findAll();
 
+        $user = $this->getUser();
+        $recipe = new Recipe();
 
-        $form = $this->createForm(AddRecipeType::class);
+        $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $recipeData = $form->getData();
+            $recipe = $form->getData();
+            $recipe->setUser($user);
 
-            $entityManager->persist($recipeData);
+            $entityManager->persist($recipe);
             $entityManager->flush();
 
-            // permet de recharger la liste des recettes pour que la nouvelle recette s'affiche directement
+            // recharge la liste des recettes pour que la nouvelle recette s'affiche directement
             return $this->redirectToRoute("app_recipe");
         }
 
