@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RecipeController!{% endblock %}
+
+{% block body %}
+
+recipes length: {{ recipes|length }} <br>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>First Image</th>
+            <th>Nom recette</th>
+            <th>Auteur</th>
+            <th>Note</th>
+            <th>Catégorie</th>
+        </tr>
+    </thead>
+    {% for recipe in recipes %}
+
+    <tr>
+        <td> <img src="{{ recipe.photos|first.url }}" alt="" width="100px" height="100px"> </td>
+        <td> {{ recipe.name }} </td>
+        <td> {{ recipe.user.pseudo }} </td>
+        <td> {{ recipe.note }} </td>
+        <td> {{ recipe.category.name }} </td>
+        <td> <i class="fa-regular fa-heart"></i> </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
