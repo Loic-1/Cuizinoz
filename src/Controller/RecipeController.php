@@ -38,12 +38,17 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute("app_recipe");
         }
 
-
-        // $name = $request->request->get('name');
-
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
             'addRecipeForm' => $form
+        ]);
+    }
+
+    #[Route('/recipe/{recipe}', name: 'detail_recipe')]
+    public function detailRecipe(Recipe $recipe): Response
+    {
+        return $this->render('recipe/detailRecipe.html.twig', [
+            'recipe' => $recipe
         ]);
     }
 }
