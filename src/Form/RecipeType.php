@@ -19,7 +19,7 @@ class RecipeType extends AbstractType
             ->add('name')
             ->add('preparationTime')
             ->add('instructions')
-            ->add('note')
+            // ->add('note')
             // ->add('compilations', EntityType::class, [
             //     'class' => Compilation::class,
             //     'choice_label' => 'id',

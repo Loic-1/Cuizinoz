@@ -19,20 +19,27 @@ th, td {
     display: grid;
     grid-template-columns: 200px 200px 200px;
     column-gap: 50px;
-
     justify-content: center;
 
     padding: 50px 200px;
 }
 
 .recipe_card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     width: max-content;
+
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .recipe_image_container {
     width: 200px;
     height: 200px;
-
+    
     overflow: hidden;
 }
 
@@ -45,4 +52,10 @@ th, td {
     &:hover {
         transform: scale(1.1);
     }
+}
+
+.recipe_infos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
