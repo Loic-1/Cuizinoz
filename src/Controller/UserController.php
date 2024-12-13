@@ -28,8 +28,6 @@ class UserController extends AbstractController
     {
         $friends = $user->getFriends();
 
-        // var_dump($user, $friends); die;
-
         return $this->render('user/listFriends.html.twig', [
             'friends' => $friends
         ]);
