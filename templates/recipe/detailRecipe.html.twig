@@ -44,9 +44,14 @@
     </div>
 </div>
 <div class="detail_comments_container">
+    {% for comment in recipe.comments %}
     <div class="detail_comment">
-        
+        <h3>{{ comment.title }}</h3>
+        <p>{{ comment.content }}</p>
+        <p>Créé le {{ comment.creationDateFr }} par {{ comment.user.pseudo }}</p>
+        <p>NOTE</p>
     </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
