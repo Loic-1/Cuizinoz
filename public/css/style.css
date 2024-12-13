@@ -4,13 +4,22 @@
     box-sizing: border-box;
 }
 
-table {
-    border-collapse: collapse;
+:root {
+    --button-color: #FF503F;
+
+    --main-background-color: #FAFAFA;
+    --secondary-background-color: #FF6F61;
+
+    --main-font-color: #1d1c1b;
+    --secondary-font-color: #3F3735;
 }
 
-th, td {
-    border: 1px solid black;
-    padding: 1rem;
+.h2_200_p {
+    padding: 50px 200px 0px;
+}
+
+body {
+    color: var(--main-font-color);
 }
 
 /* liste des recettes */
@@ -35,7 +44,7 @@ th, td {
 .recipe_image_container {
     width: 200px;
     height: 200px;
-    
+
     overflow: hidden;
 
     border-radius: 10px;
@@ -108,4 +117,14 @@ th, td {
     gap: 50px;
 
     padding: 50px 200px;
+}
+
+.detail_comment {
+    width: 100%;
+
+    text-align: center;
+
+    &.detail_comment_content {
+        text-align: justify;
+    }
 }
