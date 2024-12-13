@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -26,6 +27,9 @@ class Category
      */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category', orphanRemoval: true)] // orphanRemoval: si Category meurt alors toutes ses recipes meurent
     private Collection $recipes;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $alt = null;
 
     public function __construct()
     {
@@ -87,6 +91,18 @@ class Category
                 $recipe->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(?string $alt): static
+    {
+        $this->alt = $alt;
 
         return $this;
     }

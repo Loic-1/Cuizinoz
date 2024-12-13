@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PhotoRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PhotoRepository::class)]
@@ -13,12 +14,15 @@ class Photo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
 
     #[ORM\ManyToOne(inversedBy: 'photos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $alt = null;
 
     public function getId(): ?int
     {
@@ -45,6 +49,18 @@ class Photo
     public function setRecipe(?Recipe $recipe): static
     {
         $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(?string $alt): static
+    {
+        $this->alt = $alt;
 
         return $this;
     }

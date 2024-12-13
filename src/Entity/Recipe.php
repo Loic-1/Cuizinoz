@@ -25,7 +25,7 @@ class Recipe
     #[ORM\Column(type: Types::TEXT)]
     private ?string $instructions = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "float", nullable: true)]
     private ?float $note = null;
 
     /**

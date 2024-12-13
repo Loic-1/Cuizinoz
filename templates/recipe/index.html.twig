@@ -4,30 +4,40 @@
 
 {% block body %}
 
-recipes length: {{ recipes|length }} <br>
+<h2>Nos recettes</h2>
 
-<table>
+<div class="recipe_container">
 
-    <thead>
-        <tr>
-            <th>First Image</th>
-            <th>Nom recette</th>
-            <th>Auteur</th>
-            <th>Note</th>
-            <th>Catégorie</th>
-        </tr>
-    </thead>
     {% for recipe in recipes %}
 
-    <tr>
-        <td> <img src="{{ recipe.photos|first.url }}" alt="" width="100px" height="100px"> </td>
-        <td> {{ recipe.name }} </td>
-        <td> {{ recipe.user.pseudo }} </td>
-        <td> {{ recipe.note }} </td>
-        <td> {{ recipe.category.name }} </td>
-        <td> <i class="fa-regular fa-heart"></i> </td>
-    </tr>
+    <div class="recipe_card">
+
+        <figure class="recipe_image_container">
+            {% if recipe.photos != null %}
+            <img src="#{# {{ recipe.photos|first.url }} #}" alt="{# {{ recipe.photos|first.alt }} #}">
+            {% endif %}
+        </figure>
+        {{ recipe.name }} <br>
+        Par {{ recipe.user.pseudo }} <br>
+        Note: {{ recipe.note }} <br>
+        {{ recipe.category.name }} <i class="fa-regular fa-heart"></i>
+    </div>
     {% endfor %}
-</table>
+</div>
+
+{# PARTIE FORM POUR RAJOUTER UNE RECETTE #}
+
+{{ form_errors(addRecipeForm) }}
+{{ form_start(addRecipeForm) }}
+
+{{ form_row(addRecipeForm.name) }}
+{{ form_row(addRecipeForm.preparationTime) }}
+{{ form_row(addRecipeForm.instructions) }}
+{{ form_row(addRecipeForm.note) }}
+{{ form_row(addRecipeForm.category) }}
+
+<button type="submit">Publier recette</button>
+
+{{ form_end(addRecipeForm) }}
 
 {% endblock %}
