@@ -19,7 +19,7 @@ class Ingredient
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $priceUnit = null;
+    private ?float $priceUnit = null;
 
     #[ORM\Column(length: 10)]
     private ?string $unit = null;

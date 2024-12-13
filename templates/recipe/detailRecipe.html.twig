@@ -4,4 +4,49 @@
 
 {% block body %}
 
+<h2>{{ recipe.name }}</h2>
+
+<div class="detail_recipe_container">
+    <figure class="detail_image_container">
+        {% if recipe.photos|length > 0 %}
+
+        {# affiche la première photo de la collection photos de recipe #}
+        <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+
+        {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+        {% else %}
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+            alt="Pas encore de photo">
+        {% endif %}
+    </figure>
+    <div class="detail_info_container">
+        <p>Par {{ recipe.user.pseudo }}</p>
+        <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
+        <p>Catégorie: {{ recipe.category.name }}</p>
+        <p>Note: {{ recipe.note }}</p>
+        <p>Ingrédients requis: <br>
+        <ul>
+            {% for contain in recipe.contains %}
+
+            <li>{{ contain.ingredient.name ~ " " ~ contain.quantity ~ " " ~ contain.ingredient.unit}}</li>
+            {% endfor %}
+        </ul>
+        </p>
+        <p>Instructions de préparation: <br>
+            {{ recipe.instructions }}</p>
+        <div class="detail_actions_container">
+            <i class="fa-regular fa-heart"></i>
+            <i class="fa-solid fa-plus"></i>
+            {% if app.user.id == recipe.user.id %}
+            <i class="fa-solid fa-pen-nib"></i>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="detail_comments_container">
+    <div class="detail_comment">
+        
+    </div>
+</div>
+
 {% endblock %}

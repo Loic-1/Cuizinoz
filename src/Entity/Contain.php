@@ -14,7 +14,7 @@ class Contain
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'contains')]
     #[ORM\JoinColumn(nullable: false)]
