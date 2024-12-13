@@ -14,13 +14,20 @@
 
         <figure class="recipe_image_container">
             {% if recipe.photos != null %}
-            <img src="#{# {{ recipe.photos|first.url }} #}" alt="{# {{ recipe.photos|first.alt }} #}">
+
+            {# affiche la première photo de la collection photos de recipe #}
+            <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+
+            {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+            {% else %}
+
+            <img src="#" alt="">
             {% endif %}
         </figure>
         {{ recipe.name }} <br>
         Par {{ recipe.user.pseudo }} <br>
         {{ recipe.category.name }} <br>
-        Note: {{ recipe.note }} 
+        Note: {{ recipe.note }}
         <i class="fa-regular fa-heart"></i>
     </div>
     {% endfor %}
