@@ -23,7 +23,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{user}/friends', name: 'friends_user')]
+    #[Route('/friends/{user}', name: 'friends_user')]
     public function listFriends(User $user): Response
     {
         $friends = $user->getFriends();

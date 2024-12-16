@@ -6,10 +6,10 @@
 
 Friends array length: {{ friends|length }}
 
-{# {{ dump(friends) }} #}
+{{ dump(friends) }}
 
 {% for friend in friends %}
-    {{ friend.follower.pseudo }}
+    {{ friend.followee.pseudo }}
 {% endfor %}
 
 {% endblock %}

@@ -15,11 +15,11 @@ class Friend
 
     #[ORM\ManyToOne(inversedBy: 'friends')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $follower = null; // follower: ceux qui vous suivent
+    private ?User $follower = null; // follower: le suiveur
 
     #[ORM\ManyToOne(inversedBy: 'friends')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $followee = null; // followee: ceux que l'on suit (ça existe vraiment en anglais)
+    private ?User $followee = null; // followee: le suivi
 
     public function getId(): ?int
     {
