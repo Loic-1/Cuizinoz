@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cuizinoz{% endblock %}
+
+{% block body %}
+
+{% if app.user %}
+    
+<h1>Hello {{ app.user.pseudo }}!</h1>
+
+{% else %}
+
+Hello!
+{% endif %}
+
+{% endblock %}
