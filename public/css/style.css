@@ -122,7 +122,11 @@ body {
 .detail_comment {
     width: 100%;
 
+    padding: 1rem;
+
     text-align: center;
+    
+    border: 1px solid black;
 
     &.detail_comment_content {
         text-align: justify;
