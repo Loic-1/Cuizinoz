@@ -72,6 +72,19 @@ body {
     }
 }
 
+.recipe_addRecipeForm_container {
+    display: flex;
+    justify-content: center;
+
+    padding: 50px 200px;
+}
+
+.addRecipeForm {
+    width: max-content;
+
+    border: 1px solid black;
+}
+
 
 
 /* DÉTAIL RECETTE */
@@ -125,7 +138,7 @@ body {
     padding: 1rem;
 
     text-align: center;
-    
+
     border: 1px solid black;
 
     &.detail_comment_content {

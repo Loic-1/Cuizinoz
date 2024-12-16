@@ -24,7 +24,8 @@
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
             {% else %}
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas encore de photo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                    alt="Pas encore de photo">
             </a>
             {% endif %}
 
@@ -32,8 +33,8 @@
         <div class="recipe_infos_container">
             <p>{{ recipe.name }}</p>
             <p>Une recette de {{ recipe.user.pseudo }}</p>
+            <p>Note: {{ recipe.note }} (temp)</p>
             <p>{{ recipe.category.name }}</p>
-            {# <p>Note: {{ recipe.note }} (temp)</p> #}
             <div class="recipe_actions">
                 <i class="fa-regular fa-heart"></i>
                 <i class="fa-solid fa-plus"></i>
@@ -43,19 +44,24 @@
     {% endfor %}
 </div>
 
-{# PARTIE FORM POUR RAJOUTER UNE RECETTE #}
+<div class="recipe_addRecipeForm_container">
+    {# PARTIE FORM POUR RAJOUTER UNE RECETTE #}
+    <div class="addRecipeForm">
+        {{ form_errors(addRecipeForm) }}
+        {{ form_start(addRecipeForm) }}
 
-{{ form_errors(addRecipeForm) }}
-{{ form_start(addRecipeForm) }}
+        {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType définit déjà tous les attributs
+        nécessaires,
+        mais on peut mettre en forme le form avec l'ordre des lignes #}
+        {{ form_row(addRecipeForm.name) }}
+        {{ form_row(addRecipeForm.preparationTime) }}
+        {{ form_row(addRecipeForm.instructions) }}
+        {{ form_row(addRecipeForm.category) }}
 
-{{ form_row(addRecipeForm.name) }}
-{{ form_row(addRecipeForm.preparationTime) }}
-{{ form_row(addRecipeForm.instructions) }}
-{# {{ form_row(addRecipeForm.note) }} #}
-{{ form_row(addRecipeForm.category) }}
+        <button type="submit">Publier recette</button>
 
-<button type="submit">Publier recette</button>
-
-{{ form_end(addRecipeForm) }}
+        {{ form_end(addRecipeForm) }}
+    </div>
+</div>
 
 {% endblock %}
