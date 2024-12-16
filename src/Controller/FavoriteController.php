@@ -6,6 +6,7 @@ use App\Entity\Favorite;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Repository\FavoriteRepository;
+use App\Repository\RecipeRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,18 +25,32 @@ class FavoriteController extends AbstractController
         ]);
     }
     #[Route('favorite/add/{recipe}/{user}', name: 'add_favorite')]
-    public function addFavorite(Recipe $recipe, User $user, EntityManagerInterface $entityManager)
+    public function addFavorite(Recipe $recipe, User $user, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
-        $favorite = new Favorite();
 
-        $favorite->setUser($user);
-        $favorite->setRecipe($recipe);
-        $favorite->setRegisterDate(new DateTime());
+        if (count($favoriteRepository->isUnique($recipe->getId())) == 0) {
 
-        $entityManager->persist($favorite);
-        $entityManager->flush();
+            $favorite = new Favorite();
 
-        return $this->redirectToRoute("app_favorite", [
+            $favorite->setUser($user);
+            $favorite->setRecipe($recipe);
+            $favorite->setRegisterDate(new DateTime());
+
+            $entityManager->persist($favorite);
+            $entityManager->flush();
+
+            // return $this->redirectToRoute("app_favorite", [
+            //     "user" => $user->getId()
+            // ]);
+
+            return $this->redirectToRoute("app_recipe");
+        }
+
+        // return $this->redirectToRoute("app_favorite", [
+        //     "user" => $user->getId()
+        // ]);
+
+        return$this->redirectToRoute("app_favorite", [
             "user" => $user->getId()
         ]);
     }

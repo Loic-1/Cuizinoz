@@ -32,6 +32,21 @@ class FavoriteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function isUnique($recipe_id) {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('f')
+        ->from('App\Entity\Favorite', 'f')
+        ->where('f.recipe = :recipe_id')
+        ->setParameter('recipe_id', $recipe_id)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return Favorite[] Returns an array of Favorite objects
     //     */
