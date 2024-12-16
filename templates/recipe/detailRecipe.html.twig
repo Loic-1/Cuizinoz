@@ -38,7 +38,9 @@
             <i class="fa-regular fa-heart"></i>
             <i class="fa-solid fa-plus"></i>
             {% if app.user.id == recipe.user.id %}
-            <i class="fa-solid fa-pen-nib"></i>
+            <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
+                <i class="fa-solid fa-pen-nib"></i>
+            </a>
             {% endif %}
         </div>
     </div>
@@ -52,11 +54,14 @@
         <p>NOTE</p>
     </div>
     {% endfor %}
-</div>
 
-{{ form_errors(addCommentForm) }}
-{{ form_start(addCommentForm) }}
-<button type="submit">Poster commentaire</button>
-{{ form_end(addCommentForm) }}
+    {{ form_errors(addCommentForm) }}
+    {{ form_start(addCommentForm) }}
+    {{ form_row(addCommentForm.title) }}
+    {{ form_row(addCommentForm.content) }}
+
+    <button type="submit">Poster commentaire</button>
+    {{ form_end(addCommentForm) }}
+</div>
 
 {% endblock %}

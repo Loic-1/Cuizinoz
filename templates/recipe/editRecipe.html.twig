@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo}}{% endblock %}
+
+{% block body %}
+
+<h1>Modif {{ recipe.name }}</h1>
+
+{{ form_errors(editRecipeForm) }}
+{{ form_start(editRecipeForm) }}
+{{ form_row(editRecipeForm.name) }}
+{{ form_row(editRecipeForm.preparationTime) }}
+{{ form_row(editRecipeForm.instructions) }}
+{{ form_row(editRecipeForm.category) }}
+
+<button type="submit">Modifier recette</button>
+
+{{ form_end(editRecipeForm) }}
+
+{% endblock %}
