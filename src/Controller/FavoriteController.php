@@ -48,6 +48,19 @@ class FavoriteController extends AbstractController
         ]);
     }
 
-    // #[Route('favorite/remove/{user}/{recipe}', name: 'add_favorite')]
-    // public function removeFavorite(Recipe $recipe, User $user, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager) {}
+    #[Route('favorite/remove/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
+    public function removeFavorite(Recipe $recipe, User $user, Favorite $favorite, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
+    {
+
+        $user->removeFavorite($favorite);
+        $recipe->removeFavorite($favorite);
+
+        $entityManager->persist($user);
+        $entityManager->persist($recipe);
+        $entityManager->flush();
+
+        return $this->redirectToRoute("app_favorite", [
+            "user" => $user->getId()
+        ]);
+    }
 }
