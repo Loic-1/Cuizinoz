@@ -24,6 +24,7 @@ class FavoriteController extends AbstractController
             'favorites' => $favorites
         ]);
     }
+
     #[Route('favorite/add/{recipe}/{user}', name: 'add_favorite')]
     public function addFavorite(Recipe $recipe, User $user, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
@@ -50,8 +51,11 @@ class FavoriteController extends AbstractController
         //     "user" => $user->getId()
         // ]);
 
-        return$this->redirectToRoute("app_favorite", [
+        return $this->redirectToRoute("app_favorite", [
             "user" => $user->getId()
         ]);
     }
+
+    #[Route('favorite/remove/{recipe}/{user}', name: 'add_favorite')]
+    public function removeFavorite(Recipe $recipe, User $user, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager) {}
 }
