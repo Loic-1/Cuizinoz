@@ -36,7 +36,9 @@
             <p>Note: {{ recipe.note }} (temp)</p>
             <p>{{ recipe.category.name }}</p>
             <div class="recipe_actions">
-                <i class="fa-regular fa-heart"></i>
+                <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">    
+                    <i class="fa-regular fa-heart"></i>
+                </a>
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
