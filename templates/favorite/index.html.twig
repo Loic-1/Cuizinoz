@@ -1,7 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FavoriteController!{% endblock %}
+{% block title %}Vos favoris{% endblock %}
 
 {% block body %}
-{{ dump(favorites) }}
+
+<div class="recipe_container">
+
+    {% for favorite in favorites %}
+
+    <div class="recipe_card">
+
+        <figure class="recipe_image_container">
+
+            {% if favorite.recipe.photos|length > 0 %}
+
+            {# affiche la première photo de la collection photos de recipe #}
+            <a href="{{ path('detail_recipe', { recipe: favorite.recipe.id }) }}">
+                <img src="{{ favorite.recipe.photos|first.url }}" alt="{{ favorite.recipe.photos|first.alt }}">
+            </a>
+
+            {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+            {% else %}
+            <a href="{{ path('detail_recipe', { recipe: favorite.recipe.id }) }}">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                    alt="Pas encore de photo">
+            </a>
+            {% endif %}
+
+        </figure>
+        <div class="recipe_infos_container">
+            <p>{{ favorite.recipe.name }}</p>
+            <p>Une recette de {{ favorite.recipe.user.pseudo }}</p>
+            <p>Note: {{ favorite.recipe.note }} (temp)</p>
+            <p>{{ favorite.recipe.category.name }}</p>
+            <div class="recipe_actions">
+                <i class="fa-solid fa-heart"></i>
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
 {% endblock %}

@@ -86,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Message>
      */
-    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender', orphanRemoval: true)] // Si User meurt, alors ses messages mourront
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender', orphanRemoval: false)] // Si User meurt, alors ses messages mourront
     private Collection $messages;
 
     /**

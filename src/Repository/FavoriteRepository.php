@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Favorite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Select;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,6 +15,21 @@ class FavoriteRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Favorite::class);
+    }
+
+    public function findFavorites($user_id) {
+        
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('f')
+        ->from('App\Entity\Favorite', 'f')
+        ->where('f.user = :user_id')
+        ->setParameter('user_id', $user_id)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 
     //    /**
