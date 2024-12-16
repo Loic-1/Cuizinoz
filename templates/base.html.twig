@@ -15,6 +15,7 @@
     {% endblock %}
 
     {% block javascripts %}
+    <script src="{{ asset('js/script.js') }}"></script>
     {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
@@ -23,10 +24,12 @@
     <header>
         {% if app.user %}
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="#">Vos collections</a> | <a href="{{ path('friends_user', { user: app.user.id }) }}">Vos amis</a> | <a href="{{ path('app_favorite', {user: app.user.id}) }}">Vos favoris</a>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        <a href="#"><i class="fa-regular fa-folder"></i><i class="fa-regular fa-folder-open"></i></i>Vos collections</a> | <a href="{{ path('friends_user', { user: app.user.id }) }}">Vos amis</a> | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i class="fa-regular fa-bookmark"></i> Vos favoris</a>
+        <a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
+        <a href="#"><i class="fa-regular fa-user"></i></a>
         <p>Bienvenue {{app.user.pseudo}}</p>
         {% else %}
+        <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
         <a href="{{ path('app_login') }}">Se connecter</a>
         <a href="{{ path('app_register') }}">S'enregistrer</a>
         <p>Veuillez vous connecter ou bien vous enregistrer</p>

@@ -34,8 +34,12 @@
         </p>
         <p>Instructions de préparation: <br>
             {{ recipe.instructions }}</p>
+        {% if app.user %}
+
         <div class="detail_actions_container">
-            <i class="fa-regular fa-heart"></i>
+            <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                <i class="fa-regular fa-heart"></i>
+            </a>
             <i class="fa-solid fa-plus"></i>
             {% if app.user.id == recipe.user.id %}
             <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
@@ -43,6 +47,7 @@
             </a>
             {% endif %}
         </div>
+        {% endif %}
     </div>
 </div>
 <div class="detail_comments_container">
@@ -55,6 +60,8 @@
     </div>
     {% endfor %}
 
+    {% if app.user %}
+    
     {{ form_errors(addCommentForm) }}
     {{ form_start(addCommentForm) }}
     {{ form_row(addCommentForm.title) }}
@@ -62,6 +69,7 @@
 
     <button type="submit">Poster commentaire</button>
     {{ form_end(addCommentForm) }}
+    {% endif %}
 </div>
 
 {% endblock %}

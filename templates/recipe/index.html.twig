@@ -35,16 +35,21 @@
             <p>Une recette de {{ recipe.user.pseudo }}</p>
             <p>Note: {{ recipe.note }} (temp)</p>
             <p>{{ recipe.category.name }}</p>
+            {% if app.user %}
+
             <div class="recipe_actions">
-                <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">    
+                <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
                     <i class="fa-regular fa-heart"></i>
                 </a>
                 <i class="fa-solid fa-plus"></i>
             </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
 </div>
+
+{% if app.user %}
 
 <div class="recipe_addRecipeForm_container">
     {# PARTIE FORM POUR RAJOUTER UNE RECETTE #}
@@ -65,5 +70,6 @@
         {{ form_end(addRecipeForm) }}
     </div>
 </div>
+{% endif %}
 
 {% endblock %}
