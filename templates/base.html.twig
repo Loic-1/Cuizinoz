@@ -22,9 +22,8 @@
 <body>
     <header>
         {% if app.user %}
-        <a href="{{ path('friends_user', { user: app.user.id }) }}">Liste des amis</a>
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="{{ path('app_favorite') }}">Liste des favoris</a>
+        <a href="#">Vos collections</a> | <a href="{{ path('friends_user', { user: app.user.id }) }}">Vos amis</a> | <a href="{{ path('app_favorite') }}">Vos favoris</a>
         <a href="{{ path('app_logout') }}">Se déconnecter</a>
         <p>Bienvenue {{app.user.pseudo}}</p>
         {% else %}

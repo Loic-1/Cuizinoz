@@ -26,8 +26,9 @@ body {
 
 .recipe_container {
     display: grid;
-    grid-template-columns: 200px 200px 200px;
+    grid-template-columns: 200px 200px 200px 200px;
     column-gap: 50px;
+    row-gap: 50px;
     justify-content: center;
 
     padding: 50px 200px;
