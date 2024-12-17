@@ -1,16 +1,18 @@
-{% extends 'base.html.twig' %} {% block title %}Modification {{ compilation.name }}{% endblock %}
-{%block body %}
+{% extends 'base.html.twig' %} {% block title %}Modification
+{{ compilation.name }}{% endblock %} {%block body %}
 
-{{ form_errors(editCompilationForm) }}
+<div class="h2_200_p">
+  {{ form_errors(editCompilationForm) }}
 
-{{ form_start(editCompilationForm) }}
+  {{ form_start(editCompilationForm) }}
 
-{{ form_row(editCompilationForm.name) }}
-{{ form_row(editCompilationForm.tags) }}
-{{ form_row(editCompilationForm.recipes) }}
+  {{ form_row(editCompilationForm.name) }}
+  {{ form_row(editCompilationForm.tags) }}
+  {{ form_row(editCompilationForm.recipes) }}
 
-<button type="submit">Modifier</button>
+  <button type="submit">Modifier</button>
 
-{{ form_end(editCompilationForm) }}
+  {{ form_end(editCompilationForm) }}
+</div>
 
 {% endblock %}
