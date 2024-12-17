@@ -1,13 +1,52 @@
 {% extends 'base.html.twig' %} {% block title %}Vos collections{% endblock %} {%
     block body %}
     
-    <h2>{{ compilation.name }}</h2>
+    <h2 class="h2_200_p">{{ compilation.name }}</h2>
 
-    {% for recipe in compilation.recipes %}
-        {{ recipe.name }}
-    {% endfor %}
+    <div class="recipe_container">
 
-    <a href="{{ path('edit_compilation', { compilation: compilation.id }) }}">Modifier collection</a>
+        {% for recipe in compilation.recipes %}
+    
+        <div class="recipe_card">
+    
+            <figure class="recipe_image_container">
+    
+                {% if recipe.photos|length > 0 %}
+    
+                {# affiche la première photo de la collection photos de recipe #}
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+                </a>
+    
+                {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+                {% else %}
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                        alt="Pas encore de photo">
+                </a>
+                {% endif %}
+    
+            </figure>
+            <div class="recipe_infos_container">
+                <p>{{ recipe.name }}</p>
+                <p>Une recette de {{ recipe.user.pseudo }}</p>
+                <p>Note: {{ recipe.note }} (temp)</p>
+                <p>{{ recipe.category.name }}</p>
+                {% if app.user %}
+    
+                <div class="recipe_actions">
+                    <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('edit_compilation', { compilation: compilation.id }) }}" class="h2_200_p">Modifier collection</a>
 
     {% endblock %}
     
