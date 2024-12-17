@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos collections{% endblock %}
+
+{% block body %}
+
+<h2>Vos collections</h2>
+
+<div class="compilation_container">
+
+    {% for compilation in compilations %}
+    <div class="compilation_card">
+
+        <p> {{ compilation.name }} </p>
+        <strong> {{ compilation.recipes|length }} </strong>
+        <div class="compilation_actions">
+            <i class="fa-solid fa-pen-nib"></i>
+            <i class="fa-solid fa-trash"></i>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

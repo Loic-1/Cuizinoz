@@ -147,3 +147,29 @@ body {
         text-align: justify;
     }
 }
+
+/* COMPILATION */
+
+.compilation_container {
+
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 50px;
+
+    width: 100%;
+
+    padding: 50px 200px;
+}
+
+.compilation_card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    width: 200px;
+    height: 200px;
+
+    border: 1px solid black;
+}
