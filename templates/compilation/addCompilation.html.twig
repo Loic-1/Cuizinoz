@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %} {% block title %}Vos collections{% endblock %}
+{%block body %}
+
+{{ form_errors(addCompilationForm) }}
+
+{{ form_start(addCompilationForm) }}
+
+{{ form_row(addCompilationForm.name) }}
+{{ form_row(addCompilationForm.tags) }}
+{{ form_row(addCompilationForm.recipes) }}
+
+<button type="submit">Ajouter</button>
+
+{{ form_end(addCompilationForm) }}
+
+{% endblock %}
