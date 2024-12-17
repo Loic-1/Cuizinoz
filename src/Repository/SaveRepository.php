@@ -16,6 +16,21 @@ class SaveRepository extends ServiceEntityRepository
         parent::__construct($registry, Save::class);
     }
 
+    public function isUnique($compilation_id) {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s')
+        ->from('App\Entity\Save', 's')
+        ->where('s.compilation = :compilation_id')
+        ->setParameter('compilation_id', $compilation_id)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return Save[] Returns an array of Save objects
     //     */
