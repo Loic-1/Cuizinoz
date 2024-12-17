@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CompilationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CompilationRepository::class)]
@@ -38,6 +39,9 @@ class Compilation
      */
     #[ORM\ManyToMany(targetEntity: Recipe::class, mappedBy: 'compilations')]
     private Collection $recipes;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $creationDate = null;
 
     public function __construct()
     {
@@ -155,6 +159,18 @@ class Compilation
         if ($this->recipes->removeElement($recipe)) {
             $recipe->removeCompilation($this);
         }
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): static
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }
