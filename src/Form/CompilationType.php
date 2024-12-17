@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Compilation;
 use App\Entity\Recipe;
 use App\Entity\Tag;
-use App\Entity\user;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
