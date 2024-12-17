@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %} {% block title %}Modification {{ compilation.name }}{% endblock %}
+{%block body %}
+
+{{ form_errors(editCompilationForm) }}
+
+{{ form_start(editCompilationForm) }}
+
+{{ form_row(editCompilationForm.name) }}
+{{ form_row(editCompilationForm.tags) }}
+{{ form_row(editCompilationForm.recipes) }}
+
+<button type="submit">Modifier</button>
+
+{{ form_end(editCompilationForm) }}
+
+{% endblock %}

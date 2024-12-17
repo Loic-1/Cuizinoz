@@ -3,5 +3,11 @@
     
     <h2>{{ compilation.name }}</h2>
 
+    {% for recipe in compilation.recipes %}
+        {{ recipe.name }}
+    {% endfor %}
+
+    <a href="{{ path('edit_compilation', { compilation: compilation.id }) }}">Modifier collection</a>
+
     {% endblock %}
     

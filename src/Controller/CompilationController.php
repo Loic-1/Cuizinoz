@@ -132,7 +132,7 @@ class CompilationController extends AbstractController
 
     // permet d'afficher le détail d'une compilation
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
-    public function detailCompilation(Compilation $compilation): Response
+    public function detailCompilation(Compilation $compilation = null): Response
     {
         if ($compilation) {
 
@@ -142,5 +142,34 @@ class CompilationController extends AbstractController
         } else {
             return $this->redirectToRoute("app_home");
         }
+    }
+
+    #[Route('/compilation/edit/{compilation}', name: 'edit_compilation')]
+    public function editCompilation(Compilation $compilation, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
+        $form = $this->createForm(CompilationType::class, $compilation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // on récupère les entrées dans les champs du form
+            $recipe = $form->getData();
+
+            // on prépare le push vers la BDD
+            $entityManager->persist($recipe);
+            // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
+            $entityManager->flush();
+
+            return $this->redirectToRoute("detail_compilation", [
+                "compilation" => $compilation->getId()
+            ]);
+        }
+
+        return $this->render('compilation/editCompilation.html.twig', [
+            'compilation' => $compilation,
+            'editCompilationForm' => $form
+        ]);
     }
 }
