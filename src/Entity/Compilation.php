@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CompilationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CompilationRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CompilationRepository::class)]
 class Compilation
@@ -20,7 +21,7 @@ class Compilation
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'compilations')]
-    private ?user $User = null;
+    private ?User $user = null;
 
     /**
      * @var Collection<int, Tag>
@@ -67,14 +68,14 @@ class Compilation
         return $this;
     }
 
-    public function getUser(): ?user
+    public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?user $User): static
+    public function setUser(?User $user): static
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }

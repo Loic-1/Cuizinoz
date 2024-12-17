@@ -4,7 +4,7 @@ block body %}
 <h2>Vos collections</h2>
 
 <div class="compilation_container">
-  {% for compilation in compilations %}
+  {% for compilation in user.compilations %}
   <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
     <div class="compilation_card">
       <p>{{ compilation.name }}</p>

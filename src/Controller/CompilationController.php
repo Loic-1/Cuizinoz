@@ -14,41 +14,44 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CompilationController extends AbstractController
 {
-    #[Route('/compilation/{user}', name: 'app_compilation')]
-    public function index(User $user, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $compilation = new Compilation();
-
-        $form = $this->createForm(CompilationType::class, $compilation);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-
-            $compilation = $form->getData();
-            $compilation->setUser($user);
-            $compilation->setCreationDate(new DateTime());
-
-            $entityManager->persist($compilation);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_compilation', [
-                'user' => $user->getId()
-            ]);
-        }
-
-        $compilations = $user->getCompilations();
-
-        return $this->render('compilation/index.html.twig', [
-            'compilations' => $compilations,
-            'addCompilationForm' => $form
-        ]);
-    }
-
+    
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
     public function detailCompilation(Compilation $compilation): Response
     {
         return $this->render('compilation/detailCompilation.html.twig', [
             'compilation' => $compilation
         ]);
+    }
+
+    #[Route('/compilation/{user}', name: 'app_compilation')]
+    public function index(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if($user) {
+            $compilation = new Compilation();
+    
+            $form = $this->createForm(CompilationType::class, $compilation);
+            $form->handleRequest($request);
+    
+            if($form->isSubmitted() && $form->isValid()) {
+    
+                $compilation = $form->getData();
+                $compilation->setUser($user);
+                $compilation->setCreationDate(new DateTime());
+    
+                $entityManager->persist($compilation);
+                $entityManager->flush();
+    
+                return $this->redirectToRoute('app_compilation', [
+                    'user' => $user->getId()
+                ]);
+            }
+    
+            return $this->render('compilation/index.html.twig', [
+                'user' => $user,
+                'addCompilationForm' => $form
+            ]);
+        } else {
+            return $this->redirectToRoute("app_home");
+        }
     }
 }
