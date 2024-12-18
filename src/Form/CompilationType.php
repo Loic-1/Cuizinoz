@@ -29,11 +29,11 @@ class CompilationType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
             ])
-            ->add('recipes', EntityType::class, [
-                'class' => Recipe::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-            ])
+            // ->add('recipes', EntityType::class, [
+            //     'class' => Recipe::class,
+            //     'choice_label' => 'name',
+            //     'multiple' => true,
+            // ])
         ;
     }
 

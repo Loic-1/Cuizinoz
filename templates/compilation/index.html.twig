@@ -13,6 +13,7 @@ block body %}
     <div class="compilation_card">
       <p>{{ save.compilation.name }}</p>
       <strong> {{ save.compilation.recipes | length }} recettes</strong>
+      <p>NbTags: {{ save.compilation.tags|length }}</p>
       <div class="compilation_actions">
         {% if app.user == save.compilation.user %}
         <a
@@ -44,6 +45,7 @@ block body %}
     <div class="compilation_card">
       <p>{{ compilation.name }}</p>
       <strong> {{ compilation.recipes | length }} recettes</strong>
+      <p>NbTags: {{ compilation.tags|length }}</p>
       <div class="compilation_actions">
         <a
           href="{{ path('edit_compilation', { compilation: compilation.id }) }}"
