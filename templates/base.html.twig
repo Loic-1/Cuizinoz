@@ -24,10 +24,10 @@
     <header>
         {% if app.user %}
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="{{ path('app_compilation', { user: app.user.id }) }}"><i class="fa-regular fa-floppy-disk"></i>Vos collections et sauvegardées</a> | <a href="{{ path('friends_user', { user: app.user.id }) }}"><i class="fa-solid fa-user-group"></i> Vos amis</a> | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i class="fa-regular fa-bookmark"></i> Vos favoris</a>
+        <a href="{{ path('app_compilation', { user: app.user.id }) }}"><i class="fa-regular fa-floppy-disk"></i>Vos collections et sauvegardées</a> | else | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i class="fa-regular fa-bookmark"></i> Vos favoris</a>
         <a href="{{ path('list_compilation') }}"><i class="fa-regular fa-folder"></i>Liste des collections du site</a>
         <a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
-        <a href="#"><i class="fa-regular fa-user"></i></a>
+        <a href="{{ path('detail_user', { user: app.user.id }) }}"><i class="fa-regular fa-user"></i></a>
         <p>Bienvenue {{app.user.pseudo}}</p>
         {% else %}
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>

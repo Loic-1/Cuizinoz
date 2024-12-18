@@ -457,6 +457,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->followers->contains($follower)) {
             $this->followers->add($follower);
+            // NEW
+            $follower->addFollowee($this);
         }
 
         return $this;
@@ -481,6 +483,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->followees->contains($followee)) {
             $this->followees->add($followee);
+            // NEW
+            $followee->addFollower($this);
         }
 
         return $this;

@@ -3,26 +3,37 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-
-{{ followers|length }} followers<br>
-{{ followees|length }} personnes suivies
-
-{# {{ dump(followers) }} #}
-{# {{ dump(followees) }} #}
-
 <h1>TODO: Popup des followers et des followees</h1>
 
-<h2>Ils vous suivent:</h2>
+<h2>{{ user.pseudo }}</h2>
 
+<strong>{{ followees|length }}</strong> personnes suivies, <strong>{{ followers|length }}</strong> followers<br>
+
+<h3>Followers: </h3>
+
+{% if followers|length > 0 %}
+    
 {% for follower in followers %}
-{{ follower.pseudo }}
-{% endfor %}
 
-<h2>Vous les suivez:</h2>
+    {{ follower.pseudo }} <br>
+{% endfor %}
+{% else %}
+
+<p>Pas de follower :(</p>
+{% endif %}
+
+<h3>Personnes suivies: </h3>
+
+{% if followees|length > 0 %}    
 
 {% for followee in followees %}
-{{ followee.pseudo }}
+
+{{ followee.pseudo }} <br>
 {% endfor %}
+{% else %}
+
+<p>Vous ne suivez personne</p>
+{% endif %}
 
 <h2>Liste utilisateurs</h2>
 
