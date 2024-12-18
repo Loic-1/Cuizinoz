@@ -180,11 +180,24 @@ class CompilationController extends AbstractController
         ]);
     }
 
-    #[Route('/compilation/edit/{compilation}/{recipe}', name: 'add_recipe_compilation')]
+    #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]
     public function addRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {
 
         $compilation->addRecipe($recipe);
+
+        $entityManager->persist($compilation);
+        $entityManager->flush();
+
+        return $this->redirectToRoute("edit_compilation", [
+            'compilation' => $compilation->getId()
+        ]);
+    }
+
+    #[Route('/compilation/edit/remove/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
+    public function removeRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
+    {
+        $compilation->removeRecipe($recipe);
 
         $entityManager->persist($compilation);
         $entityManager->flush();

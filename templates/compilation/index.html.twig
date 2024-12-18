@@ -12,7 +12,7 @@ block body %}
   >
     <div class="compilation_card">
       <p>{{ save.compilation.name }}</p>
-      <strong> {{ save.compilation.recipes | length }} </strong>
+      <strong> {{ save.compilation.recipes | length }} recettes</strong>
       <div class="compilation_actions">
         {% if app.user == save.compilation.user %}
         <a
@@ -43,7 +43,7 @@ block body %}
   <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
     <div class="compilation_card">
       <p>{{ compilation.name }}</p>
-      <strong> {{ compilation.recipes | length }} </strong>
+      <strong> {{ compilation.recipes | length }} recettes</strong>
       <div class="compilation_actions">
         <a
           href="{{ path('edit_compilation', { compilation: compilation.id }) }}"

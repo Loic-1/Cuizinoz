@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %} {% block title %}Modification
 {{ compilation.name }}{% endblock %} {%block body %}
 
-Nombre de recettes: {{ compilation.recipes|length }}
-
 <div class="h2_200_p">
   {{ form_errors(editCompilationForm) }}
 
@@ -17,7 +15,7 @@ Nombre de recettes: {{ compilation.recipes|length }}
   {{ form_end(editCompilationForm) }}
 </div>
 
-<h2>Recettes</h2>
+{# <h2>Recettes</h2>
 
 {% for recipe in recipesNotAdded %}
 {{ recipe.name }} <a href="{{ path('add_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}"><i
@@ -27,8 +25,106 @@ Nombre de recettes: {{ compilation.recipes|length }}
 <h2>Recettes déjà rajoutées</h2>
 
 {% for recipe in recipesAdded %}
-{{ recipe.name }} <a href="#"><i
+{{ recipe.name }} <a href="{{ path('remove_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}"><i
     class="fa-solid fa-minus"></i></a><br>
-{% endfor %}
+{% endfor %} #}
+
+<h2 class="h2_200_p">Recettes</h2>
+
+<div class="recipe_container">
+
+  {% for recipe in recipesNotAdded %}
+
+  <div class="recipe_card">
+
+      <figure class="recipe_image_container">
+
+          {% if recipe.photos|length > 0 %}
+
+          {# affiche la première photo de la collection photos de recipe #}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+          </a>
+
+          {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+          {% else %}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                  alt="Pas encore de photo">
+          </a>
+          {% endif %}
+
+      </figure>
+      <div class="recipe_infos_container">
+          <p>{{ recipe.name }}</p>
+          <p>Une recette de {{ recipe.user.pseudo }}</p>
+          <p>Note: {{ recipe.note }} (temp)</p>
+          <p>{{ recipe.category.name }}</p>
+          {% if app.user %}
+
+          <div class="recipe_actions">
+              <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                  <i class="fa-regular fa-heart"></i>
+              </a>
+              <a href="{{ path('add_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}">
+                <a href="{{ path('add_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}">
+                  <i class="fa-solid fa-plus"></i>
+                </a>
+          </div>
+          {% endif %}
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+<h2 class="h2_200_p">Recettes déjà rajoutées</h2>
+
+<div class="recipe_container">
+
+  {% for recipe in recipesAdded %}
+
+  <div class="recipe_card">
+
+      <figure class="recipe_image_container">
+
+          {% if recipe.photos|length > 0 %}
+
+          {# affiche la première photo de la collection photos de recipe #}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+          </a>
+
+          {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+          {% else %}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                  alt="Pas encore de photo">
+          </a>
+          {% endif %}
+
+      </figure>
+      <div class="recipe_infos_container">
+          <p>{{ recipe.name }}</p>
+          <p>Une recette de {{ recipe.user.pseudo }}</p>
+          <p>Note: {{ recipe.note }} (temp)</p>
+          <p>{{ recipe.category.name }}</p>
+          {% if app.user %}
+
+          <div class="recipe_actions">
+              <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                  <i class="fa-regular fa-heart"></i>
+              </a>
+              <a href="{{ path('add_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}">
+                <a href="{{ path('remove_recipe_compilation', { compilation: compilation.id, recipe: recipe.id }) }}">
+                  <i class="fa-solid fa-minus"></i>
+                </a>
+          </div>
+          {% endif %}
+      </div>
+  </div>
+  {% endfor %}
+</div>
+
+
 
 {% endblock %}
