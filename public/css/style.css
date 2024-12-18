@@ -69,16 +69,24 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    
+
     /* text-align: center; */
 
     padding: 0px 10px;
-
-    &.recipe_actions {
-        display: flex;
-        flex-direction: row;
-    }
 }
+
+.recipe_actions {
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+    color: var(--button-color);
+
+   
+}
+
+.recipe_actions a {
+        color: var(--button-color);
+    }
 
 .recipe_addRecipeForm_container {
     display: flex;
