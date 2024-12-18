@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Compilation;
+use App\Entity\Recipe;
 use App\Entity\Save;
 use App\Form\CompilationType;
 use App\Repository\CompilationRepository;
+use App\Repository\RecipeRepository;
 use App\Repository\SaveRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -145,7 +147,7 @@ class CompilationController extends AbstractController
     }
 
     #[Route('/compilation/edit/{compilation}', name: 'edit_compilation')]
-    public function editCompilation(Compilation $compilation, Request $request, EntityManagerInterface $entityManager): Response
+    public function editCompilation(Compilation $compilation, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
     {
 
         // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
@@ -167,9 +169,28 @@ class CompilationController extends AbstractController
             ]);
         }
 
+        $recipesNotAdded = $recipeRepository->findNotAdded($compilation->getId());
+        $recipesAdded = $recipeRepository->findAdded($compilation->getId());
+
         return $this->render('compilation/editCompilation.html.twig', [
             'compilation' => $compilation,
-            'editCompilationForm' => $form
+            'editCompilationForm' => $form,
+            'recipesNotAdded' => $recipesNotAdded,
+            'recipesAdded' => $recipesAdded
+        ]);
+    }
+
+    #[Route('/compilation/edit/{compilation}/{recipe}', name: 'add_recipe_compilation')]
+    public function addRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
+    {
+
+        $compilation->addRecipe($recipe);
+
+        $entityManager->persist($compilation);
+        $entityManager->flush();
+
+        return $this->redirectToRoute("edit_compilation", [
+            'compilation' => $compilation->getId()
         ]);
     }
 }

@@ -16,7 +16,9 @@ block body %}
       <div class="compilation_actions">
         {% if app.user == save.compilation.user %}
         <a
-          href="{{ path('edit_compilation', { compilation: save.compilation.id }) }}"
+          href="{{
+            path('edit_compilation', { compilation: save.compilation.id })
+          }}"
         >
           <i class="fa-solid fa-pen-nib"></i>
         </a>
@@ -43,7 +45,11 @@ block body %}
       <p>{{ compilation.name }}</p>
       <strong> {{ compilation.recipes | length }} </strong>
       <div class="compilation_actions">
-        <i class="fa-solid fa-pen-nib"></i>
+        <a
+          href="{{ path('edit_compilation', { compilation: compilation.id }) }}"
+        >
+          <i class="fa-solid fa-pen-nib"></i>
+        </a>
         <a
           href="{{
             path('add_compilation', {
