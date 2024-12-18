@@ -35,7 +35,7 @@
 <p>Vous ne suivez personne</p>
 {% endif %}
 
-<h2>Liste utilisateurs</h2>
+<h2>Liste utilisateurs(pour tester c'est temporaire)</h2>
 
 {% for user in users %}
 {{ user.pseudo }} <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a><a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-minus"></i></a><br>
