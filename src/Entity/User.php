@@ -78,12 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $comments;
 
     /**
-     * @var Collection<int, Friend>
-     */
-    #[ORM\OneToMany(targetEntity: Friend::class, mappedBy: 'follower')]
-    private Collection $friends;
-
-    /**
      * @var Collection<int, Message>
      */
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'sender', orphanRemoval: false)] // Si User meurt, alors ses messages mourront
@@ -98,15 +92,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $alt = null;
 
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[ORM\JoinTable(name: 'user_followers')]
+    private Collection $followers;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[ORM\JoinTable(name: 'user_followees')]
+    private Collection $followees;
+
     public function __construct()
     {
         $this->compilations = new ArrayCollection();
         $this->saves = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->friends = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->recipes = new ArrayCollection();
+        $this->followers = new ArrayCollection();
+        $this->followees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -365,36 +374,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Friend>
-     */
-    public function getFriends(): Collection
-    {
-        return $this->friends;
-    }
-
-    public function addFriend(Friend $friend): static
-    {
-        if (!$this->friends->contains($friend)) {
-            $this->friends->add($friend);
-            $friend->setFollower($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFriend(Friend $friend): static
-    {
-        if ($this->friends->removeElement($friend)) {
-            // set the owning side to null (unless already changed)
-            if ($friend->getFollower() === $this) {
-                $friend->setFollower(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Message>
      */
     public function getMessages(): Collection
@@ -462,6 +441,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAlt(?string $alt): static
     {
         $this->alt = $alt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFollowers(): Collection
+    {
+        return $this->followers;
+    }
+
+    public function addFollower(self $follower): static
+    {
+        if (!$this->followers->contains($follower)) {
+            $this->followers->add($follower);
+        }
+
+        return $this;
+    }
+
+    public function removeFollower(self $follower): static
+    {
+        $this->followers->removeElement($follower);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getFollowees(): Collection
+    {
+        return $this->followees;
+    }
+
+    public function addFollowee(self $followee): static
+    {
+        if (!$this->followees->contains($followee)) {
+            $this->followees->add($followee);
+        }
+
+        return $this;
+    }
+
+    public function removeFollowee(self $followee): static
+    {
+        $this->followees->removeElement($followee);
 
         return $this;
     }
