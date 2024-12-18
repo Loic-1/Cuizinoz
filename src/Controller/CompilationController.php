@@ -53,41 +53,46 @@ class CompilationController extends AbstractController
 
     // permet de créer une compilation
     #[Route('/compilation/ajout/{user}', name: 'create_compilation')]
-    public function createCompilation(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    public function createCompilation(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
     {
 
-        // on instancie une nouvelle compilation
-        $compilation = new Compilation();
+        if ($user) {
 
-        // on définit $form à partir de App\Form\CompilationType
-        $form = $this->createForm(CompilationType::class, $compilation);
-        // on demande à $form d'inspecter la requête envoyée et d'appeler Symfony\Component\Form\FormInterface::submit si le bouton submit est cliqué
-        $form->handleRequest($request);
+            // on instancie une nouvelle compilation
+            $compilation = new Compilation();
 
-        // si clic sur bouton submit et toutes les conditions remplies
-        if ($form->isSubmitted() && $form->isValid()) {
+            // on définit $form à partir de App\Form\CompilationType
+            $form = $this->createForm(CompilationType::class, $compilation);
+            // on demande à $form d'inspecter la requête envoyée et d'appeler Symfony\Component\Form\FormInterface::submit si le bouton submit est cliqué
+            $form->handleRequest($request);
 
-            // on récupère les données entrées ds les champs
-            $compilation = $form->getData();
-            // on définit ce qui n'est pas demandé car illogique
-            $compilation->setUser($user);
-            $compilation->setCreationDate(new DateTime());
+            // si clic sur bouton submit et toutes les conditions remplies
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            // on prépare toutes les requêtes (on peut faire plusieurs persist())
-            $entityManager->persist($compilation);
-            // on envoie tout d'un coup
-            $entityManager->flush();
+                // on récupère les données entrées ds les champs
+                $compilation = $form->getData();
+                // on définit ce qui n'est pas demandé car illogique
+                $compilation->setUser($user);
+                $compilation->setCreationDate(new DateTime());
 
-            // puis on redirige vers la liste des collection/compilations
-            return $this->redirectToRoute('app_compilation', [
-                'user' => $user->getId()
+                // on prépare toutes les requêtes (on peut faire plusieurs persist())
+                $entityManager->persist($compilation);
+                // on envoie tout d'un coup
+                $entityManager->flush();
+
+                // puis on redirige vers la liste des collection/compilations
+                return $this->redirectToRoute('app_compilation', [
+                    'user' => $user->getId()
+                ]);
+            }
+
+            // on envoie le $form
+            return $this->render('compilation/addCompilation.html.twig', [
+                'addCompilationForm' => $form
             ]);
+        } else {
+            return $this->redirectToRoute("app_home");
         }
-
-        // on envoie le $form
-        return $this->render('compilation/addCompilation.html.twig', [
-            'addCompilationForm' => $form
-        ]);
     }
 
     // permet de sauvegarder une compilation
@@ -147,37 +152,41 @@ class CompilationController extends AbstractController
     }
 
     #[Route('/compilation/edit/{compilation}', name: 'edit_compilation')]
-    public function editCompilation(Compilation $compilation, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
+    public function editCompilation(Compilation $compilation = null, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
     {
+        if ($compilation) {
 
-        // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
-        $form = $this->createForm(CompilationType::class, $compilation);
-        $form->handleRequest($request);
+            // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
+            $form = $this->createForm(CompilationType::class, $compilation);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            // on récupère les entrées dans les champs du form
-            $recipe = $form->getData();
+                // on récupère les entrées dans les champs du form
+                $recipe = $form->getData();
 
-            // on prépare le push vers la BDD
-            $entityManager->persist($recipe);
-            // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
-            $entityManager->flush();
+                // on prépare le push vers la BDD
+                $entityManager->persist($recipe);
+                // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
+                $entityManager->flush();
 
-            return $this->redirectToRoute("detail_compilation", [
-                "compilation" => $compilation->getId()
+                return $this->redirectToRoute("detail_compilation", [
+                    "compilation" => $compilation->getId()
+                ]);
+            }
+
+            $recipesNotAdded = $recipeRepository->findNotAdded($compilation->getId());
+            $recipesAdded = $recipeRepository->findAdded($compilation->getId());
+
+            return $this->render('compilation/editCompilation.html.twig', [
+                'compilation' => $compilation,
+                'editCompilationForm' => $form,
+                'recipesNotAdded' => $recipesNotAdded,
+                'recipesAdded' => $recipesAdded
             ]);
+        } else {
+            return $this->redirectToRoute("app_home");
         }
-
-        $recipesNotAdded = $recipeRepository->findNotAdded($compilation->getId());
-        $recipesAdded = $recipeRepository->findAdded($compilation->getId());
-
-        return $this->render('compilation/editCompilation.html.twig', [
-            'compilation' => $compilation,
-            'editCompilationForm' => $form,
-            'recipesNotAdded' => $recipesNotAdded,
-            'recipesAdded' => $recipesAdded
-        ]);
     }
 
     #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]

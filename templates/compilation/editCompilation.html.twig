@@ -125,6 +125,10 @@
   {% endfor %}
 </div>
 
+<a href="{{ path('detail_compilation', { compilation: compilation.id }) }}" class="h2_200_p">
+    <button>Retour à {{ compilation.name }}</button>
+</a>
+
 
 
 {% endblock %}
