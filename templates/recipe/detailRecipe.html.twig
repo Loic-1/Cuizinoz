@@ -11,7 +11,7 @@
         {% if recipe.photos|length > 0 %}
 
         {# affiche la première photo de la collection photos de recipe #}
-        <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+        <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="{{ recipe.photos|first.alt }}">
 
         {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
         {% else %}

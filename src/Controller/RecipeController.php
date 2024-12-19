@@ -3,22 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Photo;
 use App\Entity\Recipe;
 use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Repository\UserRepository;
+use App\Service\PictureService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
     #[Route('/recipe', name: 'app_recipe')]
-    public function index(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
         // trouver toutes les recettes
         $recipes = $recipeRepository->findAll();
@@ -30,6 +33,20 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère les images
+            $images = $form->get('images')->getData();
+            foreach ($images as $image) {
+                // On définit le dossier de destination
+                $folder = 'gallery';
+
+                // On appelle le service d'ajout
+                $fichier = $pictureService->add($image, $folder, 300, 300);
+                
+                $photo = new Photo();
+                $photo->setName($fichier);
+                $recipe->addPhoto($photo);
+            }
 
             $recipe = $form->getData();
             $recipe->setUser($user);

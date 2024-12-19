@@ -18,7 +18,7 @@
 
             {# affiche la première photo de la collection photos de recipe #}
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="{{ recipe.photos|first.url }}" alt="{{ recipe.photos|first.alt }}">
+                <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="{{ recipe.photos|first.alt }}">{# {{ recipe.photos|first.url }} #}
             </a>
 
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
@@ -64,6 +64,7 @@
         {{ form_row(addRecipeForm.preparationTime) }}
         {{ form_row(addRecipeForm.instructions) }}
         {{ form_row(addRecipeForm.category) }}
+        {{ form_row(addRecipeForm.images) }}
 
         <button type="submit">Publier</button>
 

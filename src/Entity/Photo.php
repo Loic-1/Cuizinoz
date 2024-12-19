@@ -24,6 +24,9 @@ class Photo
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $alt = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class Photo
     public function setAlt(?string $alt): static
     {
         $this->alt = $alt;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

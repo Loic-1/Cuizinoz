@@ -43,7 +43,7 @@ class Recipe
     /**
      * @var Collection<int, Photo>
      */
-    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true)] // Si Recipe meurt, alors ses photos mourront
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true, cascade:["persist"])] // Si Recipe meurt, alors ses photos mourront
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
