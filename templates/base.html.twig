@@ -11,6 +11,8 @@
         integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {% endblock %}
 
@@ -24,9 +26,12 @@
     <header>
         {% if app.user %}
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="{{ path('app_compilation', { user: app.user.id }) }}"><i class="fa-regular fa-floppy-disk"></i>Vos collections et sauvegardées</a> | else | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i class="fa-regular fa-bookmark"></i> Vos favoris</a>
+        <a href="{{ path('app_compilation', { user: app.user.id }) }}"><i class="fa-regular fa-floppy-disk"></i>Vos
+            collections et sauvegardées</a> | else | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i
+                class="fa-regular fa-bookmark"></i> Vos favoris</a>
         <a href="{{ path('list_compilation') }}"><i class="fa-regular fa-folder"></i>Liste des collections du site</a>
-        <a href="{{ path('detail_user', { user: app.user.id }) }}"><i class="fa-regular fa-user"></i> {{app.user.pseudo}}</a>
+        <a href="{{ path('detail_user', { user: app.user.id }) }}"><i class="fa-regular fa-user"></i>
+            {{app.user.pseudo}}</a>
         <a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
         {% else %}
         <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
@@ -35,6 +40,37 @@
         <p>Veuillez vous connecter ou bien vous enregistrer</p>
         {% endif %}
     </header>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var main = new Splide('#main-carousel', {
+                type: 'fade',
+                rewind: true,
+                pagination: false,
+                arrows: true,
+            });
+
+            var thumbnails = new Splide('#thumbnail-carousel', {
+                fixedWidth: 100,
+                fixedHeight: 60,
+                gap: 10,
+                rewind: true,
+                pagination: true,
+                isNavigation: true,
+                arrows: false,
+                breakpoints: {
+                    600: {
+                        fixedWidth: 60,
+                        fixedHeight: 44,
+                    },
+                },
+            });
+
+            main.sync(thumbnails);
+            main.mount();
+            thumbnails.mount();
+        }); 
+    </script>
     {% block body %}{% endblock %}
 </body>
 

@@ -6,23 +6,38 @@
 
 <h2 class="h2_200_p">{{ recipe.name }}</h2>
 
+{# <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas encore de photo">
+#}
+
 <div class="detail_recipe_container">
-    <figure class="detail_image_container">
-        {% if recipe.photos|length > 0 %}
 
-        {# affiche la première photo de la collection photos de recipe #}
-        {# <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="{{ recipe.photos|first.alt }}"> #}
+    <div class="carousel">
+        <section id="main-carousel" class="splide" aria-label="Beautiful Images">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    {% for photo in recipe.photos %}
+                    <li class="splide__slide">
+                        <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
 
-        {% for photo in recipe.photos %}
-            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="{{ photo.alt }}">
-        {% endfor %}
+        <section id="thumbnail-carousel" class="splide"
+            aria-label="The carousel with thumbnails. Selecting a thumbnail will change the Beautiful Gallery carousel.">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    {% for photo in recipe.photos %}
+                    <li class="splide__slide">
+                        <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    </div>
 
-        {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
-        {% else %}
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
-            alt="Pas encore de photo">
-        {% endif %}
-    </figure>
     <div class="detail_info_container">
         <p>Par {{ recipe.user.pseudo }}</p>
         <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
@@ -53,6 +68,7 @@
         </div>
         {% endif %}
     </div>
+</div>
 </div>
 <div class="detail_comments_container">
     {% for comment in recipe.comments %}
