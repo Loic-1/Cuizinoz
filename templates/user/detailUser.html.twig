@@ -41,7 +41,7 @@
 
 {% if app.user %}
 
-<section class="detail_user_actions">
+<section class="detail_user_actions_container">
     {% if app.user != user %}
 
     <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}">
