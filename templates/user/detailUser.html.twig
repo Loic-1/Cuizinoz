@@ -3,19 +3,88 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<h1>TODO: Popup des followers et des followees</h1>
 
-<h2>{{ user.pseudo }}</h2>
+<h2 class="h2_200_p">{{ user.pseudo }}</h2>
+
+<section class="detail_user_photo_info_container">
+    <figure class="detail_user_photo_container">
+        {% if user.profilePicture %}
+
+        <img src="{{ user.profilePicture }}" alt="" class="detail_user_photo">
+
+        {% else %}
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt=""
+            class="detail_user_photo">
+        {% endif %}
+    </figure>
+    <div class="detail_user_info_container">
+        <h3>Biographie</h3>
+        <p>{{ user.biography }}</p>
+    </div>
+</section>
+
+<h2 class="h2_200_p">Infos supplémentaires</h2>
+
+<section class="detail_user_more_info_container">
+    <p>Adresse mail: {{ user.email }}</p>
+    <p>Date d'inscription: {{ user.registrationDateFr }}</p>
+    {% if user.roles|length > 0 %}
+
+    <p>Rôles:
+        {% for role in user.roles %}
+        {{ role }}
+        {% endfor %}
+    </p>
+    {% endif %}
+</section>
+
+{% if app.user %}
+
+<section class="detail_user_actions">
+    {% if app.user != user %}
+
+    <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}">
+        <button>Suivre</button>
+    </a>
+
+    {% else %}
+
+    <a href="#">
+        <button>Modifier le profil</button>
+    </a>
+    {% endif %}
+</section>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>TODO: Popup des followers et des followees</h1>
 
 <strong>{{ followees|length }}</strong> personnes suivies, <strong>{{ followers|length }}</strong> followers<br>
 
 <h3>Followers: </h3>
 
 {% if followers|length > 0 %}
-    
+
 {% for follower in followers %}
 
-    {{ follower.pseudo }} <br>
+{{ follower.pseudo }} <br>
 {% endfor %}
 {% else %}
 
@@ -24,7 +93,7 @@
 
 <h3>Personnes suivies: </h3>
 
-{% if followees|length > 0 %}    
+{% if followees|length > 0 %}
 
 {% for followee in followees %}
 
@@ -36,9 +105,13 @@
 {% endif %}
 
 <h2>Liste utilisateurs(pour tester c'est temporaire)</h2>
+{% if app.user %}
 
 {% for user in users %}
-{{ user.pseudo }} <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a><a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-minus"></i></a><br>
+<a href="{{ path('detail_user', { user: user.id }) }}">{{ user.pseudo }}</a>
+<a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a>
+<a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-minus"></i></a><br>
 {% endfor %}
+{% endif %}
 
 {% endblock %}

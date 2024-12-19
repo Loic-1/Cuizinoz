@@ -246,6 +246,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->registrationDate;
     }
 
+    public function getRegistrationDateFr(): ?string
+    {
+        return $this->registrationDate->format("d/m/Y à H:i");
+    }
+
     public function setRegistrationDate(\DateTimeInterface $registrationDate): static
     {
         $this->registrationDate = $registrationDate;

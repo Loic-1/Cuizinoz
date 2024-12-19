@@ -81,12 +81,12 @@ body {
     font-size: 25px;
     color: var(--button-color);
 
-   
+
 }
 
 .recipe_actions a {
-        color: var(--button-color);
-    }
+    color: var(--button-color);
+}
 
 .recipe_addRecipeForm_container {
     display: flex;
@@ -202,4 +202,46 @@ body {
     gap: 10px;
 
     font-size: var(--action-font-size);
+}
+
+/* USER DETAIL */
+
+.detail_user_photo_info_container {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+
+    padding: 100px 200px;
+}
+
+.detail_user_photo_container {
+    overflow: hidden;
+
+    width: 200px;
+    height: 200px;
+
+    border-radius: 100%;
+}
+
+.detail_user_photo {
+    height: 100%;
+    width: auto;
+
+    object-fit: cover;
+}
+
+.detail_user_info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    width: 100%;
+}
+
+.detail_user_more_info_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding: 100px 200px;
 }

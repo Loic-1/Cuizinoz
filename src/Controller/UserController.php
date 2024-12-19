@@ -24,18 +24,23 @@ class UserController extends AbstractController
     }
 
     #[Route('/detail/{user}', name: 'detail_user')]
-    public function detailUser(User $user, UserRepository $userRepository): Response
+    public function detailUser(User $user = null, UserRepository $userRepository): Response
     {
-        $followers = $user->getFollowers();
-        $followees = $user->getFollowees();
-        $users = $userRepository->findAll();
+        if ($user) {
 
-        return $this->render('user/detailUser.html.twig', [
-            'user' => $user,
-            'followers' => $followers,
-            'followees' => $followees,
-            'users' => $users
-        ]);
+            $followers = $user->getFollowers();
+            $followees = $user->getFollowees();
+            $users = $userRepository->findAll();
+
+            return $this->render('user/detailUser.html.twig', [
+                'user' => $user,
+                'followers' => $followers,
+                'followees' => $followees,
+                'users' => $users
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     #[Route('/follow/{follower}/{followee}', name: 'follow_user')]
