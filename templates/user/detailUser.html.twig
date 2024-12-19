@@ -50,8 +50,10 @@
 
     {% else %}
 
-    <a href="#">
-        <button>Modifier le profil</button>
+    <a href="{{ path('edit_user', { user: user.id }) }}">
+        {# <button> #}
+            Modifier le profil
+        {# </button> #}
     </a>
     {% endif %}
 </section>
@@ -110,7 +112,8 @@
 {% for user in users %}
 <a href="{{ path('detail_user', { user: user.id }) }}">{{ user.pseudo }}</a>
 <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a>
-<a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-minus"></i></a><br>
+<a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i
+        class="fa-solid fa-minus"></i></a><br>
 {% endfor %}
 {% endif %}
 
