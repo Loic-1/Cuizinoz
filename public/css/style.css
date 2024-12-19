@@ -16,6 +16,11 @@
 
     --action-font-size: 25px;
 }
+::selection {
+    background-color: var(--button-color);
+    color: var(--tertiary-font-color);
+    padding: 10px;
+}
 
 .h2_200_p {
     padding: 50px 200px 0px;
