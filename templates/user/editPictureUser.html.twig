@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<div class="h2_200_p">
+    {{ form_errors(editPictureUserForm) }}
+
+    {{ form_start(editPictureUserForm) }}
+
+    {{ form_row(editPictureUserForm.profilePicture) }}
+    {# {{ form_row(editPictureUserForm.biography) }}s #}
+
+    <button type="submit">Modifier profil</button>
+
+    {{ form_end(editPictureUserForm) }}
+</div>
+
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserPictureType;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
@@ -118,6 +119,37 @@ class UserController extends AbstractController
                 'user' => $user->getId(),
                 'editUserForm' => $form
             ]);
+        } else {
+
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
+    #[Route('/editProfilePicture/{user}', name: 'edit_picture_user')]
+    public function editPictureUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
+    {
+
+        if ($user) {
+
+            $form = $this->createForm(UserPictureType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $user = $form->getData();
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('detail_user', [
+                    'user' => $user->getId()
+                ]);
+            }
+            return $this->render('user/editPictureUser.html.twig', [
+                'editPictureUserForm' => $form, 
+                'user' => $user
+            ]);
+
         } else {
 
             return $this->redirectToRoute('app_home');

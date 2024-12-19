@@ -55,6 +55,11 @@
             Modifier le profil
         {# </button> #}
     </a>
+    <a href="{{ path('edit_picture_user', { user: user.id }) }}">
+        {# <button> #}
+            Modifier la photo de profil
+        {# </button> #}
+    </a>
     {% endif %}
 </section>
 {% endif %}
