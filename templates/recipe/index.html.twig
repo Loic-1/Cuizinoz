@@ -18,7 +18,7 @@
 
             {# affiche la première photo de la collection photos de recipe #}
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="{{ recipe.photos|first.alt }}">{# {{ recipe.photos|first.url }} #}
+                <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.url) }}" alt="{{ recipe.photos|first.alt }}">{# {{ recipe.photos|first.url }} #}
             </a>
 
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}

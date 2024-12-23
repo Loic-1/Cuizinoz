@@ -24,8 +24,8 @@ class Photo
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $alt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -68,15 +68,15 @@ class Photo
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+    // public function getName(): ?string
+    // {
+    //     return $this->name;
+    // }
 
-    public function setName(string $name): static
-    {
-        $this->name = $name;
+    // public function setName(string $name): static
+    // {
+    //     $this->name = $name;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }
