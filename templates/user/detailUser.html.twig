@@ -91,7 +91,7 @@
 
 {% for follower in followers %}
 
-{{ follower.pseudo }} <br>
+<a href="{{ path('detail_user', { user: follower.id }) }}">{{ follower.pseudo }}</a>
 {% endfor %}
 {% else %}
 
@@ -104,11 +104,21 @@
 
 {% for followee in followees %}
 
-{{ followee.pseudo }} <br>
+<a href="{{ path('detail_user', { user: followee.id }) }}">{{ followee.pseudo }}</a>
+{% if app.user == user %}
+    
+<a href="{{ path('unfollow_user', { follower: app.user.id, followee: followee.id }) }}">
+    <i class="fa-solid fa-minus"></i>
+</a>
+<br>
+{% else %}
+
+<br>
+{% endif %}
 {% endfor %}
 {% else %}
 
-<p>Vous ne suivez personne</p>
+<p>Ne suit personne</p>
 {% endif %}
 
 <h2>Liste utilisateurs(pour tester c'est temporaire)</h2>
