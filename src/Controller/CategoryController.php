@@ -10,16 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CategoryController extends AbstractController
 {
-    #[Route('/category', name: 'app_category')]
-    public function index(): Response
-    {
-        return $this->render('category/index.html.twig', [
-            'controller_name' => 'CategoryController',
-        ]);
-    }
-
     #[Route('/category/{category}', name: 'recipe_category')]
-    public function listRecipesCategory(Category $category, CategoryRepository $categoryRepository): Response
+    public function index(Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($category) {
 
