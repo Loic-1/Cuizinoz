@@ -16,6 +16,22 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findRecipesByCategoryId($category_id)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('r')
+            ->from('App\Entity\Recipe', 'r')
+            ->where('r.category = :category_id')
+            ->setParameter('category_id', $category_id)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */

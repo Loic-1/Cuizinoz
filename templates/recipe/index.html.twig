@@ -34,7 +34,9 @@
             <p>{{ recipe.name }}</p>
             <p>Une recette de {{ recipe.user.pseudo }}</p>
             <p>Note: {{ recipe.note }} (temp)</p>
-            <p>{{ recipe.category.name }}</p>
+            <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
+                {{ recipe.category.name }}
+            </a>
             {% if app.user %}
 
             <div class="recipe_actions">
