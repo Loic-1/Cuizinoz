@@ -4,6 +4,22 @@
 
 {% block body %}
 
+<div class="addRecipeForm">
+    {{ form_errors(addRecipeForm) }}
+    {{ form_start(addRecipeForm) }}
 
+    {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType définit déjà tous les attributs
+    nécessaires,
+    mais on peut mettre en forme le form avec l'ordre des lignes #}
+    {{ form_row(addRecipeForm.name) }}
+    {{ form_row(addRecipeForm.preparationTime) }}
+    {{ form_row(addRecipeForm.instructions) }}
+    {{ form_row(addRecipeForm.category) }}
+    {# {{ form_row(addRecipeForm.images) }} #}
+
+    <button type="submit">Publier</button>
+
+    {{ form_end(addRecipeForm) }}
+</div>
 
 {% endblock %}
