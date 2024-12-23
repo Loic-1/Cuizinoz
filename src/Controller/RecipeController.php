@@ -64,6 +64,46 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    #[Route('/createRecipe', name: 'create_recipe')]
+    public function createRecipe(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    {
+        $user = $this->getUser();
+        $recipe = new Recipe();
+
+        $form = $this->createForm(RecipeType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // On récupère les images
+            $images = $form->get('images')->getData();
+            foreach ($images as $image) {
+                // On définit le dossier de destination
+                $folder = 'gallery';
+
+                // On appelle le service d'ajout
+                $fichier = $pictureService->add($image, $folder, 300, 300);
+                
+                $photo = new Photo();
+                // $photo->setName($fichier);
+                $recipe->addPhoto($photo);
+            }
+
+            $recipe = $form->getData();
+            $recipe->setUser($user);
+
+            $entityManager->persist($recipe);
+            $entityManager->flush();
+
+            // recharge la liste des recettes pour que la nouvelle recette s'affiche directement
+            return $this->redirectToRoute("app_recipe");
+        }
+
+        return $this->render('recipe/createRecipe.html.twig', [
+            'addRecipeForm' => $form
+        ]);
+    }
+
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
     public function detailRecipe(Recipe $recipe, Request $request, EntityManagerInterface $entityManager): Response
     {
