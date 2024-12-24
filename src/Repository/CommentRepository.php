@@ -28,8 +28,8 @@ class CommentRepository extends ServiceEntityRepository
             ->setMaxResults($limit)
         ;
 
-        $result = $qb->getQuery();
-        return $result->getResult();
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
 
     //    /**

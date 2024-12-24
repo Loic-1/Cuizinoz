@@ -64,6 +64,23 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findNewBestRecipes(int $limit)
+    {
+
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('r')
+            ->from('App\Entity\Recipe', 'r')
+            ->orderBy('r.note', 'DESC')
+            // ->orderBy('count(r.comments)', 'DESC')
+            ->setMaxResults($limit)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */

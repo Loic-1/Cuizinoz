@@ -15,12 +15,14 @@ class HomeController extends AbstractController
     {
         // recettes à la une (trié en fonction de la note et des commentaires, définir un max(par défaut: 6))
 
+        $recipes = $recipeRepository->findNewBestRecipes(6);
+
         // derniers commentaires (définir un max(par défaut: 6))
 
         $comments = $commentRepository->findLastComments(6);
 
         return $this->render('home/index.html.twig', [
-            // 'recipes' => $recipes,
+            'recipes' => $recipes,
             'comments' => $comments
         ]);
     }
