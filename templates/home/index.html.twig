@@ -4,13 +4,10 @@
 
 {% block body %}
 
-{% if app.user %}
-    
-<h1>Hello {{ app.user.pseudo }}!</h1>
+{{ dump(comments) }}
 
-{% else %}
-
-Hello!
-{% endif %}
+{% for comment in comments %}
+    {{ comment.title }}
+{% endfor %}
 
 {% endblock %}
