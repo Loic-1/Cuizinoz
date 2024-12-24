@@ -2,19 +2,99 @@
 
 {% block title %}Cuizinoz{% endblock %}
 
+{# HEADER #}
+
 {% block body %}
 
-{{ dump(comments) }}
+<section class="home_section_1">
 
-{% for comment in comments %}
-    {{ comment.title }} <br>
-{% endfor %}
+    <figure class="home_section_1_image_container">
+        <img src="#" alt="">
+    </figure>
+    <div class="home_section_1_overlay">
+        {# Icône chapeau #}
+        <h3>Bienvenue sur Cuizinoz</h3>
+        <p>l'application où on ose cuisiner !</p>
+    </div>
+</section>
+
+<h2>Recettes à la une</h2>
+
+<section class="home_section_2">
+    <div class="recipe_container">
+
+        {% for recipe in recipes %}
+
+        <div class="recipe_card">
+
+            <figure class="recipe_image_container">
+
+                {% if recipe.photos|length > 0 %}
+
+                {# affiche la première photo de la collection photos de recipe #}
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+                        alt="{{ recipe.photos|first.alt }}">{# {{ recipe.photos|first.url }} #}
+                </a>
+
+                {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+                {% else %}
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                        alt="Pas encore de photo">
+                </a>
+                {% endif %}
+
+            </figure>
+            <div class="recipe_infos_container">
+                <p>{{ recipe.name }}</p>
+                <p>Une recette de {{ recipe.user.pseudo }}</p>
+                <p>Note: {{ recipe.note }} (temp)</p>
+                <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
+                    {{ recipe.category.name }}
+                </a>
+                {% if app.user %}
+
+                <div class="recipe_actions">
+                    <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                    {# <i class="fa-solid fa-plus"></i> #}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
+</section>
+
+<section class="home_section_3">
+    <p class="home_section_3_citation">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat sed libero ipsum suscipit maiores, saepe
+        perferendis ut blanditiis laboriosam animi. Eos corrupti ex asperiores molestiae provident culpa ipsum placeat
+        dolore.
+    </p>
+</section>
+
+<h2>La communauté</h2>
+
+<section class="home_section_4">
+    <div class="home_section_4_comment_container">
+
+        {% for comment in comments %}
 
 
-{{ dump(recipes) }}
+        <div class="home_section_4_comment_card">
+            <h4>{{ comment.title }}</h4>
+            <p>Dans {{ comment.recipe.name }} à {{ comment.creationDateFr }}</p>
+            <p>{{ comment.content }}</p>
+            Par {{ comment.user.pseudo }}
+        </div>
 
-{% for recipe in recipes %}
-    {{ recipe.name ~ recipe.note }} <br>
-{% endfor %}
+        {% endfor %}
+
+    </div>
+</section>
 
 {% endblock %}
