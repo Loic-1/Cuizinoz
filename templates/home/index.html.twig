@@ -6,7 +6,7 @@
 
 {% block body %}
 
-<section class="home_section_1">
+{# <section class="home_section_1">
 
     <figure class="home_section_1_image_container">
         <img src="#" alt="">
@@ -100,6 +100,39 @@
 
 <section class="home_section5">
 
-</section>
+</section> #}
+
+<h2>Featured Recipes</h2>
+            {% if recipes is not empty %}
+                <ul>
+                    {% for recipe in recipes %}
+                        <li>
+                            <h3>{{ recipe.title }}</h3>
+                            <p>{{ recipe.description|slice(0, 100) ~ '...' }}</p>
+                            <p><strong>Rating:</strong> {{ recipe.rating }} / 5</p>
+                            <a href="{{ path('recipe_show', { id: recipe.id }) }}">View Recipe</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No featured recipes available at the moment.</p>
+            {% endif %}
+        </section>
+
+        <section class="latest-comments">
+            <h2>Latest Comments</h2>
+            {% if comments is not empty %}
+                <ul>
+                    {% for comment in comments %}
+                        <li>
+                            <p><strong>{{ comment.authorName }}</strong> said:</p>
+                            <blockquote>{{ comment.content|slice(0, 100) ~ '...' }}</blockquote>
+                            <p><em>On {{ comment.recipe.title }}</em></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No comments available at the moment.</p>
+            {% endif %}
 
 {% endblock %}
