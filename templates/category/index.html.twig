@@ -2,10 +2,55 @@
 
 {% block title %}{{ category.name }}{% endblock %}
 
-{% block body %}
+{# {% block body %}
 {{ dump(recipes) }}
 {% for recipe in recipes %}
 {{ recipe.name }}
-{% endfor %}
+{% endfor %} #}
+
+<div class="recipe_container">
+
+    {% for recipe in recipes %}
+
+    <div class="recipe_card">
+
+        <figure class="recipe_image_container">
+
+            {% if recipe.photos|length > 0 %}
+
+            {# affiche la première photo de la collection photos de recipe #}
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="{{ recipe.photos|first.alt }}">{# {{ recipe.photos|first.url }} #}
+            </a>
+
+            {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
+            {% else %}
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                    alt="Pas encore de photo">
+            </a>
+            {% endif %}
+
+        </figure>
+        <div class="recipe_infos_container">
+            <p>{{ recipe.name }}</p>
+            <p>Une recette de {{ recipe.user.pseudo }}</p>
+            <p>Note: {{ recipe.note }} (temp)</p>
+            <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
+                {{ recipe.category.name }}
+            </a>
+            {% if app.user %}
+
+            <div class="recipe_actions">
+                <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+                {# <i class="fa-solid fa-plus"></i> #}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 {% endblock %}
