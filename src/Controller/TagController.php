@@ -16,7 +16,8 @@ class TagController extends AbstractController
             $compilations = $tag->getCompilations();
 
             return $this->render('tag/index.html.twig', [
-                'compilations' => $compilations
+                'compilations' => $compilations,
+                'tag' => $tag
             ]);
         } else {
             return $this->redirectToRoute('app_home');
