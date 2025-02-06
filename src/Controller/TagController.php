@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Tag;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TagController extends AbstractController
 {
-    #[Route('/tag', name: 'app_tag')]
-    public function index(): Response
+    #[Route('/tag/{tag}', name: 'app_tag')]
+    public function index(Tag $tag = null): Response
     {
-        return $this->render('tag/index.html.twig', [
-            'controller_name' => 'TagController',
-        ]);
+        if ($tag) {
+            $compilations = $tag->getCompilations();
+
+            return $this->render('tag/index.html.twig', [
+                'compilations' => $compilations
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 }
