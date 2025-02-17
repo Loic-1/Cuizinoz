@@ -2,11 +2,13 @@
 
 {% block title %}{{ category.name }}{% endblock %}
 
-{# {% block body %}
-{{ dump(recipes) }}
+{% block body %}
+{# {{ dump(recipes) }}
 {% for recipe in recipes %}
 {{ recipe.name }}
 {% endfor %} #}
+
+<h2 class="h2_200_p">{{category.name ~ "s"}}</h2>
 
 <div class="recipe_container">
 

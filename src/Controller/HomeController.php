@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,7 @@ class HomeController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_home')]
-    public function index(RecipeRepository $recipeRepository, CommentRepository $commentRepository): Response
+    public function index(RecipeRepository $recipeRepository, CommentRepository $commentRepository, CategoryRepository $categoryRepository): Response
     {
         // recettes à la une (trié en fonction de la note et des commentaires, définir un max(par défaut: 6))
 
@@ -22,9 +23,14 @@ class HomeController extends AbstractController
 
         $comments = $commentRepository->findLastComments(6);
 
+        // catégories (pas de limite car peu de catégories)
+
+        $categories = $categoryRepository->findAll();
+
         return $this->render('home/index.html.twig', [
             'recipes' => $recipes,
-            'comments' => $comments
+            'comments' => $comments,
+            'categories' => $categories,
         ]);
     }
 }
