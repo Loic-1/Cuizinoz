@@ -1,79 +1,95 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon"
-        {# href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"> #}
-        href="{{ asset('assets/Logo1.png') }}">
-    {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="{{
+      asset("assets/Logo1.png")
+    }}"> {% block stylesheets %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+    />
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    {% endblock %}
-
-    {% block javascripts %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    {% endblock %} {% block javascripts %}
     <script src="{{ asset('js/script.js') }}"></script>
-    {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
-</head>
+    {% block importmap %}{{
+      importmap("app")
+    }}{% endblock %} {% endblock %}
+  </head>
 
-<body>
+  <body>
     <header>
-        {% if app.user %}
-        <a href="{{ path('app_home') }}"><img src="{{ asset('assets/Logo1.png') }}" alt=""></a>
-        <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="{{ path('app_compilation', { user: app.user.id }) }}"><i class="fa-regular fa-floppy-disk"></i>Vos
-            collections et sauvegardées</a> | else | <a href="{{ path('app_favorite', {user: app.user.id}) }}"><i
-                class="fa-regular fa-bookmark"></i> Vos favoris</a>
-        <a href="{{ path('list_compilation') }}"><i class="fa-regular fa-folder"></i>Liste des collections du site</a>
-        <a href="{{ path('detail_user', { user: app.user.id }) }}"><i class="fa-regular fa-user"></i>
-            {{app.user.pseudo}}</a>
-        <a href="{{ path('app_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a>
-        {% else %}
-        <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
-        <a href="{{ path('app_login') }}">Se connecter</a>
-        <a href="{{ path('app_register') }}">S'enregistrer</a>
-        <p>Veuillez vous connecter ou bien vous enregistrer</p>
-        {% endif %}
+      {% if app.user %}
+      <a href="{{ path('app_home') }}"
+        ><img src="{{ asset('assets/Logo1.png') }}" alt=""
+      /></a>
+      <a href="{{ path('app_compilation', { user: app.user.id }) }}"
+        ><i class="fa-regular fa-floppy-disk"></i>Vos collections et
+        sauvegardées</a
+      >
+      |
+      <a href="{{ path('app_favorite', { user: app.user.id }) }}"
+        ><i class="fa-regular fa-bookmark"></i> Vos favoris</a
+      >
+      |
+      <a href="{{ path('list_compilation') }}"
+        ><i class="fa-regular fa-folder"></i>Liste des collections du site</a
+      >
+      |
+      <a href="{{ path('detail_user', { user: app.user.id }) }}"
+        ><i class="fa-regular fa-user"></i> {{ app.user.pseudo }}</a
+      >
+      <a href="{{ path('app_logout') }}"
+        ><i class="fa-solid fa-right-from-bracket"></i
+      ></a>
+      {% else %}
+      <a href="{{ path('app_recipe') }}">Liste des recettes (tmp)</a>
+      <a href="{{ path('app_login') }}">Se connecter</a>
+      <a href="{{ path('app_register') }}">S'enregistrer</a>
+      <p>Veuillez vous connecter ou bien vous enregistrer</p>
+      {% endif %}
     </header>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var main = new Splide('#main-carousel', {
-                type: 'fade',
-                rewind: true,
-                pagination: false,
-                arrows: true,
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        var main = new Splide("#main-carousel", {
+          type: "fade",
+          rewind: true,
+          pagination: false,
+          arrows: true,
+        });
 
-            var thumbnails = new Splide('#thumbnail-carousel', {
-                fixedWidth: 100,
-                fixedHeight: 60,
-                gap: 10,
-                rewind: true,
-                pagination: true,
-                isNavigation: true,
-                arrows: false,
-                breakpoints: {
-                    600: {
-                        fixedWidth: 60,
-                        fixedHeight: 44,
-                    },
-                },
-            });
+        var thumbnails = new Splide("#thumbnail-carousel", {
+          fixedWidth: 100,
+          fixedHeight: 60,
+          gap: 10,
+          rewind: true,
+          pagination: true,
+          isNavigation: true,
+          arrows: false,
+          breakpoints: {
+            600: {
+              fixedWidth: 60,
+              fixedHeight: 44,
+            },
+          },
+        });
 
-            main.sync(thumbnails);
-            main.mount();
-            thumbnails.mount();
-        }); 
+        main.sync(thumbnails);
+        main.mount();
+        thumbnails.mount();
+      });
     </script>
     {% block body %}{% endblock %}
-</body>
-
+  </body>
 </html>
