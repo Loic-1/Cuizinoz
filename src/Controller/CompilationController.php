@@ -158,45 +158,6 @@ class CompilationController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/compilation/edit/{compilation}', name: 'edit_compilation')]
-    public function editCompilation(Compilation $compilation = null, Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
-    {
-        if ($compilation) {
-
-            // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
-            $form = $this->createForm(CompilationType::class, $compilation);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                // on récupère les entrées dans les champs du form
-                $recipe = $form->getData();
-
-                // on prépare le push vers la BDD
-                $entityManager->persist($recipe);
-                // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
-                $entityManager->flush();
-
-                return $this->redirectToRoute("detail_compilation", [
-                    "compilation" => $compilation->getId()
-                ]);
-            }
-
-            $recipesNotAdded = $recipeRepository->findNotAdded($compilation->getId());
-            $recipesAdded = $recipeRepository->findAdded($compilation->getId());
-
-            return $this->render('compilation/editCompilation.html.twig', [
-                'compilation' => $compilation,
-                'editCompilationForm' => $form,
-                'recipesNotAdded' => $recipesNotAdded,
-                'recipesAdded' => $recipesAdded
-            ]);
-        } else {
-            return $this->redirectToRoute("app_home");
-        }
-    }
-
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]
     public function addRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
     {

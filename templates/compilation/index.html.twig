@@ -1,6 +1,26 @@
 {% extends 'base.html.twig' %} {% block title %}Vos collections{% endblock %} {%
 block body %}
 
+<h2 class="h2_200_p">Vos collections créées</h2>
+
+<div class="compilation_container">
+  {% for compilation in user.compilations %}
+  <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+    <div class="compilation_card">
+      <p>{{ compilation.name }}</p>
+      <strong> {{ compilation.recipes | length }} recettes</strong>
+      <p>NbTags: {{ compilation.tags | length }}</p>
+    </div>
+  </a>
+  {% endfor %}
+
+  <a href="{{ path('create_compilation', { user: user.id }) }}">
+    <div class="compilation_card">
+      <i class="fa-solid fa-plus"></i>
+    </div>
+  </a>
+</div>
+
 <h2 class="h2_200_p">Vos collections sauvegardées</h2>
 
 <div class="compilation_container">
@@ -13,17 +33,8 @@ block body %}
     <div class="compilation_card">
       <p>{{ save.compilation.name }}</p>
       <strong> {{ save.compilation.recipes | length }} recettes</strong>
-      <p>NbTags: {{ save.compilation.tags|length }}</p>
+      <p>NbTags: {{ save.compilation.tags | length }}</p>
       <div class="compilation_actions">
-        {% if app.user == save.compilation.user %}
-        <a
-          href="{{
-            path('edit_compilation', { compilation: save.compilation.id })
-          }}"
-        >
-          <i class="fa-solid fa-pen-nib"></i>
-        </a>
-        {% endif %}
         <a
           href="{{
             path('remove_compilation', { user: user.id, save: save.id })
@@ -35,43 +46,6 @@ block body %}
     </div>
   </a>
   {% endfor %}
-</div>
-
-<h2 class="h2_200_p">Vos collections créées</h2>
-
-<div class="compilation_container">
-  {% for compilation in user.compilations %}
-  <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
-    <div class="compilation_card">
-      <p>{{ compilation.name }}</p>
-      <strong> {{ compilation.recipes | length }} recettes</strong>
-      <p>NbTags: {{ compilation.tags|length }}</p>
-      <div class="compilation_actions">
-        <a
-          href="{{ path('edit_compilation', { compilation: compilation.id }) }}"
-        >
-          <i class="fa-solid fa-pen-nib"></i>
-        </a>
-        <a
-          href="{{
-            path('add_compilation', {
-              compilation: compilation.id,
-              user: app.user.id
-            })
-          }}"
-        >
-          <i class="fa-regular fa-floppy-disk"></i>
-        </a>
-      </div>
-    </div>
-  </a>
-  {% endfor %}
-
-  <a href="{{ path('create_compilation', { user: user.id }) }}">
-    <div class="compilation_card">
-      <i class="fa-solid fa-plus"></i>
-    </div>
-  </a>
 </div>
 
 {% endblock %}
