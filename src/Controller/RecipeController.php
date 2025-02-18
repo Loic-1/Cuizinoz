@@ -43,7 +43,7 @@ class RecipeController extends AbstractController
 
                 // On appelle le service d'ajout
                 $fichier = $pictureService->add($image, $folder, 300, 300);
-                
+
                 $photo = new Photo();
                 $photo->setName($fichier);
                 $recipe->addPhoto($photo);
@@ -85,7 +85,7 @@ class RecipeController extends AbstractController
 
                 // On appelle le service d'ajout
                 $fichier = $pictureService->add($image, $folder, 300, 300);
-                
+
                 $photo = new Photo();
                 // $photo->setName($fichier);
                 $recipe->addPhoto($photo);
@@ -108,32 +108,36 @@ class RecipeController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
-    public function detailRecipe(Recipe $recipe, Request $request, EntityManagerInterface $entityManager): Response
+    public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $comment = new Comment();
+        if ($recipe) {
+            $comment = new Comment();
 
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
+            $commentForm = $this->createForm(CommentType::class, $comment);
+            $commentForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
 
-            $comment = $form->getData();
-            $comment->setCreationDate(new DateTime());
-            $comment->setUser($this->getUser());
-            $comment->setRecipe($recipe);
+                $comment = $commentForm->getData();
+                $comment->setCreationDate(new DateTime());
+                $comment->setUser($this->getUser());
+                $comment->setRecipe($recipe);
 
-            $entityManager->persist($comment);
-            $entityManager->flush();
+                $entityManager->persist($comment);
+                $entityManager->flush();
 
-            return $this->redirectToRoute("detail_recipe", [
-                "recipe" => $recipe->getId()
+                return $this->redirectToRoute("detail_recipe", [
+                    "recipe" => $recipe->getId()
+                ]);
+            }
+
+            return $this->render('recipe/detailRecipe.html.twig', [
+                'recipe' => $recipe,
+                'addCommentForm' => $commentForm
             ]);
+        } else {
+            return $this->redirectToRoute('app_home');
         }
-
-        return $this->render('recipe/detailRecipe.html.twig', [
-            'recipe' => $recipe,
-            'addCommentForm' => $form
-        ]);
     }
 
     #[IsGranted('ROLE_USER')]

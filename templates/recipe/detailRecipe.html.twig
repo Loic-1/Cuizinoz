@@ -65,6 +65,14 @@
                 <i class="fa-solid fa-pen-nib"></i>
             </a>
             {% endif %}
+
+            <div>
+                {% for compilation in app.user.compilations %}
+                    {{ compilation.name }}
+                    <a href="">Ajouter</a>
+                {% endfor %}
+            </div>
+
         </div>
         {% endif %}
     </div>
