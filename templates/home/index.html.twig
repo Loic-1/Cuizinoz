@@ -3,6 +3,7 @@
 
 <section class="home_section_1">
   <figure class="home_section_1_image_container">
+    {# <img src="{{ asset('assets/chicken.jpg') }}" alt="" /> #}
     <img src="#" alt="" />
   </figure>
   <div class="home_section_1_overlay">
@@ -19,11 +20,14 @@
 
 <section class="home_section_2">
   <div class="recipe_container_home">
+
     {% for recipe in recipes %}
 
     <div class="recipe_card">
       <figure class="recipe_image_container">
+
         {% if recipe.photos|length > 0 %} {# affiche la première photo de la
+
         collection photos de recipe #}
         <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
           <img
@@ -34,13 +38,16 @@
 
         {# recipe.photos == null -> pas de galerie de photos pour cette recette
         #} {% else %}
+
         <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
             alt="Pas encore de photo"
           />
         </a>
+
         {% endif %}
+
       </figure>
       <div class="recipe_infos_container">
         <p>{{ recipe.name }}</p>
@@ -51,10 +58,14 @@
           {{ recipe.category.name }}
         </a>
         <p>Note: {{ recipe.note }} (temp)</p>
+
         {% if app.user %} {% endif %}
+
       </div>
     </div>
+
     {% endfor %}
+
   </div>
   <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
 </section>
@@ -71,7 +82,8 @@
 
 <section class="home_section_4">
   <div class="home_section_4_comment_container">
-    {% for comment in comments %}
+
+    {% if comments|length > 0 %} {% for comment in comments %}
 
     <div class="home_section_4_comment_card">
       <h4>{{ comment.title }}</h4>
@@ -80,14 +92,21 @@
       Par {{ comment.user.pseudo }}
     </div>
 
-    {% endfor %}
+    {% endfor %} {% else %}
+
+    <h3>Pas de commentaires</h3>
+
+    {% endif %}
+
   </div>
 </section>
 
 <h2>Catégories</h2>
 
 <section class="home_section5">
-  {% for category in categories %}
+
+  {% if categories|length > 0 %} {% for category in categories %}
+
   <figure class="recipe_image_container">
     <a href="{{ path('recipe_category', { category: category.id }) }}">
       <img src="{{ category.photo }}" alt="" />
@@ -96,7 +115,13 @@
   <p>
     {{ category.name }}
   </p>
-  {% endfor %}
+
+  {% endfor %} {% else %}
+
+  <h3>Pas de catégories</h3>
+
+  {% endif %}
+
 </section>
 
 {% endblock %}
