@@ -8,7 +8,6 @@ use App\Entity\Recipe;
 use App\Entity\Save;
 use App\Form\CompilationType;
 use App\Repository\CompilationRepository;
-use App\Repository\RecipeRepository;
 use App\Repository\SaveRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CompilationController extends AbstractController
 {
-    // liste toutes les compilations du site
+    // Renvoie toutes les compilations
     #[Route('/compilations', name: 'list_compilation')]
     public function listCompilations(CompilationRepository $compilationRepository): Response
     {
@@ -32,61 +31,52 @@ class CompilationController extends AbstractController
         ]);
     }
 
-    // la vue permettra d'afficher les compilations sauvegardées et celles créées
+    // Renvoie le user spécifié (pour afficher ses compilations) (POTENTIELLEMENT À REFAIRE)
     #[Route('/compilation/{user}', name: 'app_compilation')]
-    public function index(User $user = null): Response
+    public function listCompilationsUser(User $user = null): Response
     {
 
-        // si un User avec l'id {user} existe
         if ($user) {
 
             return $this->render('compilation/index.html.twig', [
                 'user' => $user
             ]);
-        }
-        // si non
-        else {
+        } else {
 
             return $this->redirectToRoute("app_home");
         }
     }
 
-    // permet de créer une compilation
+    // Permet de créer une compilation pour le user spécifié
     #[Route('/compilation/edit/addCompilation/{user}', name: 'create_compilation')]
     public function createCompilation(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
     {
 
         if ($user) {
 
-            // on instancie une nouvelle compilation
             $compilation = new Compilation();
 
-            // on définit $form à partir de App\Form\CompilationType
             $form = $this->createForm(CompilationType::class, $compilation);
             // on demande à $form d'inspecter la requête envoyée et d'appeler Symfony\Component\Form\FormInterface::submit si le bouton submit est cliqué
             $form->handleRequest($request);
 
-            // si clic sur bouton submit et toutes les conditions remplies
             if ($form->isSubmitted() && $form->isValid()) {
 
-                // on récupère les données entrées ds les champs
+                // Récupèration des données entrées dans les champs
                 $compilation = $form->getData();
-                // on définit ce qui n'est pas demandé car illogique
                 $compilation->setUser($user);
                 $compilation->setCreationDate(new DateTime());
 
-                // on prépare toutes les requêtes (on peut faire plusieurs persist())
+                // Préparation du push puis push sur BDD
                 $entityManager->persist($compilation);
-                // on envoie tout d'un coup
                 $entityManager->flush();
 
-                // puis on redirige vers la liste des collection/compilations
                 return $this->redirectToRoute('app_compilation', [
                     'user' => $user->getId()
                 ]);
             }
 
-            // on envoie le $form
+            // Envoi du form tant qu'il n'est pas submit pour permettre son affichage
             return $this->render('compilation/addCompilation.html.twig', [
                 'addCompilationForm' => $form
             ]);
@@ -95,24 +85,24 @@ class CompilationController extends AbstractController
         }
     }
 
-    // permet de sauvegarder une compilation
+    // Permet de sauvegarder une compilation pour le user spécifié
     #[Route('/compilation/edit/saveCompilation/{user}/{compilation}', name: 'add_compilation')]
     public function addSave(Compilation $compilation = null, User $user = null, EntityManagerInterface $entityManager, SaveRepository $saveRepository): Response
     {
         if ($compilation && $user) {
 
+            // Si une save associée à cette compilation n'existe pas déjà
             if (count($saveRepository->isUnique($compilation->getId())) == 0) {
 
-                // création d'une nouvelle instance de Save, $save
                 $save = new Save();
-                // on définit les attributs
+
+                // Définition des attributs
                 $save->setUser($user);
                 $save->setCompilation($compilation);
                 $save->setRegisterDate(new DateTime());
 
-                // on prépare le push
+                // Préparation du push puis push sur BDD
                 $entityManager->persist($save);
-                // on push
                 $entityManager->flush();
 
                 return $this->redirectToRoute("list_compilation");
@@ -126,7 +116,7 @@ class CompilationController extends AbstractController
         }
     }
 
-    // permet de sauvegarder une compilation
+    // Permet de retirer une sauvegarde pour le user spécifié
     #[Route('/compilation/edit/removeSave/{user}/{save}', name: 'remove_compilation')]
     public function removeSave(Save $save = null, User $user = null, EntityManagerInterface $entityManager): Response
     {
@@ -145,7 +135,7 @@ class CompilationController extends AbstractController
         }
     }
 
-    // permet d'afficher le détail d'une compilation
+    // Permet d'afficher le détail d'une compilation
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
     public function detailCompilation(Compilation $compilation = null): Response
     {
@@ -159,6 +149,7 @@ class CompilationController extends AbstractController
         }
     }
 
+    // Permet de rajouter une recipe à une compilation
     #[Route('/compilation/edit/addRecipe/{compilation}/{recipe}', name: 'add_recipe_compilation')]
     public function addRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
@@ -177,6 +168,7 @@ class CompilationController extends AbstractController
         }
     }
 
+    // Permet de retirer une recipe d'une compilation
     #[Route('/compilation/edit/removeRecipe/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
     public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {

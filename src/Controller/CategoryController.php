@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CategoryController extends AbstractController
 {
+    // Renvoie une liste des recettes appartenant à la catégorie, ainsi que la catégorie
     #[Route('/category/{category}', name: 'recipe_category')]
     public function index(Category $category = null, CategoryRepository $categoryRepository): Response
     {

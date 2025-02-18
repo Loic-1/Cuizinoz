@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AdminController extends AbstractController
 {
+    // Renvoie tous les utilisateurs 
     #[Route('/admin/users', name: 'app_admin')]
     public function index(UserRepository $userRepository): Response
     {
