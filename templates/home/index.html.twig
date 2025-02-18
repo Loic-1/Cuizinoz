@@ -3,14 +3,22 @@
 
 <section class="home_section_1">
   <figure class="home_section_1_image_container">
-    {# <img src="{{ asset('assets/chicken.jpg') }}" alt="" /> #}
+    {#
+    <img
+      src="{{ asset('assets/chicken.jpg') }}"
+      alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
+    />
+    #}
     <img src="#" alt="" />
   </figure>
   <div class="home_section_1_overlay">
+    {#
     <img
       src="{{ asset('assets/chef.png') }}"
       alt="Toque de cuisinier survolant l'image de couverture"
     />
+    #}
+    <img src="#" alt="" />
     <h3>Bienvenue sur Cuizinoz</h3>
     <p>l'application où on ose cuisiner !</p>
   </div>
@@ -20,14 +28,11 @@
 
 <section class="home_section_2">
   <div class="recipe_container_home">
-
     {% for recipe in recipes %}
 
     <div class="recipe_card">
       <figure class="recipe_image_container">
-
         {% if recipe.photos|length > 0 %} {# affiche la première photo de la
-
         collection photos de recipe #}
         <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
           <img
@@ -47,7 +52,6 @@
         </a>
 
         {% endif %}
-
       </figure>
       <div class="recipe_infos_container">
         <p>{{ recipe.name }}</p>
@@ -60,12 +64,10 @@
         <p>Note: {{ recipe.note }} (temp)</p>
 
         {% if app.user %} {% endif %}
-
       </div>
     </div>
 
     {% endfor %}
-
   </div>
   <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
 </section>
@@ -82,7 +84,6 @@
 
 <section class="home_section_4">
   <div class="home_section_4_comment_container">
-
     {% if comments|length > 0 %} {% for comment in comments %}
 
     <div class="home_section_4_comment_card">
@@ -97,14 +98,12 @@
     <h3>Pas de commentaires</h3>
 
     {% endif %}
-
   </div>
 </section>
 
 <h2>Catégories</h2>
 
 <section class="home_section5">
-
   {% if categories|length > 0 %} {% for category in categories %}
 
   <figure class="recipe_image_container">
@@ -121,7 +120,6 @@
   <h3>Pas de catégories</h3>
 
   {% endif %}
-
 </section>
 
 {% endblock %}
