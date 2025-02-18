@@ -167,8 +167,8 @@ class CompilationController extends AbstractController
         $entityManager->persist($compilation);
         $entityManager->flush();
 
-        return $this->redirectToRoute("edit_compilation", [
-            'compilation' => $compilation->getId()
+        return $this->redirectToRoute('detail_recipe', [
+            'recipe' => $recipe->getId()
         ]);
     }
 
