@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CategoryController extends AbstractController
 {
-    #[IsGranted('ROLE_USER')]
     #[Route('/category/{category}', name: 'recipe_category')]
     public function index(Category $category = null, CategoryRepository $categoryRepository): Response
     {

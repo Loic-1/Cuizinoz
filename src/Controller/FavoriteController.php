@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteController extends AbstractController
 {
-    #[IsGranted('ROLE_USER')]
     #[Route('/favorite/{user}', name: 'app_favorite')]
     public function index(User $user = null, FavoriteRepository $favoriteRepository): Response
     {
@@ -31,7 +30,6 @@ class FavoriteController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('favorite/add/{user}/{recipe}', name: 'add_favorite')]
     public function addFavorite(Recipe $recipe = null, User $user = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
@@ -59,7 +57,6 @@ class FavoriteController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('favorite/remove/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
     public function removeFavorite(Recipe $recipe = null, User $user = null, Favorite $favorite = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {

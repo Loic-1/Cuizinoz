@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    #[IsGranted('ROLE_USER')]
     #[Route('/user', name: 'app_user')]
     public function index(UserRepository $userRepository): Response
     {
@@ -27,7 +26,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/detail/{user}', name: 'detail_user')]
     public function detailUser(User $user = null, UserRepository $userRepository): Response
     {
@@ -48,7 +46,6 @@ class UserController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/follow/{follower}/{followee}', name: 'follow_user')]
     public function followUser(User $follower = null, User $followee = null, EntityManagerInterface $entityManager): Response
     {
@@ -71,7 +68,6 @@ class UserController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/unfollow/{follower}/{followee}', name: 'unfollow_user')]
     public function unfollowUser(User $follower = null, User $followee = null, EntityManagerInterface $entityManager): Response
     {
@@ -94,7 +90,6 @@ class UserController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/edit/{user}', name: 'edit_user')]
     public function editUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -126,7 +121,6 @@ class UserController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/editProfilePicture/{user}', name: 'edit_picture_user')]
     public function editPictureUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
     {

@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
-    #[IsGranted('ROLE_USER')]
     #[Route('/recipe', name: 'app_recipe')]
     public function index(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
@@ -65,7 +64,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/createRecipe', name: 'create_recipe')]
     public function createRecipe(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
@@ -106,7 +104,6 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
     public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -140,7 +137,6 @@ class RecipeController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/recipe/edit/{recipe}', name: 'edit_recipe')]
     public function editRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {

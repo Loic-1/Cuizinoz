@@ -20,7 +20,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CompilationController extends AbstractController
 {
     // liste toutes les compilations du site
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilations', name: 'list_compilation')]
     public function listCompilations(CompilationRepository $compilationRepository): Response
     {
@@ -34,7 +33,6 @@ class CompilationController extends AbstractController
     }
 
     // la vue permettra d'afficher les compilations sauvegardées et celles créées
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/{user}', name: 'app_compilation')]
     public function index(User $user = null): Response
     {
@@ -54,7 +52,6 @@ class CompilationController extends AbstractController
     }
 
     // permet de créer une compilation
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/ajout/{user}', name: 'create_compilation')]
     public function createCompilation(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -99,7 +96,6 @@ class CompilationController extends AbstractController
     }
 
     // permet de sauvegarder une compilation
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/save/{user}/{compilation}', name: 'add_compilation')]
     public function addSave(Compilation $compilation = null, User $user = null, EntityManagerInterface $entityManager, SaveRepository $saveRepository): Response
     {
@@ -131,7 +127,6 @@ class CompilationController extends AbstractController
     }
 
     // permet de sauvegarder une compilation
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/remove/{user}/{save}', name: 'remove_compilation')]
     public function removeSave(Save $save = null, User $user = null, EntityManagerInterface $entityManager): Response
     {
@@ -151,7 +146,6 @@ class CompilationController extends AbstractController
     }
 
     // permet d'afficher le détail d'une compilation
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
     public function detailCompilation(Compilation $compilation = null): Response
     {
@@ -165,7 +159,6 @@ class CompilationController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]
     public function addRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
@@ -184,7 +177,6 @@ class CompilationController extends AbstractController
         }
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/compilation/edit/remove/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
     public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
