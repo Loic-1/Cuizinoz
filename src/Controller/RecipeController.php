@@ -142,30 +142,35 @@ class RecipeController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/recipe/edit/{recipe}', name: 'edit_recipe')]
-    public function editRecipe(Recipe $recipe, Request $request, EntityManagerInterface $entityManager): Response
+    public function editRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
-        // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
+        if ($recipe) {
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
+            $form = $this->createForm(RecipeType::class, $recipe);
+            $form->handleRequest($request);
 
-            // on récupère les entrées dans les champs du form
-            $recipe = $form->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            // on prépare le push vers la BDD
-            $entityManager->persist($recipe);
-            // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
-            $entityManager->flush();
+                // on récupère les entrées dans les champs du form
+                $recipe = $form->getData();
 
-            return $this->redirectToRoute("detail_recipe", [
-                "recipe" => $recipe->getId()
+                // on prépare le push vers la BDD
+                $entityManager->persist($recipe);
+                // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
+                $entityManager->flush();
+
+                return $this->redirectToRoute("detail_recipe", [
+                    "recipe" => $recipe->getId()
+                ]);
+            }
+
+            return $this->render('recipe/editRecipe.html.twig', [
+                'recipe' => $recipe,
+                'editRecipeForm' => $form
             ]);
+        } else {
+            return $this->redirectToRoute('app_home');
         }
-
-        return $this->render('recipe/editRecipe.html.twig', [
-            'recipe' => $recipe,
-            'editRecipeForm' => $form
-        ]);
     }
 }

@@ -12,7 +12,7 @@ class CategoryController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/category/{category}', name: 'recipe_category')]
-    public function index(Category $category, CategoryRepository $categoryRepository): Response
+    public function index(Category $category = null, CategoryRepository $categoryRepository): Response
     {
         if ($category) {
 

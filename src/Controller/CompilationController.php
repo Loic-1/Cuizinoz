@@ -101,45 +101,53 @@ class CompilationController extends AbstractController
     // permet de sauvegarder une compilation
     #[IsGranted('ROLE_USER')]
     #[Route('/compilation/save/{user}/{compilation}', name: 'add_compilation')]
-    public function addSave(Compilation $compilation, User $user, EntityManagerInterface $entityManager, SaveRepository $saveRepository): Response
+    public function addSave(Compilation $compilation = null, User $user = null, EntityManagerInterface $entityManager, SaveRepository $saveRepository): Response
     {
+        if ($compilation && $user) {
 
-        if (count($saveRepository->isUnique($compilation->getId())) == 0) {
+            if (count($saveRepository->isUnique($compilation->getId())) == 0) {
 
-            // création d'une nouvelle instance de Save, $save
-            $save = new Save();
-            // on définit les attributs
-            $save->setUser($user);
-            $save->setCompilation($compilation);
-            $save->setRegisterDate(new DateTime());
+                // création d'une nouvelle instance de Save, $save
+                $save = new Save();
+                // on définit les attributs
+                $save->setUser($user);
+                $save->setCompilation($compilation);
+                $save->setRegisterDate(new DateTime());
 
-            // on prépare le push
-            $entityManager->persist($save);
-            // on push
-            $entityManager->flush();
+                // on prépare le push
+                $entityManager->persist($save);
+                // on push
+                $entityManager->flush();
 
-            return $this->redirectToRoute("list_compilation");
+                return $this->redirectToRoute("list_compilation");
+            }
+
+            return $this->render("compilation/index.html.twig", [
+                "user" => $user
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
         }
-
-        return $this->render("compilation/index.html.twig", [
-            "user" => $user
-        ]);
     }
 
     // permet de sauvegarder une compilation
     #[IsGranted('ROLE_USER')]
     #[Route('/compilation/remove/{user}/{save}', name: 'remove_compilation')]
-    public function removeSave(Save $save, User $user, EntityManagerInterface $entityManager): Response
+    public function removeSave(Save $save = null, User $user = null, EntityManagerInterface $entityManager): Response
     {
+        if ($user && $save) {
 
-        $user->removeSave($save);
+            $user->removeSave($save);
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-        return $this->redirectToRoute("app_compilation", [
-            "user" => $user->getId()
-        ]);
+            return $this->redirectToRoute("app_compilation", [
+                "user" => $user->getId()
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     // permet d'afficher le détail d'une compilation
@@ -159,30 +167,39 @@ class CompilationController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]
-    public function addRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
+    public function addRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
+        if ($compilation && $recipe) {
 
-        $compilation->addRecipe($recipe);
+            $compilation->addRecipe($recipe);
 
-        $entityManager->persist($compilation);
-        $entityManager->flush();
+            $entityManager->persist($compilation);
+            $entityManager->flush();
 
-        return $this->redirectToRoute('detail_recipe', [
-            'recipe' => $recipe->getId()
-        ]);
+            return $this->redirectToRoute('detail_recipe', [
+                'recipe' => $recipe->getId()
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     #[IsGranted('ROLE_USER')]
     #[Route('/compilation/edit/remove/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
-    public function removeRecipeCompilation(Compilation $compilation, Recipe $recipe, EntityManagerInterface $entityManager): Response
+    public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
-        $compilation->removeRecipe($recipe);
+        if ($compilation && $recipe) {
 
-        $entityManager->persist($compilation);
-        $entityManager->flush();
+            $compilation->removeRecipe($recipe);
 
-        return $this->redirectToRoute("edit_compilation", [
-            'compilation' => $compilation->getId()
-        ]);
+            $entityManager->persist($compilation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("edit_compilation", [
+                'compilation' => $compilation->getId()
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
     }
 }

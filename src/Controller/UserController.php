@@ -67,9 +67,7 @@ class UserController extends AbstractController
             ]);
         } else {
 
-            return $this->redirectToRoute('detail_user', [
-                'user' => $follower->getId()
-            ]);
+            return $this->redirectToRoute('app_home');
         }
     }
 
@@ -92,9 +90,7 @@ class UserController extends AbstractController
             ]);
         } else {
 
-            return $this->redirectToRoute('detail_user', [
-                'user' => $follower->getId()
-            ]);
+            return $this->redirectToRoute('app_home');
         }
     }
 
@@ -152,10 +148,9 @@ class UserController extends AbstractController
                 ]);
             }
             return $this->render('user/editPictureUser.html.twig', [
-                'editPictureUserForm' => $form, 
+                'editPictureUserForm' => $form,
                 'user' => $user
             ]);
-
         } else {
 
             return $this->redirectToRoute('app_home');
