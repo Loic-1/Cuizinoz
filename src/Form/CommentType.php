@@ -7,6 +7,7 @@ use App\Entity\Recipe;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,19 +16,8 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('content')
-            // ->add('creationDate', null, [
-            //     'widget' => 'single_text',
-            // ])
-            // ->add('user', EntityType::class, [
-            //     'class' => User::class,
-            //     'choice_label' => 'id',
-            // ])
-            // ->add('recipe', EntityType::class, [
-            //     'class' => Recipe::class,
-            //     'choice_label' => 'id',
-            // ])
+            ->add('title', TextType::class)
+            ->add('content', TextType::class)
         ;
     }
 

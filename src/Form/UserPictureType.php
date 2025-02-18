@@ -14,27 +14,7 @@ class UserPictureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('email')
-            // ->add('roles')
-            // ->add('password')
-            // ->add('isVerified')
-            // ->add('biography')
             ->add('profilePicture', FileType::class)
-            // ->add('pseudo')
-            // ->add('registrationDate', null, [
-                // 'widget' => 'single_text',
-            // ])
-            // ->add('alt')
-            // ->add('followers', EntityType::class, [
-                // 'class' => User::class,
-                // 'choice_label' => 'id',
-                // 'multiple' => true,
-            // ])
-            // ->add('followees', EntityType::class, [
-                // 'class' => User::class,
-                // 'choice_label' => 'id',
-                // 'multiple' => true,
-            // ])
         ;
     }
 
