@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TagController extends AbstractController
 {
+    // Renvoie les compilation ayant le tag spécifié, ainsi que le tag
     #[Route('/tag/{tag}', name: 'app_tag')]
     public function index(Tag $tag = null): Response
     {
