@@ -64,7 +64,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    #[Route('/createRecipe', name: 'create_recipe')]
+    #[Route('/recipe/edit/addRecipe', name: 'create_recipe')]
     public function createRecipe(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
         $user = $this->getUser();

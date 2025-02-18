@@ -52,7 +52,7 @@ class CompilationController extends AbstractController
     }
 
     // permet de créer une compilation
-    #[Route('/compilation/ajout/{user}', name: 'create_compilation')]
+    #[Route('/compilation/edit/addCompilation/{user}', name: 'create_compilation')]
     public function createCompilation(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
     {
 
@@ -96,7 +96,7 @@ class CompilationController extends AbstractController
     }
 
     // permet de sauvegarder une compilation
-    #[Route('/compilation/save/{user}/{compilation}', name: 'add_compilation')]
+    #[Route('/compilation/edit/saveCompilation/{user}/{compilation}', name: 'add_compilation')]
     public function addSave(Compilation $compilation = null, User $user = null, EntityManagerInterface $entityManager, SaveRepository $saveRepository): Response
     {
         if ($compilation && $user) {
@@ -127,7 +127,7 @@ class CompilationController extends AbstractController
     }
 
     // permet de sauvegarder une compilation
-    #[Route('/compilation/remove/{user}/{save}', name: 'remove_compilation')]
+    #[Route('/compilation/edit/removeSave/{user}/{save}', name: 'remove_compilation')]
     public function removeSave(Save $save = null, User $user = null, EntityManagerInterface $entityManager): Response
     {
         if ($user && $save) {
@@ -159,7 +159,7 @@ class CompilationController extends AbstractController
         }
     }
 
-    #[Route('/compilation/edit/add/{compilation}/{recipe}', name: 'add_recipe_compilation')]
+    #[Route('/compilation/edit/addRecipe/{compilation}/{recipe}', name: 'add_recipe_compilation')]
     public function addRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
         if ($compilation && $recipe) {
@@ -177,7 +177,7 @@ class CompilationController extends AbstractController
         }
     }
 
-    #[Route('/compilation/edit/remove/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
+    #[Route('/compilation/edit/removeRecipe/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
     public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
         if ($compilation && $recipe) {

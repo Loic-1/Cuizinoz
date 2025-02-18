@@ -37,6 +37,9 @@ security:
   access_control:
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/compilation/edit, roles: ROLE_USER }
+    - { path: ^/favorite/edit, roles: ROLE_USER }
+    - { path: ^/recipe/edit, roles: ROLE_USER }
 
 when@test:
   security:

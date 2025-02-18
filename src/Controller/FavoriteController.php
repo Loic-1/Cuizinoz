@@ -30,7 +30,7 @@ class FavoriteController extends AbstractController
         }
     }
 
-    #[Route('favorite/add/{user}/{recipe}', name: 'add_favorite')]
+    #[Route('favorite/edit/addFavorite/{user}/{recipe}', name: 'add_favorite')]
     public function addFavorite(Recipe $recipe = null, User $user = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
         if ($recipe && $user) {
@@ -57,7 +57,7 @@ class FavoriteController extends AbstractController
         }
     }
 
-    #[Route('favorite/remove/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
+    #[Route('favorite/edit/removeFavorite/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
     public function removeFavorite(Recipe $recipe = null, User $user = null, Favorite $favorite = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
         if ($user && $recipe && $favorite) {
