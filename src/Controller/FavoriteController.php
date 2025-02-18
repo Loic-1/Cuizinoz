@@ -6,7 +6,6 @@ use App\Entity\Favorite;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Repository\FavoriteRepository;
-use App\Repository\RecipeRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteController extends AbstractController
 {
+    // Renvoie tous les favorites du user spécifié
     #[Route('/favorite/{user}', name: 'app_favorite')]
-    public function index(User $user = null, FavoriteRepository $favoriteRepository): Response
+    public function listFavorites(User $user = null, FavoriteRepository $favoriteRepository): Response
     {
         if ($user) {
 
@@ -30,6 +30,7 @@ class FavoriteController extends AbstractController
         }
     }
 
+    // Permet de rajouter un favorite liant user à recipe
     #[Route('favorite/edit/addFavorite/{user}/{recipe}', name: 'add_favorite')]
     public function addFavorite(Recipe $recipe = null, User $user = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
@@ -57,6 +58,7 @@ class FavoriteController extends AbstractController
         }
     }
 
+    // Permet de supprimer un favorite en fonction du user et de la recipe
     #[Route('favorite/edit/removeFavorite/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
     public function removeFavorite(Recipe $recipe = null, User $user = null, Favorite $favorite = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
     {
