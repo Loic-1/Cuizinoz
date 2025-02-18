@@ -69,7 +69,7 @@
             <div>
                 {% for compilation in app.user.compilations %}
                     {{ compilation.name }}
-                    <a href="">Ajouter</a>
+                    <a href="{{ path('add_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">Ajouter</a>
                 {% endfor %}
             </div>
 
