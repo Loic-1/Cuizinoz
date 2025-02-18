@@ -10,6 +10,7 @@ block body %}
     <figure class="recipe_image_container">
       {% if recipe.photos|length > 0 %} {# affiche la première photo de la
       collection photos de recipe #}
+
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
         <img
           src="{{ recipe.photos|first.url }}"
@@ -19,12 +20,14 @@ block body %}
 
       {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
       {% else %}
+
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
           alt="Pas encore de photo"
         />
       </a>
+
       {% endif %}
     </figure>
     <div class="recipe_infos_container">
@@ -32,6 +35,7 @@ block body %}
       <p>Une recette de {{ recipe.user.pseudo }}</p>
       <p>Note: {{ recipe.note }} (temp)</p>
       <p>{{ recipe.category.name }}</p>
+
       {% if app.user %}
 
       <div class="recipe_actions">
@@ -44,9 +48,11 @@ block body %}
         </a>
         {# <i class="fa-solid fa-plus"></i> #}
       </div>
+
       {% endif %}
     </div>
   </div>
+
   {% endfor %}
 </div>
 

@@ -33,17 +33,16 @@
       <a href="{{ path('app_home') }}"
         ><img src="{{ asset('assets/Logo1.png') }}" alt=""
       /></a>
-      <a href="{{ path('app_compilation', { user: app.user.id }) }}"
-        ><i class="fa-regular fa-floppy-disk"></i>Vos collections et
-        sauvegardées</a
-      >
-      |
       <a href="{{ path('app_favorite', { user: app.user.id }) }}"
         ><i class="fa-regular fa-bookmark"></i> Vos favoris</a
       >
       |
+      <a href="{{ path('app_compilation', { user: app.user.id }) }}"
+        ><i class="fa-regular fa-floppy-disk"></i>Vos collections</a
+      >
+      |
       <a href="{{ path('list_compilation') }}"
-        ><i class="fa-regular fa-folder"></i>Liste des collections du site</a
+        ><i class="fa-regular fa-folder"></i>Collections du site</a
       >
       <a href="{{ path('detail_user', { user: app.user.id }) }}"
         ><i class="fa-regular fa-user"></i
