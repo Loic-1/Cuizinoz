@@ -11,18 +11,19 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    // Renvoie un assortiment de recipe, comment et une liste de toutes les category
     #[Route('/', name: 'app_home')]
-    public function index(RecipeRepository $recipeRepository, CommentRepository $commentRepository, CategoryRepository $categoryRepository): Response
+    public function listUsers(RecipeRepository $recipeRepository, CommentRepository $commentRepository, CategoryRepository $categoryRepository): Response
     {
-        // recettes à la une (trié en fonction de la note et des commentaires, définir un max(par défaut: 6))
+        // Recettes à la une (trié en fonction de la note [et du nombre de commentaires], définir un max(par défaut: 6))
 
         $recipes = $recipeRepository->findNewBestRecipes(6);
 
-        // derniers commentaires (définir un max(par défaut: 6))
+        // Derniers commentaires (définir un max(par défaut: 6))
 
         $comments = $commentRepository->findLastComments(6);
 
-        // catégories (pas de limite car peu de catégories)
+        // Catégories (pas de limite car peu de catégories)
 
         $categories = $categoryRepository->findAll();
 
