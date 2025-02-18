@@ -8,20 +8,19 @@ use App\Entity\Recipe;
 use App\Form\CommentType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
-use App\Repository\UserRepository;
 use App\Service\PictureService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
+    // Renvoie une liste des recipe, permet de créer une nouvelle recipe
     #[Route('/recipe', name: 'app_recipe')]
-    public function index(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    public function listRecipes(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
         // trouver toutes les recettes
         $recipes = $recipeRepository->findAll();
@@ -64,6 +63,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    // FONCTION PERDUE, JSP CE QU'ELLE FAIT lÀ
     #[Route('/recipe/edit/addRecipe', name: 'create_recipe')]
     public function createRecipe(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
@@ -104,6 +104,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    // Renvoie la recipe spécifiée, permet de publier un comment pour la recipe
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
     public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -137,6 +138,7 @@ class RecipeController extends AbstractController
         }
     }
 
+    // Permet de modifier la recipe spécifiée, puis de la renvoyer pour l'afficher
     #[Route('/recipe/edit/{recipe}', name: 'edit_recipe')]
     public function editRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
