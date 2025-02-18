@@ -16,8 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
+    // Renvoie une liste des utilisateurs [INUTILE]
     #[Route('/user', name: 'app_user')]
-    public function index(UserRepository $userRepository): Response
+    public function listUsers(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
 
@@ -26,6 +27,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    // Renvoie l'utilisateur spécifié, ceux qui le suivent et ceux qu'il suit
     #[Route('/detail/{user}', name: 'detail_user')]
     public function detailUser(User $user = null, UserRepository $userRepository): Response
     {
@@ -46,10 +48,12 @@ class UserController extends AbstractController
         }
     }
 
+    // Permet au follower de suivre le followee (tous deux des users)
     #[Route('/follow/{follower}/{followee}', name: 'follow_user')]
     public function followUser(User $follower = null, User $followee = null, EntityManagerInterface $entityManager): Response
     {
 
+        // Empêche un user de se suivre lui-même
         if ($follower && $followee && ($follower != $followee)) {
 
             $follower->addFollowee($followee);
@@ -68,6 +72,7 @@ class UserController extends AbstractController
         }
     }
 
+    // Permet au follower d'arrêter de suivre le followee
     #[Route('/unfollow/{follower}/{followee}', name: 'unfollow_user')]
     public function unfollowUser(User $follower = null, User $followee = null, EntityManagerInterface $entityManager): Response
     {
@@ -90,6 +95,7 @@ class UserController extends AbstractController
         }
     }
 
+    // Permet de modifier les attributs du user spécifié
     #[Route('/edit/{user}', name: 'edit_user')]
     public function editUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -121,6 +127,7 @@ class UserController extends AbstractController
         }
     }
 
+    // NOT USED YET
     #[Route('/editProfilePicture/{user}', name: 'edit_picture_user')]
     public function editPictureUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
     {
