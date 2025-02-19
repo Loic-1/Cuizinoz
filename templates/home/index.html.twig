@@ -73,12 +73,11 @@
           {{ recipe.category.name }}
         </a>
         <p>Note: {{ recipe.note }} (temp)</p>
-
-        {% if app.user %} {% endif %}
       </div>
     </div>
 
     {% endfor %}
+
   </div>
   <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
 </section>
@@ -95,13 +94,21 @@
 
 <section class="home_section_4">
   <div class="home_section_4_comment_container">
+
     {% if comments|length > 0 %} {% for comment in comments %}
 
     <div class="home_section_4_comment_card">
       <h4>{{ comment.title }}</h4>
-      <p>Dans {{ comment.recipe.name }} à {{ comment.creationDateFr }}</p>
+      <p>Dans
+        <a href="{{ path('detail_recipe', {recipe: comment.recipe.id}) }}">          
+          {{ comment.recipe.name }}
+        </a>
+      </p>
       <p>{{ comment.content }}</p>
-      Par {{ comment.user.pseudo }}
+      <a href="{{ path('detail_user', {user: comment.user.id}) }}">        
+        {{ comment.user.pseudo }}
+      </a>,
+      {{ comment.creationDateFr }}
     </div>
 
     {% endfor %} {% else %}
@@ -109,6 +116,7 @@
     <h3>Pas de commentaires</h3>
 
     {% endif %}
+
   </div>
 </section>
 
