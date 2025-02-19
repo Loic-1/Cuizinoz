@@ -25,6 +25,7 @@ class FavoriteRepository extends ServiceEntityRepository
         $qb->select('f')
         ->from('App\Entity\Favorite', 'f')
         ->where('f.user = :user_id')
+        ->orderBy('f.registerDate', 'DESC')
         ->setParameter('user_id', $user_id)
         ;
 
