@@ -67,7 +67,7 @@ class Comment
 
     public function getCreationDateFr(): ?string
     {
-        return $this->creationDate->format("d/m/Y à H:i:m");
+        return $this->creationDate->format("d/m/Y à H:i");
     }
 
     public function setCreationDate(\DateTimeInterface $creationDate): static

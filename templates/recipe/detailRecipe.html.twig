@@ -93,7 +93,11 @@
     <div class="detail_comment">
         <h3>{{ comment.title }}</h3>
         <p class="detail_comment_content">{{ comment.content }}</p>
-        <p>Créé le {{ comment.creationDateFr }} par {{ comment.user.pseudo }}</p>
+        <p>Créé le {{ comment.creationDateFr }} par
+            <a href="{{ path('detail_user', { user: comment.user.id }) }}">                
+                {{ comment.user.pseudo }}
+            </a>
+        </p>
         <p>NOTE</p>
     </div>
     {% endfor %}
