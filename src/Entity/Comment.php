@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+use function Symfony\Component\Clock\now;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -67,7 +70,9 @@ class Comment
 
     public function getCreationDateFr(): ?string
     {
-        return $this->creationDate->format("d/m/Y à H:i");
+        return ($this->creationDate->diff(new DateTime())->format("%a") > 0
+            ? $this->creationDate->format("d/m/Y à H:i")
+            : "aujourd'hui à " . $this->creationDate->format("h:i"));
     }
 
     public function setCreationDate(\DateTimeInterface $creationDate): static
