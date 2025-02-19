@@ -1,4 +1,12 @@
-{% extends 'base.html.twig' %} {% block title %}Vos collections{% endblock %} {%
+{% extends 'base.html.twig' %}
+
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
+
+{% endblock %} #}
+
+{% block title %}Vos collections{% endblock %} {%
 block body %}
 
 <h2 class="h2_200_p">{{ compilation.name }}</h2>
@@ -13,8 +21,8 @@ block body %}
 
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
         <img
-          src="{{ recipe.photos|first.url }}"
-          alt="{{ recipe.photos|first.alt }}"
+        src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+        alt="{{ recipe.photos|first.alt }}"
         />
       </a>
 

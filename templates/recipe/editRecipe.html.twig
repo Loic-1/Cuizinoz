@@ -1,9 +1,23 @@
-{% extends 'base.html.twig' %} {% block title %}{{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo
-}}{% endblock %} {% block body %}
+{% extends 'base.html.twig' %}
+
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/editRecipe.css') }}" />
+
+{% endblock %} #}
+
+{% block title %}
+
+{{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo}}
+
+{% endblock %}
+
+{% block body %}
 
 <h1 class="h2_200_p">Modif {{ recipe.name }}</h1>
 
 <div class="h2_200_p">
+
   {{ form_errors(editRecipeForm) }}
   {{ form_start(editRecipeForm) }}
   {{ form_row(editRecipeForm.name) }}
@@ -14,6 +28,7 @@
   <button type="submit">Modifier recette</button>
 
   {{ form_end(editRecipeForm) }}
+  
 </div>
 
 {% endblock %}

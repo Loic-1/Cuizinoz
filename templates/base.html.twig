@@ -20,6 +20,7 @@
     />
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+
     {% endblock %} {% block javascripts %}
     <script src="{{ asset('js/script.js') }}"></script>
     {% block importmap %}{{
@@ -34,17 +35,19 @@
         ><img src="{{ asset('assets/Logo1.png') }}" alt=""
       /></a>
       <a href="{{ path('app_favorite', { user: app.user.id }) }}">
-        {# <i class="fa-regular fa-bookmark"></i> #} Vos favoris</a
+        {# <i class="fa-regular fa-bookmark"></i> #} Favoris</a
       >
       |
       <a href="{{ path('app_compilation', { user: app.user.id }) }}">
-        {# <i class="fa-regular fa-floppy-disk"></i> #} Vos collections</a
+        {# <i class="fa-regular fa-floppy-disk"></i> #} Collections</a
       >
       |
       <a href="{{ path('list_compilation') }}">
         {# <i class="fa-regular fa-folder"></i> #} Collections du site</a
       >
-      <a href="{{ path('detail_user', { user: app.user.id }) }}"
+      <a
+        href="{{ path('detail_user', { user: app.user.id }) }}"
+        title="{{ app.user.pseudo }}"
         ><i class="fa-regular fa-user"></i
       ></a>
       <a href="{{ path('app_logout') }}"
@@ -54,8 +57,8 @@
       <a href="{{ path('app_home') }}"
         ><img src="{{ asset('assets/Logo1.png') }}" alt=""
       /></a>
-      <a href="{{ path('app_login') }}">Se connecter</a>
-      <a href="{{ path('app_register') }}">S'enregistrer</a>
+      <a href="{{ path('app_login') }}">Connexion</a>
+      <a href="{{ path('app_register') }}">Enregistrement</a>
       <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
       {% endif %}
     </header>

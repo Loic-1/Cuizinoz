@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/listFavorites.css') }}" />
+
+{% endblock %} #}
+
 {% block title %}Vos favoris{% endblock %}
 
 {% block body %}
@@ -16,7 +22,10 @@
 
             {# affiche la première photo de la collection photos de recipe #}
             <a href="{{ path('detail_recipe', { recipe: favorite.recipe.id }) }}">
-                <img src="{{ favorite.recipe.photos|first.url }}" alt="{{ favorite.recipe.photos|first.alt }}">
+                <img
+                src="{{ asset('uploads/gallery/' ~ favorite.recipe.photos|first.name) }}"
+                alt="{{ favorite.recipe.photos|first.alt }}"
+                />
             </a>
 
             {# recipe.photos == null -> pas de galerie de photos pour cette recette #}

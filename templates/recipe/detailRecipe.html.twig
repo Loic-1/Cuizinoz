@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/detailRecipe.css') }}" />
+
+{% endblock %} #}
+
 {% block title %}{{ recipe.name ~ " - " ~ recipe.user.pseudo}}{% endblock %}
 
 {% block body %}

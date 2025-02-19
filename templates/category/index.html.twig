@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/detailCategory.css') }}">
+
+{% endblock %} #}
+
 {% block title %}{{ category.name }}{% endblock %}
 
 {% block body %}
-{# {{ dump(recipes) }}
-{% for recipe in recipes %}
-{{ recipe.name }}
-{% endfor %} #}
 
 <h2 class="h2_200_p">{{category.name ~ "s"}}</h2>
 
