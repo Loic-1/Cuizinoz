@@ -13,8 +13,16 @@
 <h2 class="h2_200_p">{{category.name ~ "s"}}</h2>
 
 <ul>
-    <li><a href="{{ path('recipe_category', { category: category.id, orderBy: 'note', order: 'DESC' }) }}">Note</a></li>
-    <li><a href="{{ path('recipe_category', { category: category.id, orderBy: 'name', order: 'ASC' }) }}">A - Z</a></li>
+    <li>
+        Note
+        <a href="{{ path('recipe_category', { category: category.id, orderBy: 'note', order: 'ASC' }) }}"><i class="fa-solid fa-arrow-down-1-9"></i></a>
+        <a href="{{ path('recipe_category', { category: category.id, orderBy: 'note', order: 'DESC' }) }}"><i class="fa-solid fa-arrow-up-1-9"></i></a>
+    </li>
+    <li>
+        A - Z
+        <a href="{{ path('recipe_category', { category: category.id, orderBy: 'name', order: 'ASC' }) }}"><i class="fa-solid fa-arrow-down-a-z"></i></a>
+        <a href="{{ path('recipe_category', { category: category.id, orderBy: 'name', order: 'DESC' }) }}"><i class="fa-solid fa-arrow-up-a-z"></i></a>
+    </li>
 </ul>
 
 <div class="recipe_container">
