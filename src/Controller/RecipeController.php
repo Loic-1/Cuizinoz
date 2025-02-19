@@ -19,11 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
 class RecipeController extends AbstractController
 {
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
-    #[Route('/recipe', name: 'app_recipe')]
-    public function listRecipes(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    #[Route('/recipe/read/{orderBy?}/{order?}', name: 'app_recipe', defaults:['orderBy' => 'note', 'ORDER' => 'DESC'])]
+    public function listRecipes(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, $orderBy, $order): Response
     {
         // trouver toutes les recettes
-        $recipes = $recipeRepository->findAll();
+        // $recipes = $recipeRepository->findAll();
+        $recipes = $recipeRepository->findAllOrderedBy($orderBy, $order);
 
         $user = $this->getUser();
         $recipe = new Recipe();

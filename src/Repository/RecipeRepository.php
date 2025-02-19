@@ -81,6 +81,20 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findAllOrderedBy($orderBy, $order)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('r')
+            ->from('App\Entity\Recipe', 'r')
+            ->orderBy('r.' . $orderBy, $order)
+        ;
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */
