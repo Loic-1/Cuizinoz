@@ -62,7 +62,11 @@
       </figure>
       <div class="recipe_infos_container">
         <p>{{ recipe.name }}</p>
-        <p>Une recette de {{ recipe.user.pseudo }}</p>
+        <p>Une recette de
+          <a href="{{path('detail_user', {user: recipe.user.id})}}">
+            {{ recipe.user.pseudo }}
+          </a>
+        </p>
         <a
           href="{{ path('recipe_category', { category: recipe.category.id }) }}"
         >

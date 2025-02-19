@@ -45,7 +45,11 @@
     </div>
 
     <div class="detail_info_container">
-        <p>Par {{ recipe.user.pseudo }}</p>
+        <p>Par
+            <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+                {{ recipe.user.pseudo }}
+            </a>
+        </p>
         <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
         <p>Catégorie: {{ recipe.category.name }}</p>
         <p>Note: {{ recipe.note }}</p>

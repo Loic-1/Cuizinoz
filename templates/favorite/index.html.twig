@@ -39,7 +39,11 @@
         </figure>
         <div class="recipe_infos_container">
             <p>{{ favorite.recipe.name }}</p>
-            <p>Une recette de {{ favorite.recipe.user.pseudo }}</p>
+            <p>Une recette de
+                <a href="{{ path('detail_user', { user: favorite.recipe.user.id }) }}">                    
+                    {{ favorite.recipe.user.pseudo }}
+                </a>
+            </p>
             <p>Note: {{ favorite.recipe.note }} (temp)</p>
             <p>{{ favorite.recipe.category.name }}</p>
             <div class="recipe_actions">

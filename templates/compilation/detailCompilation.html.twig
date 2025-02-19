@@ -40,7 +40,11 @@ block body %}
     </figure>
     <div class="recipe_infos_container">
       <p>{{ recipe.name }}</p>
-      <p>Une recette de {{ recipe.user.pseudo }}</p>
+      <p>Une recette de
+        <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+          {{ recipe.user.pseudo }}
+        </a>
+      </p>
       <p>Note: {{ recipe.note }} (temp)</p>
       <p>{{ recipe.category.name }}</p>
 
