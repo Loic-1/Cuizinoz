@@ -58,7 +58,9 @@ block body %}
         >
           <i class="fa-regular fa-heart"></i>
         </a>
-        {# <i class="fa-solid fa-plus"></i> #}
+        <a href="{{ path('remove_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">
+          <i class="fa-solid fa-minus"></i>
+        </a>
       </div>
 
       {% endif %}
