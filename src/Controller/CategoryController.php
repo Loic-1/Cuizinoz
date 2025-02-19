@@ -11,12 +11,13 @@ use Symfony\Component\Routing\Attribute\Route;
 class CategoryController extends AbstractController
 {
     // Renvoie une liste des recettes appartenant à la catégorie, ainsi que la catégorie
-    #[Route('/category/{category}', name: 'recipe_category')]
-    public function index(Category $category = null, CategoryRepository $categoryRepository): Response
+    #[Route('/category/{category}/{orderBy?}/{order?}', name: 'recipe_category', defaults:['orderBy' => 'note', 'ORDER' => 'DESC'])]
+    public function index(Category $category = null, CategoryRepository $categoryRepository, $orderBy, $order): Response
     {
         if ($category) {
 
-            $recipes = $categoryRepository->findRecipesByCategoryId($category->getId());
+            // $recipes = $categoryRepository->findRecipesByCategoryId($category->getId());
+            $recipes = $categoryRepository->findRecipesByCategoryId($category->getId(), $orderBy, $order);
 
             return $this->render('category/index.html.twig', [
                 'recipes' => $recipes,

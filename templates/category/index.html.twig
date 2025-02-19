@@ -12,6 +12,11 @@
 
 <h2 class="h2_200_p">{{category.name ~ "s"}}</h2>
 
+<ul>
+    <li><a href="{{ path('recipe_category', { category: category.id, orderBy: 'note', order: 'DESC' }) }}">Note</a></li>
+    <li><a href="{{ path('recipe_category', { category: category.id, orderBy: 'name', order: 'ASC' }) }}">A - Z</a></li>
+</ul>
+
 <div class="recipe_container">
 
     {% for recipe in recipes %}
