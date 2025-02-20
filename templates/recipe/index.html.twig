@@ -99,4 +99,17 @@
 </div>
 {% endif %}
 
+
+<form id="commentForm">
+    <input type="text" id="commentAuthor" placeholder="Votre nom" required>
+    <textarea id="commentContent" placeholder="Votre commentaire" required></textarea>
+    <button type="submit">Ajouter</button>
+</form>
+
+<ul id="commentList">
+    {% for comment in comments %}
+        <li><strong>{{ comment.author }}</strong>: {{ comment.content }} <em>({{ comment.createdAt|date('Y-m-d H:i:s') }})</em></li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
