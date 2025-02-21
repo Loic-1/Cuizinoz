@@ -47,9 +47,9 @@
             <p>Note: {{ favorite.recipe.note }} (temp)</p>
             <p>{{ favorite.recipe.category.name }}</p>
             <div class="recipe_actions">
-                <a href="{{ path('remove_favorite', {user: app.user.id, recipe: favorite.recipe.id, favorite: favorite.id }) }}">
-                    <i class="fa-solid fa-heart"></i>
-                </a>
+                {# <a href="{{ path('remove_favorite', {user: app.user.id, recipe: favorite.recipe.id, favorite: favorite.id }) }}"> #}
+                    <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ favorite.recipe.id }} data-favorite={{ favorite.id }}></i>
+                {# </a> #}
             </div>
         </div>
     </div>

@@ -2,10 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>
+      
+      {% block title %}Welcome!{% endblock %}
+    
+    </title>
     <link rel="icon" href="{{
       asset("assets/Logo1.png")
-    }}"> {% block stylesheets %}
+    }}">
+    
+    {% block stylesheets %}
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
@@ -21,18 +28,25 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
-    {% endblock %} {% block javascripts %}
+    {% endblock %}
+    {% block javascripts %}
+
     <script src="{{ asset('js/script.js') }}"></script>
+
     {% block importmap %}{{
       importmap("app")
-    }}{% endblock %} {% endblock %}
+    }}{% endblock %}
+    {% endblock %}
+
   </head>
 
   <body>
     <header>
+
       {% if app.user %}
+
       <a href="{{ path('app_home') }}"
-        ><img src="{{ asset('assets/Logo1.png') }}" alt=""
+        ><img src="{{ asset('assets/Logo1.png') }}" alt="Logo Cuizinoz renvoyent vers la page d'accueil"
       /></a>
       <a href="{{ path('app_favorite', { user: app.user.id }) }}">
         {# <i class="fa-regular fa-bookmark"></i> #} Favoris</a
@@ -53,46 +67,23 @@
       <a href="{{ path('app_logout') }}"
         ><i class="fa-solid fa-right-from-bracket"></i
       ></a>
+
       {% else %}
+
       <a href="{{ path('app_home') }}"
         ><img src="{{ asset('assets/Logo1.png') }}" alt=""
       /></a>
       <a href="{{ path('app_login') }}">Connexion</a>
       <a href="{{ path('app_register') }}">Enregistrement</a>
       <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
+
       {% endif %}
+
     </header>
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var main = new Splide("#main-carousel", {
-          type: "fade",
-          rewind: true,
-          pagination: false,
-          arrows: true,
-        });
 
-        var thumbnails = new Splide("#thumbnail-carousel", {
-          fixedWidth: 100,
-          fixedHeight: 60,
-          gap: 10,
-          rewind: true,
-          pagination: true,
-          isNavigation: true,
-          arrows: false,
-          breakpoints: {
-            600: {
-              fixedWidth: 60,
-              fixedHeight: 44,
-            },
-          },
-        });
+    {% block body %}
+    
+    {% endblock %}
 
-        main.sync(thumbnails);
-        main.mount();
-        thumbnails.mount();
-      });
-    </script>
-    {% block body %}{% endblock %}
   </body>
 </html>

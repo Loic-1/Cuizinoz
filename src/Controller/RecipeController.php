@@ -172,25 +172,4 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
     }
-
-    #[Route('/comment/add', name: 'comment_add', methods: ['POST'])]
-    public function add(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $comment = new Comment();
-        $comment->setContent($data['content']);
-        $comment->setAuthor($data['author']);
-        $comment->setCreatedAt(new \DateTime());
-
-        $entityManager->persist($comment);
-        $entityManager->flush();
-
-        return new JsonResponse([
-            'id' => $comment->getId(),
-            'content' => $comment->getContent(),
-            'author' => $comment->getAuthor(),
-            'createdAt' => $comment->getCreatedAt()->format('Y-m-d H:i:s')
-        ]);
-    }
 }
