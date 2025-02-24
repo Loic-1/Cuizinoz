@@ -7,13 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   hearts.forEach((heart) => {
     heart.addEventListener("click", async function () {
-      console.log("Click");
-
       const recipeId = heart.dataset.recipe;
       const favoriteId = heart.dataset.favorite;
 
       if (heart.classList.contains("fa-regular")) {
-
         await fetch(`${api_url}/favorite/edit/addFavorite/${recipeId}`, {
           method: "POST",
         })
@@ -25,17 +22,20 @@ document.addEventListener("DOMContentLoaded", function () {
           })
           .catch((err) => console.error("Failed to add favorite:\n", err));
       } else {
-
-        await fetch(`${api_url}/favorite/edit/removeFavorite/${recipeId}/${favoriteId}`, {
-          method: "POST",
-        })
+        await fetch(
+          `${api_url}/favorite/edit/removeFavorite/${recipeId}/${favoriteId}`,
+          {
+            method: "POST",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            heart.classList.remove("fa-solid");
-            heart.classList.add("fa-regular");
+            document.getElementById("recipe-card-" + recipeId).remove();
           })
-          .catch((err) => console.error("Failed to remove to favorite:\n", err));
+          .catch((err) =>
+            console.error("Failed to remove favorite:\n", err)
+          );
       }
     });
   });

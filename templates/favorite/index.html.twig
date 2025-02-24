@@ -6,6 +6,12 @@
 
 {% endblock %} #}
 
+{% block javascripts %}
+
+    <script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
 {% block title %}Vos favoris{% endblock %}
 
 {% block body %}
@@ -14,7 +20,7 @@
 
     {% for favorite in favorites %}
 
-    <div class="recipe_card">
+    <div class="recipe_card" id="{{'recipe-card-' ~ favorite.recipe.id}}">
 
         <figure class="recipe_image_container">
 
