@@ -1,32 +1,32 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
 
 {% endblock %} #}
 
-{% block title %}Vos collections{% endblock %} {%
-block body %}
+{% block title %} Vos collections {% endblock %}
+
+{% block body %}
 
 <h2 class="h2_200_p">{{ compilation.name }}</h2>
 
 <div class="recipe_container">
-  {% for recipe in compilation.recipes %}
+  
+  {% for recipe in recipes %}
+  {# {% for recipe in pagination.items %} #}
 
   <div class="recipe_card">
     <figure class="recipe_image_container">
-      {% if recipe.photos|length > 0 %} {# affiche la première photo de la
-      collection photos de recipe #}
+
+      {% if recipe.photos|length > 0 %}
 
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
         <img
-        src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-        alt="{{ recipe.photos|first.alt }}"
+          src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+          alt="{{ recipe.photos|first.alt }}"
         />
       </a>
 
-      {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
       {% else %}
 
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
@@ -37,10 +37,12 @@ block body %}
       </a>
 
       {% endif %}
+
     </figure>
     <div class="recipe_infos_container">
       <p>{{ recipe.name }}</p>
-      <p>Une recette de
+      <p>
+        Une recette de
         <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
           {{ recipe.user.pseudo }}
         </a>
@@ -58,16 +60,30 @@ block body %}
         >
           <i class="fa-regular fa-heart"></i>
         </a>
-        <a href="{{ path('remove_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">
+        <a
+          href="{{
+            path('remove_recipe_compilation', {
+              compilation: compilation.id,
+              recipe: recipe.id
+            })
+          }}"
+        >
           <i class="fa-solid fa-minus"></i>
         </a>
       </div>
 
       {% endif %}
+
     </div>
   </div>
 
   {% endfor %}
+  {# {% endfor %} #}
+
 </div>
+
+{# <div class="pagination">
+  {{ knp_pagination_render(pagination) }}
+</div> #}
 
 {% endblock %}

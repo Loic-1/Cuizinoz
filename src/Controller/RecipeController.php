@@ -11,6 +11,7 @@ use App\Repository\RecipeRepository;
 use App\Service\PictureService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,22 @@ use Symfony\Component\HttpFoundation\Request;
 class RecipeController extends AbstractController
 {
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
-    #[Route('/recipe/read/{orderBy?}/{order?}', name: 'app_recipe', defaults:['orderBy' => 'note', 'ORDER' => 'DESC'])]
-    public function listRecipes(RecipeRepository $recipeRepository, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, $orderBy, $order): Response
+    #[Route('/recipe/read/{orderBy?}/{order?}', name: 'app_recipe', defaults: ['orderBy' => 'note', 'ORDER' => 'DESC'])]
+    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, $orderBy, $order): Response
     {
-        // trouver toutes les recettes
-        // $recipes = $recipeRepository->findAll();
         $recipes = $recipeRepository->findAllOrderedBy($orderBy, $order);
+
+
+
+        $query = $recipeRepository->createQueryBuilder('r')->getQuery();
+
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            12,
+        );
+
+
 
         $user = $this->getUser();
         $recipe = new Recipe();
@@ -60,7 +71,8 @@ class RecipeController extends AbstractController
 
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
-            'addRecipeForm' => $form
+            'addRecipeForm' => $form,
+            'pagination' => $pagination
         ]);
     }
 

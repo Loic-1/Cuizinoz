@@ -18,7 +18,8 @@
 
 <div class="recipe_container">
 
-    {% for favorite in favorites %}
+    {# {% for favorite in favorites %} #}
+    {% for favorite in pagination.items %}
 
     <div class="recipe_card" id="{{'recipe-card-' ~ favorite.recipe.id}}">
 
@@ -60,8 +61,13 @@
         </div>
     </div>
 
+    {# {% endfor %} #}
     {% endfor %}
 
+</div>
+
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
 </div>
 
 {% endblock %}
