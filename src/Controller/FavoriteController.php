@@ -2,14 +2,10 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Entity\Favorite;
 use App\Repository\FavoriteRepository;
-use App\Repository\RecipeRepository;
-
-use function PHPUnit\Framework\isEmpty;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;

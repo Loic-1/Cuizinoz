@@ -47,7 +47,7 @@ body {
   .page:hover a {
     color: var(--tertiary-font-color);
     background-color: var(--secondary-background-color);
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 50%;
   }
 
@@ -57,7 +57,7 @@ body {
   .last a,
   .first a {
     color: var(--button-color);
-    padding: 15px;
+    padding: 15px 20px;
     text-decoration: none;
   }
 }
