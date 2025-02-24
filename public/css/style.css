@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Roboto-Standard';
+  src: url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto-Serif-Italic';
+  src: url("../fonts/Roboto_Serif/RobotoSerif-Italic-VariableFont_GRAD\,opsz\,wdth\,wght.ttf");
+}
+
 :root {
   --button-color: #ff503f;
 
@@ -15,6 +25,10 @@
   --tertiary-font-color: #fafafa;
 
   --action-font-size: 25px;
+
+  --title-font-size: 40px;
+  --title-font-weight: 500;
+  --title-font-family: 'Roboto-Standard';
 }
 
 ::selection {
@@ -25,10 +39,15 @@
 
 .h2_200_p {
   padding: 50px 200px 0px;
+  font-family: var(--title-font-family);
+  font-weight: var(--title-font-weight);
+  font-size: var(--title-font-size);
+  color: var(--main-font-color);
 }
 
 body {
   color: var(--main-font-color);
+  background-color: var(--main-background-color);
 }
 
 .hidden {
