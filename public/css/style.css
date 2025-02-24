@@ -36,6 +36,32 @@ body {
   visibility: hidden;
 }
 
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  & .current,
+  .page:hover a {
+    color: var(--tertiary-font-color);
+    background-color: var(--secondary-background-color);
+    padding: 15px 20px;
+    border-radius: 50%;
+  }
+
+  & .page a,
+  .next a,
+  .previous a,
+  .last a,
+  .first a {
+    color: var(--button-color);
+    padding: 15px 20px;
+    text-decoration: none;
+  }
+}
+
 /* liste des recettes */
 
 .recipe_container {

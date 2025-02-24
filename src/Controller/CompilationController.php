@@ -8,9 +8,11 @@ use App\Entity\Recipe;
 use App\Entity\Save;
 use App\Form\CompilationType;
 use App\Repository\CompilationRepository;
+use App\Repository\RecipeRepository;
 use App\Repository\SaveRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -137,12 +139,23 @@ class CompilationController extends AbstractController
 
     // Permet d'afficher le détail d'une compilation
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
-    public function detailCompilation(Compilation $compilation = null): Response
+    public function detailCompilation(Compilation $compilation = null, RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
     {
         if ($compilation) {
 
+            $recipes = $compilation->getRecipes();
+            // $query = $recipeRepository->createQueryBuilder('r')->getQuery();
+
+            // $pagination = $paginator->paginate(
+            //     $query,
+            //     $request->query->getInt('page', 1),
+            //     8,
+            // );
+
             return $this->render('compilation/detailCompilation.html.twig', [
-                'compilation' => $compilation
+                'compilation' => $compilation,
+                'recipes' => $recipes,
+                // 'pagination' => $pagination
             ]);
         } else {
             return $this->redirectToRoute("app_home");
