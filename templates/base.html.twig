@@ -2,16 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>
-      
-      {% block title %}Welcome!{% endblock %}
-    
-    </title>
+    <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="{{
       asset("assets/Logo1.png")
-    }}">
-    
-    {% block stylesheets %}
+    }}"> {% block stylesheets %}
 
     <link
       rel="stylesheet"
@@ -28,25 +22,21 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
-    {% endblock %}
-    {% block javascripts %}
-
-    {# <script src="{{ asset('js/script.js') }}"></script> #}
-
-    {% block importmap %}{{
+    {% endblock %} {% block javascripts %} {#
+    <script src="{{ asset('js/script.js') }}"></script>
+    #} {% block importmap %}{{
       importmap("app")
-    }}{% endblock %}
-    {% endblock %}
-
+    }}{% endblock %} {% endblock %}
   </head>
 
   <body>
     <header>
-
       {% if app.user %}
 
       <a href="{{ path('app_home') }}"
-        ><img src="{{ asset('assets/Logo1.png') }}" alt="Logo Cuizinoz renvoyent vers la page d'accueil"
+        ><img
+          src="{{ asset('assets/Logo1.png') }}"
+          alt="Logo Cuizinoz renvoyent vers la page d'accueil"
       /></a>
       <a href="{{ path('app_favorite', { user: app.user.id }) }}">
         {# <i class="fa-regular fa-bookmark"></i> #} Favoris</a
@@ -64,9 +54,10 @@
         title="{{ app.user.pseudo }}"
         ><i class="fa-regular fa-user"></i
       ></a>
-      <a href="{{ path('app_logout') }}"
-        ><i class="fa-solid fa-right-from-bracket"></i
-      ></a>
+      <a href="{{ path('app_logout') }}">
+        {# <i class="fa-solid fa-right-from-bracket"></i> #}
+        <i class="fa-solid fa-power-off"></i>
+      </a>
 
       {% else %}
 
@@ -78,12 +69,8 @@
       <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
 
       {% endif %}
-
     </header>
 
-    {% block body %}
-    
-    {% endblock %}
-
+    {% block body %} {% endblock %}
   </body>
 </html>
