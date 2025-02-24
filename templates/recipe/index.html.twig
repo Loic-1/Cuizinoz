@@ -89,6 +89,10 @@
 
 </div>
 
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
 {% if app.user %}
 
 <div class="recipe_addRecipeForm_container">
@@ -110,9 +114,5 @@
     <a href="{{ path('create_recipe') }}">Créer une recette</a>
 </div>
 {% endif %}
-
-<div class="pagination">
-    {{ knp_pagination_render(pagination) }}
-</div>
 
 {% endblock %}
