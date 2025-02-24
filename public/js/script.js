@@ -33,10 +33,23 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log(data);
             document.getElementById("recipe-card-" + recipeId).remove();
           })
-          .catch((err) =>
-            console.error("Failed to remove favorite:\n", err)
-          );
+          .catch((err) => console.error("Failed to remove favorite:\n", err));
       }
     });
   });
+
+  // const sortBtns = document.querySelectorAll(".sort_btn");
+
+  // sortBtns.forEach((sortBtn) => {
+  //   sortBtn.addEventListener("click", async function () {
+  //     const orderBy = sortBtn.dataset.orderby;
+  //     const order = sortBtn.dataset.order;
+  //     console.log(orderBy, order);
+
+  //     await fetch(`${api_url}/recipe/read/${orderBy}/${order}`)
+  //       .then((res) => res.json())
+  //       .then((data) => console.log(data))
+  //       .catch((err) => console.error("Failed to fetch recipes", err));
+  //   });
+  // });
 });
