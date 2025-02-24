@@ -11,6 +11,7 @@ use App\Repository\RecipeRepository;
 
 use function PHPUnit\Framework\isEmpty;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,14 +23,23 @@ class FavoriteController extends AbstractController
 {
     // Renvoie tous les favorites du user spécifié
     #[Route('/favorite/{user}', name: 'app_favorite')]
-    public function listFavorites(User $user = null, FavoriteRepository $favoriteRepository): Response
+    public function listFavorites(User $user = null, FavoriteRepository $favoriteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         if ($user) {
 
             $favorites = $favoriteRepository->findFavorites($user->getId());
 
+            $query = $favoriteRepository->createQueryBuilder('r')->getQuery();
+
+            $pagination = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                12,
+            );
+
             return $this->render('favorite/index.html.twig', [
-                'favorites' => $favorites
+                'favorites' => $favorites,
+                'pagination' => $pagination,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
