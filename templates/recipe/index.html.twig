@@ -5,9 +5,10 @@
 <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
 {% endblock %} #}
+
 {% block javascripts %}
 
-    <script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
 
@@ -39,8 +40,7 @@
 </ul>
 
 <div class="recipe_container">
-
-    {% for recipe in recipes %}
+    {% for recipe in pagination.items %}
 
     <div class="recipe_card">
 
@@ -48,12 +48,10 @@
 
             {% if recipe.photos|length > 0 %}
 
-            {# affiche la première photo de la collection photos de recipe #}
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
                 <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}">{# {{ recipe.photos|first.url }} #}
             </a>
 
-            {# recipe.photos == null -> pas de galerie de photos pour cette recette #}
             {% else %}
 
             <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
@@ -94,26 +92,27 @@
 {% if app.user %}
 
 <div class="recipe_addRecipeForm_container">
-    {# PARTIE FORM POUR RAJOUTER UNE RECETTE #}
     <div class="addRecipeForm">
+
         {{ form_errors(addRecipeForm) }}
         {{ form_start(addRecipeForm) }}
+            {{ form_row(addRecipeForm.name) }}
+            {{ form_row(addRecipeForm.preparationTime) }}
+            {{ form_row(addRecipeForm.instructions) }}
+            {{ form_row(addRecipeForm.category) }}
+            {{ form_row(addRecipeForm.images) }}
 
-        {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType définit déjà tous les attributs
-        nécessaires,
-        mais on peut mettre en forme le form avec l'ordre des lignes #}
-        {{ form_row(addRecipeForm.name) }}
-        {{ form_row(addRecipeForm.preparationTime) }}
-        {{ form_row(addRecipeForm.instructions) }}
-        {{ form_row(addRecipeForm.category) }}
-        {{ form_row(addRecipeForm.images) }}
-
-        <button type="submit">Publier</button>
+            <button type="submit">Publier</button>
 
         {{ form_end(addRecipeForm) }}
+
     </div>
     <a href="{{ path('create_recipe') }}">Créer une recette</a>
 </div>
 {% endif %}
+
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+</div>
 
 {% endblock %}
