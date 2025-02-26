@@ -95,6 +95,18 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findBestRecipesByUserId($userId, $limit)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('r.note', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */

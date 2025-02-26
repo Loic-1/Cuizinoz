@@ -32,6 +32,18 @@ class CommentRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findLastCommentsByUserId($userId, $limit)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('c.creationDate', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Comment[] Returns an array of Comment objects
     //     */

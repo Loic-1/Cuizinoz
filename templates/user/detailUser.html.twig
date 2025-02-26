@@ -6,6 +6,12 @@
 
 {% endblock %} #}
 
+{% block javascripts %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
@@ -101,10 +107,10 @@
 {% endfor %}
 {% else %}
 
-<p>Pas de follower :(</p>
+<p>Pas de follower</p>
 {% endif %}
 
-<h3>Personnes suivies: </h3>
+<h3>Suit: </h3>
 
 {% if followees|length > 0 %}
 
@@ -127,15 +133,139 @@
 <p>Ne suit personne</p>
 {% endif %}
 
-<h2>Liste utilisateurs(pour tester c'est temporaire)</h2>
-{% if app.user %}
+<section class="detail_user_creations_container">
 
-{% for user in users %}
-<a href="{{ path('detail_user', { user: user.id }) }}">{{ user.pseudo }}</a>
-<a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a>
-<a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i
-        class="fa-solid fa-minus"></i></a><br>
-{% endfor %}
-{% endif %}
+    <h2>Top recettes</h2>
+
+    {% if recipes|length > 0 %}
+        
+    <div class="recipe_container">
+        {% for recipe in recipes %}
+    
+        <div class="recipe_card">
+    
+            <figure class="recipe_image_container">
+    
+                {% if recipe.photos|length > 0 %}
+    
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}">{# {{ recipe.photos|first.url }} #}
+                </a>
+    
+                {% else %}
+    
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                        alt="Pas encore de photo">
+                </a>
+    
+                {% endif %}
+    
+            </figure>
+            <div class="recipe_infos_container">
+                <p>{{ recipe.name }}</p>
+                <p>Une recette de
+                    <a href="{{ path('detail_user', {user: recipe.user.id}) }}">
+                        {{ recipe.user.pseudo }}
+                    </a>
+                </p>
+                <p>Note: {{ recipe.note }} (temp)</p>
+                <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
+                    {{ recipe.category.name }}
+                </a>
+    
+                {% if app.user %}
+    
+                <div class="recipe_actions">
+                    <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                </div>
+    
+                {% endif %}
+    
+            </div>
+        </div>
+    
+        {% endfor %}
+    
+    </div>
+
+    <a href="{{ path('user_recipe', { id: user.id }) }}">Toutes les recettes</a>
+
+    {% else %}
+
+    <h3>Pas de recettes créées</h3>
+
+    {% endif %}
+
+    <h2>Dernières collections</h2>
+    
+    {% if compilations|length > 0 %}
+    
+    <div class="compilation_container">
+        
+        {% for compilation in compilations %}
+        
+        <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+            <div class="compilation_card">
+                <p>{{ compilation.name }}</p>
+                <strong> {{ compilation.recipes | length }} </strong>
+                
+                {% if app.user %}
+                
+            <div class="compilation_actions">
+              <a href="{{ path('add_compilation', { compilation: compilation.id, user: app.user.id }) }}">
+                <i class="fa-regular fa-floppy-disk"></i>
+              </a>
+            </div>
+
+            {% endif %}
+
+          </div>
+        </a>
+
+        {% endfor %}
+
+    </div>
+    
+    <a href="{{ path('app_compilation', {user: user.id}) }}">Toutes les collections</a>
+
+    {% else %}
+
+    <h3>Dernières collections</h3>
+
+    {% endif %}
+
+    <h2>Derniers commentaires</h2>
+    
+    {% if comments|length > 0 %}
+
+    <div class="home_section_4_comment_container">
+        
+        {% for comment in comments %}
+    
+        <div class="home_section_4_comment_card">
+          <h4>{{ comment.title }}</h4>
+          <p>Dans
+            <a href="{{ path('detail_recipe', {recipe: comment.recipe.id}) }}">          
+              {{ comment.recipe.name }}
+            </a>
+          </p>
+          <p>{{ comment.content }}</p>
+          <a href="{{ path('detail_user', {user: comment.user.id}) }}">        
+            {{ comment.user.pseudo }}
+          </a>,
+          {{ comment.creationDateFr }}
+        </div>
+    
+        {% endfor %}
+    </div>
+    
+    {% else %}
+
+    <h3>Pas de commentaires écris</h3>
+
+    {% endif %}
+
+</section>
 
 {% endblock %}

@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserPictureType;
 use App\Form\UserType;
+use App\Repository\CommentRepository;
+use App\Repository\CompilationRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManager;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityRepository;
@@ -29,19 +32,27 @@ class UserController extends AbstractController
 
     // Renvoie l'utilisateur spécifié, ceux qui le suivent et ceux qu'il suit
     #[Route('/detail/{user}', name: 'detail_user')]
-    public function detailUser(User $user = null, UserRepository $userRepository): Response
+    public function detailUser(User $user = null, UserRepository $userRepository, CompilationRepository $compilationRepository, RecipeRepository $recipeRepository, CommentRepository $commentRepository): Response
     {
         if ($user) {
 
             $followers = $user->getFollowers();
             $followees = $user->getFollowees();
             $users = $userRepository->findAll();
+            // limit = 3
+            $compilations = $compilationRepository->findLastCompilationsByUserId($user->getId(), 3);
+            $recipes = $recipeRepository->findBestRecipesByUserId($user->getId(), 3);
+            $comments = $commentRepository->findLastCommentsByUserId($user->getId(), 3);
 
             return $this->render('user/detailUser.html.twig', [
                 'user' => $user,
                 'followers' => $followers,
                 'followees' => $followees,
-                'users' => $users
+                'users' => $users,
+                // new
+                'compilations' => $compilations,
+                'recipes' => $recipes,
+                'comments' => $comments,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
