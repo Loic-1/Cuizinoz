@@ -16,6 +16,18 @@ class CompilationRepository extends ServiceEntityRepository
         parent::__construct($registry, Compilation::class);
     }
 
+    public function findLastCompilationsByUserId($userId, $limit)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.user = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('c.creationDate', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     //    /**
     //     * @return Compilation[] Returns an array of Compilation objects
     //     */
