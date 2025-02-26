@@ -5,12 +5,13 @@
 }
 
 @font-face {
-  font-family: 'Roboto-Standard';
-  src: url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf") format('truetype');
+  font-family: "Roboto-Standard";
+  src: url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf")
+    format("truetype");
 }
 
 @font-face {
-  font-family: 'Roboto-Serif-Italic';
+  font-family: "Roboto-Serif-Italic";
   src: url("../fonts/Roboto_Serif/RobotoSerif-Italic-VariableFont_GRAD\,opsz\,wdth\,wght.ttf");
 }
 
@@ -26,15 +27,19 @@
 
   --action-font-size: 25px;
 
-  --title-font-size: 40px;
-  --title-font-weight: 500;
-  --title-font-family: 'Roboto-Standard';
+  --roboto-standard-title-font-size: 40px;
+  --roboto-standard-title-font-weight: 500;
+  --roboto-standard-title-font-family: "Roboto-Standard";
+
+  --roboto-standard-text-font-size: 16px;
+  --roboto-standard-text-font-weight: 400;
+  --roboto-standard-text-font-family: "Roboto-Standard";
 }
 
 ::selection {
-  background-color: var(--button-color);
+  background-color: var(--secondary-background-color);
   color: var(--tertiary-font-color);
-  padding: 10px;
+  /* padding: 10px; */
 }
 
 .h2_200_p {
@@ -362,4 +367,43 @@ body {
   justify-content: center;
 
   padding: 50px 200px;
+}
+
+.addRecipe_btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--button-color);
+
+  padding: 15px;
+
+  border-radius: 100px;
+
+  text-decoration: none;
+
+  & i {
+    color: var(--tertiary-font-color);
+    font-size: 25px;
+  }
+  
+  & span {
+    display: none;
+    
+    padding-left: 10px;
+
+    color: var(--tertiary-font-color);
+    
+    font-size: var(--roboto-standard-text-font-size);
+    font-weight: var(--roboto-standard-text-font-weight);
+    font-family: var(--roboto-standard-text-font-family);
+  }
+
+  &:hover span {
+    display: unset;
+  }
 }
