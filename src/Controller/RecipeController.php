@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Entity\Photo;
 use App\Entity\Recipe;
 use App\Form\CommentType;
@@ -19,6 +20,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
+    // Renvoie le user spécifié pour récupérer ses recettes plus tard
+    #[Route('/recipe/userRecipes/{id}', name: 'user_recipe')]
+    public function userRecipes(User $user = null)
+    {
+        if ($user) {
+            return $this->render('recipe/listUserRecipe.html.twig', [
+                'user' => $user,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
     #[Route('/recipe/read/{orderBy?}/{order?}', name: 'app_recipe', defaults: ['orderBy' => 'note', 'ORDER' => 'DESC'])]
     public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, $orderBy, $order): Response

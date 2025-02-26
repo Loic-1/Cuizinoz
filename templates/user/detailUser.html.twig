@@ -6,6 +6,12 @@
 
 {% endblock %} #}
 
+{% block javascripts %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
@@ -101,10 +107,10 @@
 {% endfor %}
 {% else %}
 
-<p>Pas de follower :(</p>
+<p>Pas de follower</p>
 {% endif %}
 
-<h3>Personnes suivies: </h3>
+<h3>Suit: </h3>
 
 {% if followees|length > 0 %}
 
@@ -127,58 +133,9 @@
 <p>Ne suit personne</p>
 {% endif %}
 
-<h2>Liste utilisateurs(pour tester c'est temporaire)</h2>
-{% if app.user %}
-
-{% for user in users %}
-<a href="{{ path('detail_user', { user: user.id }) }}">{{ user.pseudo }}</a>
-<a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}"><i class="fa-solid fa-plus"></i></a>
-<a href="{{ path('unfollow_user', { follower: app.user.id, followee: user.id }) }}"><i
-        class="fa-solid fa-minus"></i></a><br>
-{% endfor %}
-{% endif %}
-
 <section class="detail_user_creations_container">
 
-    <h2>Collections créées</h2>
-
-    {% if compilations|length > 0 %}
-
-    <div class="compilation_container">
-            
-        {% for compilation in compilations %}
-
-        <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
-          <div class="compilation_card">
-            <p>{{ compilation.name }}</p>
-            <strong> {{ compilation.recipes | length }} </strong>
-
-            {% if app.user %}
-
-            <div class="compilation_actions">
-              <a href="{{ path('add_compilation', { compilation: compilation.id, user: app.user.id }) }}">
-                <i class="fa-regular fa-floppy-disk"></i>
-              </a>
-            </div>
-
-            {% endif %}
-
-          </div>
-        </a>
-
-        {% endfor %}
-
-    </div>
-    
-    <a href="{{ path('app_compilation', {user: user.id}) }}">Toutes les collections</a>
-
-    {% else %}
-
-    <h3>Pas de collections créées</h3>
-
-    {% endif %}
-
-    <h2>Recettes créées</h2>
+    <h2>Top recettes</h2>
 
     {% if recipes|length > 0 %}
         
@@ -232,13 +189,53 @@
     
     </div>
 
+    <a href="{{ path('user_recipe', { id: user.id }) }}">Toutes les recettes</a>
+
     {% else %}
 
     <h3>Pas de recettes créées</h3>
 
     {% endif %}
 
-    <h2>Commentaires écris</h2>
+    <h2>Dernières collections</h2>
+    
+    {% if compilations|length > 0 %}
+    
+    <div class="compilation_container">
+        
+        {% for compilation in compilations %}
+        
+        <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+            <div class="compilation_card">
+                <p>{{ compilation.name }}</p>
+                <strong> {{ compilation.recipes | length }} </strong>
+                
+                {% if app.user %}
+                
+            <div class="compilation_actions">
+              <a href="{{ path('add_compilation', { compilation: compilation.id, user: app.user.id }) }}">
+                <i class="fa-regular fa-floppy-disk"></i>
+              </a>
+            </div>
+
+            {% endif %}
+
+          </div>
+        </a>
+
+        {% endfor %}
+
+    </div>
+    
+    <a href="{{ path('app_compilation', {user: user.id}) }}">Toutes les collections</a>
+
+    {% else %}
+
+    <h3>Dernières collections</h3>
+
+    {% endif %}
+
+    <h2>Derniers commentaires</h2>
     
     {% if comments|length > 0 %}
 
