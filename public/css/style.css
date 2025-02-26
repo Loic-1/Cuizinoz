@@ -469,7 +469,7 @@ header {
   }
 
   & span {
-    /* display: none; */
+    display: none;
 
     padding-left: 10px;
 
