@@ -1,59 +1,57 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
-{# {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/userCompilation.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('css/userCompilation.css') }}">
+{% endblock %} #} {% block title %}Vos collections{% endblock %} {% block body
+%}
 
-{% endblock %} #}
+<div class="wrapper">
+  <h2 class="h2_200_p">Vos collections créées</h2>
 
-{% block title %}Vos collections{% endblock %} {%
-block body %}
-
-<h2 class="h2_200_p">Vos collections créées</h2>
-
-<div class="compilation_container">
-  {% for compilation in user.compilations %}
-  <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
-    <div class="compilation_card">
-      <p>{{ compilation.name }}</p>
-      <strong> {{ compilation.recipes | length }} recettes</strong>
-      <p>NbTags: {{ compilation.tags | length }}</p>
-    </div>
-  </a>
-  {% endfor %}
-
-  <a href="{{ path('create_compilation', { user: user.id }) }}">
-    <div class="compilation_card">
-      <i class="fa-solid fa-plus"></i>
-    </div>
-  </a>
-</div>
-
-<h2 class="h2_200_p">Vos collections sauvegardées</h2>
-
-<div class="compilation_container">
-  {% for save in user.saves %}
-  <a
-    href="{{
-      path('detail_compilation', { compilation: save.compilation.id })
-    }}"
-  >
-    <div class="compilation_card">
-      <p>{{ save.compilation.name }}</p>
-      <strong> {{ save.compilation.recipes | length }} recettes</strong>
-      <p>NbTags: {{ save.compilation.tags | length }}</p>
-      <div class="compilation_actions">
-        <a
-          href="{{
-            path('remove_compilation', { user: user.id, save: save.id })
-          }}"
-        >
-          <i class="fa-solid fa-trash"></i>
-        </a>
+  <div class="compilation_container">
+    {% for compilation in user.compilations %}
+    <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+      <div class="compilation_card">
+        <p>{{ compilation.name }}</p>
+        <strong> {{ compilation.recipes | length }} recettes</strong>
+        <p>NbTags: {{ compilation.tags | length }}</p>
       </div>
-    </div>
-  </a>
-  {% endfor %}
+    </a>
+    {% endfor %}
+
+    <a href="{{ path('create_compilation', { user: user.id }) }}">
+      <div class="compilation_card">
+        <i class="fa-solid fa-plus"></i>
+      </div>
+    </a>
+  </div>
+
+  <h2 class="h2_200_p">Vos collections sauvegardées</h2>
+
+  <div class="compilation_container">
+    {% for save in user.saves %}
+    <a
+      href="{{
+        path('detail_compilation', { compilation: save.compilation.id })
+      }}"
+    >
+      <div class="compilation_card">
+        <p>{{ save.compilation.name }}</p>
+        <strong> {{ save.compilation.recipes | length }} recettes</strong>
+        <p>NbTags: {{ save.compilation.tags | length }}</p>
+        <div class="compilation_actions">
+          <a
+            href="{{
+              path('remove_compilation', { user: user.id, save: save.id })
+            }}"
+          >
+            <i class="fa-solid fa-trash"></i>
+          </a>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

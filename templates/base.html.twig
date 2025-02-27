@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="{{
-      asset("assets/Logo1.png")
+      asset("assets/logoCuizinoz50x50.png")
     }}"> {% block stylesheets %}
 
     <link
@@ -33,72 +33,66 @@
     <header>
       {% if app.user %}
 
-      <a
-        href="{{ path('app_home') }}"
-        title="Retour à l'accueil"
-      >
+      <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
-          src="{{ asset('assets/Logo1.png') }}"
-          alt="Logo Cuizinoz renvoyent vers la page d'accueil"
+          src="{{ asset('assets/logoCuizinoz60x60.png') }}"
+          alt="Logo Cuizinoz renvoyant vers la page d'accueil"
         />
       </a>
 
-      <a href="{{ path('app_recipe') }}"> Recettes </a>
-      |
-      <a href="{{ path('list_compilation') }}"> Collections </a>
-      |
-      <a href="#"> Catégories </a>
-      |
-      <a href="#"> Recette aléatoire </a>
+      <div class="header_links_nav">
+        <a href="{{ path('app_recipe') }}"> Recettes </a>
+        <span> | </span>
+        <a href="{{ path('list_compilation') }}"> Collections </a>
+        <span> | </span>
+        <a href="#"> Catégories </a>
+        <span> | </span>
+        <a href="#"> Recette aléatoire </a>
+      </div>
 
-      <a
-        href="{{ path('app_favorite', { user: app.user.id }) }}"
-        title="Vos favoris"
-      >
-        <i class="fa-heart fa-solid"></i>
-      </a>
+      <div class="header_links_btn">
+        <a
+          href="{{ path('app_favorite', { user: app.user.id }) }}"
+          title="Vos favoris"
+        >
+          <i class="fa-heart fa-solid"></i>
+        </a>
 
-      <a
-        href="#"
-        title="Créer une recette"
-      >
-        <i class="fa-plus">
-          <i class="fa-solid fa-plus"></i>
-        </i>
-      </a>
+        <a href="#" title="Créer une recette">
+          <i class="fa-plus">
+            <i class="fa-solid fa-plus"></i>
+          </i>
+        </a>
 
-      <a
-        href="{{ path('detail_user', { user: app.user.id }) }}"
-        title="{{ app.user.pseudo }}"
-      >
-        <i class="fa-regular fa-user"></i>
-      </a>
+        <a
+          href="{{ path('detail_user', { user: app.user.id }) }}"
+          title="{{ app.user.pseudo }}"
+        >
+          <i class="fa-regular fa-user"></i>
+        </a>
 
-      <a
-        href="{{ path('app_logout') }}"
-        title="Se déconnecter"
-      >
-        <i class="fa-solid fa-right-from-bracket"></i>
-        {# <i class="fa-solid fa-power-off"></i> #}
-      </a>
+        <a href="{{ path('app_logout') }}" title="Se déconnecter">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          {# <i class="fa-solid fa-power-off"></i> #}
+        </a>
+      </div>
 
       {% else %}
 
-      <a
-        href="{{ path('app_home') }}"
-        title="Retour à l'accueil"
-      >
+      <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
-          src="{{ asset('assets/Logo1.png') }}"
+          src="{{ asset('assets/logoCuizinoz60x60.png') }}"
           alt="Logo Cuizinoz renvoyent vers la page d'accueil"
         />
       </a>
 
-      <a href="{{ path('app_login') }}">Connexion</a>
-      |
-      <a href="{{ path('app_register') }}">Enregistrement</a>
+      <div class="header_links_nav">
+        <a href="{{ path('app_login') }}">Connexion</a>
+        <span>|</span>
+        <a href="{{ path('app_register') }}">Enregistrement</a>
+      </div>
 
-      <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
+      {# <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p> #}
 
       {% endif %}
     </header>

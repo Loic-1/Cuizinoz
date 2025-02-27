@@ -1,16 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {% block title %}Création de recette{% endblock
+%} {% block body %}
 
-{% block title %}Création de recette{% endblock %}
-
-{% block body %}
-
-<div class="addRecipeForm">
+<div class="wrapper">
+  <div class="addRecipeForm">
     {{ form_errors(addRecipeForm) }}
     {{ form_start(addRecipeForm) }}
 
-    {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType définit déjà tous les attributs
-    nécessaires,
-    mais on peut mettre en forme le form avec l'ordre des lignes #}
+    {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType
+    définit déjà tous les attributs nécessaires, mais on peut mettre en forme le
+    form avec l'ordre des lignes #}
     {{ form_row(addRecipeForm.name) }}
     {{ form_row(addRecipeForm.preparationTime) }}
     {{ form_row(addRecipeForm.instructions) }}
@@ -20,6 +18,7 @@
     <button type="submit">Publier</button>
 
     {{ form_end(addRecipeForm) }}
+  </div>
 </div>
 
 {% endblock %}

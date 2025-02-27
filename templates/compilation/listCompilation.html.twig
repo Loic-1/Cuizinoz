@@ -1,31 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
-{# {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/listCompilation.css') }}" />
 
-<link rel="stylesheet" href="{{ asset('css/listCompilation.css') }}">
+{% endblock %} #} {% block title %}Vos collections{% endblock %} {% block body
+%}
 
-{% endblock %} #}
+<div class="wrapper">
+  <h2 class="h2_200_p">Les collections du site</h2>
 
-{% block title %}Vos collections{% endblock %} {%
-block body %}
-
-<h2 class="h2_200_p">Les collections du site</h2>
-
-<div class="compilation_container">
-  {% for compilation in compilations %}
-  <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
-    <div class="compilation_card">
-      <p>{{ compilation.name }}</p>
-      <strong> {{ compilation.recipes | length }} </strong>
-      {% if app.user %}
-      <div class="compilation_actions">
-        <a href="{{ path('add_compilation', { compilation: compilation.id, user: app.user.id }) }}">
-          <i class="fa-regular fa-floppy-disk"></i>
-        </a>
+  <div class="compilation_container">
+    {% for compilation in compilations %}
+    <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+      <div class="compilation_card">
+        <p>{{ compilation.name }}</p>
+        <strong> {{ compilation.recipes | length }} </strong>
+        {% if app.user %}
+        <div class="compilation_actions">
+          <a
+            href="{{
+              path('add_compilation', {
+                compilation: compilation.id,
+                user: app.user.id
+              })
+            }}"
+          >
+            <i class="fa-regular fa-floppy-disk"></i>
+          </a>
+        </div>
+        {% endif %}
       </div>
-      {% endif %}
-    </div>
-  </a>
-  {% endfor %}
+    </a>
+    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}

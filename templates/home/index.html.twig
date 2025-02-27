@@ -1,151 +1,156 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/home.css') }}" />
 
-{% endblock %} #}
+{% endblock %} #} {% block title %}Cuizinoz{% endblock %} {# HEADER #} {% block
+body %}
 
-{% block title %}Cuizinoz{% endblock %} {# HEADER #} {% block body %}
+<div class="wrapper">
+  <section class="home_section_1">
+    <figure class="home_section_1_image_container">
+      {#
+      <img
+        src="{{ asset('assets/chicken.jpg') }}"
+        alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
+      />
+      #}
+      <img src="#" alt="" />
+    </figure>
+    <div class="home_section_1_overlay">
+      {#
+      <img
+        src="{{ asset('assets/chef.png') }}"
+        alt="Toque de cuisinier survolant l'image de couverture"
+      />
+      #}
+      <img src="#" alt="" />
+      <h3>Bienvenue sur Cuizinoz</h3>
+      <p>l'application où on ose cuisiner !</p>
+    </div>
+  </section>
 
-<section class="home_section_1">
-  <figure class="home_section_1_image_container">
-    {#
-    <img
-      src="{{ asset('assets/chicken.jpg') }}"
-      alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
-    />
-    #}
-    <img src="#" alt="" />
-  </figure>
-  <div class="home_section_1_overlay">
-    {#
-    <img
-      src="{{ asset('assets/chef.png') }}"
-      alt="Toque de cuisinier survolant l'image de couverture"
-    />
-    #}
-    <img src="#" alt="" />
-    <h3>Bienvenue sur Cuizinoz</h3>
-    <p>l'application où on ose cuisiner !</p>
-  </div>
-</section>
+  <h2>Recettes à la une</h2>
 
-<h2>Recettes à la une</h2>
+  <section class="home_section_2">
+    <div class="recipe_container_home">
+      {% for recipe in recipes %}
 
-<section class="home_section_2">
-  <div class="recipe_container_home">
-    {% for recipe in recipes %}
+      <div class="recipe_card">
+        <figure class="recipe_image_container">
+          {% if recipe.photos|length > 0 %} {# affiche la première photo de la
+          collection photos de recipe #}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+            <img
+              src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+              alt="{{ recipe.photos|first.alt }}"
+            />{# {{ recipe.photos|first.url }} #}
+          </a>
 
-    <div class="recipe_card">
-      <figure class="recipe_image_container">
-        {% if recipe.photos|length > 0 %} {# affiche la première photo de la
-        collection photos de recipe #}
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-          <img
-            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-            alt="{{ recipe.photos|first.alt }}"
-          />{# {{ recipe.photos|first.url }} #}
-        </a>
+          {# recipe.photos == null -> pas de galerie de photos pour cette
+          recette #} {% else %}
 
-        {# recipe.photos == null -> pas de galerie de photos pour cette recette
-        #} {% else %}
+          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+              alt="Pas encore de photo"
+            />
+          </a>
 
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
-            alt="Pas encore de photo"
-          />
-        </a>
+          {% endif %}
+        </figure>
+        <div class="recipe_infos_container">
+          <p>{{ recipe.name }}</p>
+          <p>
+            Une recette de
+            <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+              {{ recipe.user.pseudo }}
+            </a>
+          </p>
+          <a
+            href="{{
+              path('recipe_category', { category: recipe.category.id })
+            }}"
+          >
+            {{ recipe.category.name }}
+          </a>
+          <p>Note: {{ recipe.note }} (temp)</p>
+        </div>
+      </div>
 
-        {% endif %}
-      </figure>
-      <div class="recipe_infos_container">
-        <p>{{ recipe.name }}</p>
-        <p>Une recette de
-          <a href="{{path('detail_user', {user: recipe.user.id})}}">
-            {{ recipe.user.pseudo }}
+      {% endfor %}
+    </div>
+    <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
+  </section>
+
+  <section class="home_section_3">
+    <p class="home_section_3_citation">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat sed
+      libero ipsum suscipit maiores, saepe perferendis ut blanditiis laboriosam
+      animi. Eos corrupti ex asperiores molestiae provident culpa ipsum placeat
+      dolore.
+    </p>
+  </section>
+
+  <h2>La communauté</h2>
+
+  <section class="home_section_4">
+    <div class="home_section_4_comment_container">
+      {% if comments|length > 0 %} {% for comment in comments %}
+
+      <div class="home_section_4_comment_card">
+        <h4>{{ comment.title }}</h4>
+        <p>
+          Dans
+          <a href="{{ path('detail_recipe', { recipe: comment.recipe.id }) }}">
+            {{ comment.recipe.name }}
           </a>
         </p>
-        <a
-          href="{{ path('recipe_category', { category: recipe.category.id }) }}"
-        >
-          {{ recipe.category.name }}
-        </a>
-        <p>Note: {{ recipe.note }} (temp)</p>
+        <p>{{ comment.content }}</p>
+        <a href="{{ path('detail_user', { user: comment.user.id }) }}">
+          {{ comment.user.pseudo }} </a
+        >,
+        {{ comment.creationDateFr }}
       </div>
+
+      {% endfor %} {% else %}
+
+      <h3>Pas de commentaires</h3>
+
+      {% endif %}
     </div>
+  </section>
 
-    {% endfor %}
+  <h2>Catégories</h2>
 
-  </div>
-  <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
-</section>
+  <section class="home_section5">
+    {% if categories|length > 0 %} {% for category in categories %}
 
-<section class="home_section_3">
-  <p class="home_section_3_citation">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat sed libero
-    ipsum suscipit maiores, saepe perferendis ut blanditiis laboriosam animi.
-    Eos corrupti ex asperiores molestiae provident culpa ipsum placeat dolore.
-  </p>
-</section>
-
-<h2>La communauté</h2>
-
-<section class="home_section_4">
-  <div class="home_section_4_comment_container">
-
-    {% if comments|length > 0 %} {% for comment in comments %}
-
-    <div class="home_section_4_comment_card">
-      <h4>{{ comment.title }}</h4>
-      <p>Dans
-        <a href="{{ path('detail_recipe', {recipe: comment.recipe.id}) }}">          
-          {{ comment.recipe.name }}
-        </a>
-      </p>
-      <p>{{ comment.content }}</p>
-      <a href="{{ path('detail_user', {user: comment.user.id}) }}">        
-        {{ comment.user.pseudo }}
-      </a>,
-      {{ comment.creationDateFr }}
-    </div>
+    <figure class="recipe_image_container">
+      <a href="{{ path('recipe_category', { category: category.id }) }}">
+        <img src="{{ category.photo }}" alt="" />
+      </a>
+    </figure>
+    <p>
+      {{ category.name }}
+    </p>
 
     {% endfor %} {% else %}
 
-    <h3>Pas de commentaires</h3>
+    <h3>Pas de catégories</h3>
 
     {% endif %}
+  </section>
 
-  </div>
-</section>
-
-<h2>Catégories</h2>
-
-<section class="home_section5">
-  {% if categories|length > 0 %} {% for category in categories %}
-
-  <figure class="recipe_image_container">
-    <a href="{{ path('recipe_category', { category: category.id }) }}">
-      <img src="{{ category.photo }}" alt="" />
+  {#
+  <div class="addRecipe_btn">
+    #}
+    <a href="#" class="addRecipe_btn">
+      <i class="fa-regular fa-plus"></i>
+      <span>Créer une recette</span>
     </a>
-  </figure>
-  <p>
-    {{ category.name }}
-  </p>
-
-  {% endfor %} {% else %}
-
-  <h3>Pas de catégories</h3>
-
-  {% endif %}
-</section>
-
-{# <div class="addRecipe_btn"> #}
-  <a href="#" class="addRecipe_btn">
-    <i class="fa-regular fa-plus"></i>
-    <span>Créer une recette</span>
-  </a>
-{# </div> #}
+    {#
+  </div>
+  #}
+</div>
 
 {% endblock %}
