@@ -101,7 +101,7 @@ a {
 /* header/navbar */
 
 header {
-  position: fixed;
+  /* position: fixed; */
 
   display: flex;
   flex-direction: row;
