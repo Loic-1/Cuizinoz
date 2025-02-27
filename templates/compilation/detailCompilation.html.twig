@@ -2,88 +2,81 @@
 
 <link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
 
-{% endblock %} #}
+{% endblock %} #} {% block title %} Vos collections {% endblock %} {% block body
+%}
 
-{% block title %} Vos collections {% endblock %}
+<div class="wrapper">
+  <h2 class="h2_200_p">{{ compilation.name }}</h2>
 
-{% block body %}
+  <div class="recipe_container">
+    {% for recipe in recipes %} {# {% for recipe in pagination.items %} #}
 
-<h2 class="h2_200_p">{{ compilation.name }}</h2>
+    <div class="recipe_card">
+      <figure class="recipe_image_container">
+        {% if recipe.photos|length > 0 %}
 
-<div class="recipe_container">
-  
-  {% for recipe in recipes %}
-  {# {% for recipe in pagination.items %} #}
-
-  <div class="recipe_card">
-    <figure class="recipe_image_container">
-
-      {% if recipe.photos|length > 0 %}
-
-      <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-        <img
-          src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-          alt="{{ recipe.photos|first.alt }}"
-        />
-      </a>
-
-      {% else %}
-
-      <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
-          alt="Pas encore de photo"
-        />
-      </a>
-
-      {% endif %}
-
-    </figure>
-    <div class="recipe_infos_container">
-      <p>{{ recipe.name }}</p>
-      <p>
-        Une recette de
-        <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-          {{ recipe.user.pseudo }}
+        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <img
+            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+            alt="{{ recipe.photos|first.alt }}"
+          />
         </a>
-      </p>
-      <p>Note: {{ recipe.note }} (temp)</p>
-      <p>{{ recipe.category.name }}</p>
 
-      {% if app.user %}
+        {% else %}
 
-      <div class="recipe_actions">
-        <a
-          href="{{
-            path('add_favorite', { user: app.user.id, recipe: recipe.id })
-          }}"
-        >
-          <i class="fa-regular fa-heart"></i>
+        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+            alt="Pas encore de photo"
+          />
         </a>
-        <a
-          href="{{
-            path('remove_recipe_compilation', {
-              compilation: compilation.id,
-              recipe: recipe.id
-            })
-          }}"
-        >
-          <i class="fa-solid fa-minus"></i>
-        </a>
+
+        {% endif %}
+      </figure>
+      <div class="recipe_infos_container">
+        <p>{{ recipe.name }}</p>
+        <p>
+          Une recette de
+          <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+            {{ recipe.user.pseudo }}
+          </a>
+        </p>
+        <p>Note: {{ recipe.note }} (temp)</p>
+        <p>{{ recipe.category.name }}</p>
+
+        {% if app.user %}
+
+        <div class="recipe_actions">
+          <a
+            href="{{
+              path('add_favorite', { user: app.user.id, recipe: recipe.id })
+            }}"
+          >
+            <i class="fa-regular fa-heart"></i>
+          </a>
+          <a
+            href="{{
+              path('remove_recipe_compilation', {
+                compilation: compilation.id,
+                recipe: recipe.id
+              })
+            }}"
+          >
+            <i class="fa-solid fa-minus"></i>
+          </a>
+        </div>
+
+        {% endif %}
       </div>
-
-      {% endif %}
-
     </div>
+
+    {% endfor %} {# {% endfor %} #}
   </div>
 
-  {% endfor %}
-  {# {% endfor %} #}
-
+  {#
+  <div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+  </div>
+  #}
 </div>
-
-{# <div class="pagination">
-  {{ knp_pagination_render(pagination) }}
-</div> #}
-
 {% endblock %}

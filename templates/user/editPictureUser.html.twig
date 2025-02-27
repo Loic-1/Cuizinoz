@@ -1,15 +1,12 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/editPictureUser.css') }}" />
 
-{% endblock %} #}
+{% endblock %} #} {% block title %}Hello UserController!{% endblock %} {% block
+body %}
 
-{% block title %}Hello UserController!{% endblock %}
-
-{% block body %}
-<div class="h2_200_p">
+<div class="wrapper">
+  <div class="h2_200_p">
     {{ form_errors(editPictureUserForm) }}
 
     {{ form_start(editPictureUserForm) }}
@@ -20,6 +17,7 @@
     <button type="submit">Modifier profil</button>
 
     {{ form_end(editPictureUserForm) }}
+  </div>
 </div>
 
 {% endblock %}

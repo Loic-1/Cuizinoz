@@ -63,6 +63,10 @@ body {
   background-color: var(--primary-background-color);
 }
 
+.wrapper {
+  padding-top: 100px;
+}
+
 .hidden {
   position: absolute;
   visibility: hidden;
@@ -101,7 +105,8 @@ a {
 /* header/navbar */
 
 header {
-  /* position: fixed; */
+  position: fixed;
+  z-index: 1000;
 
   display: flex;
   flex-direction: row;
@@ -216,7 +221,11 @@ header {
   display: flex;
   flex-direction: row;
   font-size: 25px;
-  color: var(--button-color);
+  color: var(--primary-button-color);
+
+  &:hover {
+    color: var(--secondary-button-color);
+  }
 }
 
 .recipe_actions a {
@@ -450,12 +459,13 @@ header {
   position: fixed;
   bottom: 25px;
   right: 25px;
+  z-index: 1000;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background-color: var(--button-color);
+  background-color: var(--primary-button-color);
 
   padding: 15px;
 
@@ -477,7 +487,7 @@ header {
 
     font-size: var(--roboto-standard-text-font-size);
     font-weight: var(--roboto-standard-text-font-weight);
-    font-family: var(--roboto-standard-text-font-family);
+    font-family: var(--roboto-standard-font-family);
   }
 
   &:hover span {

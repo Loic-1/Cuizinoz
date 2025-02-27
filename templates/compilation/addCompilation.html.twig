@@ -1,24 +1,20 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/addCompilation.css') }}" />
 
-{% endblock %} #}
+{% endblock %} #} {% block title %}Vos collections{% endblock %} {%block body %}
 
-{% block title %}Vos collections{% endblock %}
+<div class="wrapper">
+  {{ form_errors(addCompilationForm) }}
 
-{%block body %}
+  {{ form_start(addCompilationForm) }}
+  {{ form_row(addCompilationForm.name) }}
+  {{ form_row(addCompilationForm.tags) }}
+  {# {{ form_row(addCompilationForm.recipes) }} #}
 
-{{ form_errors(addCompilationForm) }}
+  <button type="submit">Ajouter</button>
 
-{{ form_start(addCompilationForm) }}
-{{ form_row(addCompilationForm.name) }}
-{{ form_row(addCompilationForm.tags) }}
-{# {{ form_row(addCompilationForm.recipes) }} #}
-
-<button type="submit">Ajouter</button>
-
-{{ form_end(addCompilationForm) }}
+  {{ form_end(addCompilationForm) }}
+</div>
 
 {% endblock %}

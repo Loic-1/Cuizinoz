@@ -1,34 +1,28 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/editRecipe.css') }}" />
 
-{% endblock %} #}
-
-{% block title %}
+{% endblock %} #} {% block title %}
 
 {{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo}}
 
-{% endblock %}
+{% endblock %} {% block body %}
 
-{% block body %}
+<div class="wrapper">
+  <h1 class="h2_200_p">Modif {{ recipe.name }}</h1>
 
-<h1 class="h2_200_p">Modif {{ recipe.name }}</h1>
+  <div class="h2_200_p">
+    {{ form_errors(editRecipeForm) }}
+    {{ form_start(editRecipeForm) }}
+    {{ form_row(editRecipeForm.name) }}
+    {{ form_row(editRecipeForm.preparationTime) }}
+    {{ form_row(editRecipeForm.instructions) }}
+    {{ form_row(editRecipeForm.category) }}
 
-<div class="h2_200_p">
+    <button type="submit">Modifier recette</button>
 
-  {{ form_errors(editRecipeForm) }}
-  {{ form_start(editRecipeForm) }}
-  {{ form_row(editRecipeForm.name) }}
-  {{ form_row(editRecipeForm.preparationTime) }}
-  {{ form_row(editRecipeForm.instructions) }}
-  {{ form_row(editRecipeForm.category) }}
-
-  <button type="submit">Modifier recette</button>
-
-  {{ form_end(editRecipeForm) }}
-  
+    {{ form_end(editRecipeForm) }}
+  </div>
 </div>
 
 {% endblock %}
