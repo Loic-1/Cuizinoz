@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Note;
 use App\Entity\User;
 use App\Entity\Photo;
 use App\Entity\Recipe;
 use App\Form\CommentType;
+use App\Form\NoteType;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
 use App\Service\PictureService;
@@ -17,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+
+use function PHPUnit\Framework\isEmpty;
 
 class RecipeController extends AbstractController
 {
@@ -137,10 +141,21 @@ class RecipeController extends AbstractController
     public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($recipe) {
+
+            // $notes = $recipe->getNotes()->toArray();
+
+            // $avgNote = array_sum($notes) / count($notes);
+
+            $avgNote = $recipe->getAverageNote();
+
             $comment = new Comment();
 
             $commentForm = $this->createForm(CommentType::class, $comment);
             $commentForm->handleRequest($request);
+
+            $note = new Note();
+
+            $noteForm = $this->createForm(NoteType::class, $note);
 
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
 
@@ -157,9 +172,26 @@ class RecipeController extends AbstractController
                 ]);
             }
 
+            if ($noteForm->isSubmitted() && $noteForm->isValid()) {
+
+                $note = $noteForm->getData();
+
+                $note->setUser($this->getUser());
+                $note->setRecipe($recipe);
+
+                $entityManager->persist($note);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('detail_recipe', [
+                    'recipe' => $recipe->getId()
+                ]);
+            }
+
             return $this->render('recipe/detailRecipe.html.twig', [
                 'recipe' => $recipe,
-                'addCommentForm' => $commentForm
+                'addCommentForm' => $commentForm,
+                'addNoteForm' => $noteForm,
+                'avgNote' => $avgNote,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
