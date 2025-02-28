@@ -25,8 +25,8 @@ class Recipe
     #[ORM\Column(type: Types::TEXT)]
     private ?string $instructions = null;
 
-    #[ORM\Column(type: "float", nullable: true)]
-    private ?float $note = null;
+    // #[ORM\Column(type: "float", nullable: true)]
+    // private ?float $note = null;
 
     /**
      * @var Collection<int, Favorite>
@@ -66,6 +66,12 @@ class Recipe
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'recipe')]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
@@ -73,6 +79,7 @@ class Recipe
         $this->photos = new ArrayCollection();
         $this->contains = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,17 +123,17 @@ class Recipe
         return $this;
     }
 
-    public function getNote(): ?float
-    {
-        return $this->note;
-    }
+    // public function getNote(): ?float
+    // {
+    //     return $this->note;
+    // }
 
-    public function setNote(float $note): static
-    {
-        $this->note = $note;
+    // public function setNote(float $note): static
+    // {
+    //     $this->note = $note;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Favorite>
@@ -292,6 +299,36 @@ class Recipe
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getRecipe() === $this) {
+                $note->setRecipe(null);
+            }
+        }
 
         return $this;
     }
