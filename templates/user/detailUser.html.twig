@@ -171,7 +171,7 @@
                         {{ recipe.user.pseudo }}
                     </a>
                 </p>
-                <p>Note: {{ recipe.note }} (temp)</p>
+                <p>Note: (temp)</p>
                 <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
                     {{ recipe.category.name }}
                 </a>
@@ -233,7 +233,8 @@
 
     {% else %}
 
-    <h3>Dernières collections</h3>
+    <h3>Pas de collections</h3>
+    <a href="{{ path('app_compilation', {user: user.id}) }}">Toutes les collections / Créer une collection</a>
 
     {% endif %}
 

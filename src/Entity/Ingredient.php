@@ -18,8 +18,8 @@ class Ingredient
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column]
-    private ?float $priceUnit = null;
+    // #[ORM\Column]
+    // private ?float $priceUnit = null;
 
     #[ORM\Column(length: 10)]
     private ?string $unit = null;
@@ -52,17 +52,17 @@ class Ingredient
         return $this;
     }
 
-    public function getPriceUnit(): ?int
-    {
-        return $this->priceUnit;
-    }
+    // public function getPriceUnit(): ?int
+    // {
+    //     return $this->priceUnit;
+    // }
 
-    public function setPriceUnit(int $priceUnit): static
-    {
-        $this->priceUnit = $priceUnit;
+    // public function setPriceUnit(int $priceUnit): static
+    // {
+    //     $this->priceUnit = $priceUnit;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getUnit(): ?string
     {

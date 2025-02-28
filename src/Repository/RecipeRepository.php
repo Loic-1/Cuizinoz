@@ -72,7 +72,7 @@ class RecipeRepository extends ServiceEntityRepository
 
         $qb->select('r')
             ->from('App\Entity\Recipe', 'r')
-            ->orderBy('r.note', 'DESC')
+            // ->orderBy('r.note', 'DESC')
             // ->orderBy('count(r.comments)', 'DESC')
             ->setMaxResults($limit)
         ;
@@ -81,26 +81,26 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findAllOrderedBy($orderBy, $order)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
+    // public function findAllOrderedBy($orderBy, $order)
+    // {
+    //     $em = $this->getEntityManager();
+    //     $qb = $em->createQueryBuilder();
 
-        $qb->select('r')
-            ->from('App\Entity\Recipe', 'r')
-            ->orderBy('r.' . $orderBy, $order)
-        ;
+    //     $qb->select('r')
+    //         ->from('App\Entity\Recipe', 'r')
+    //         ->orderBy('r.' . $orderBy, $order)
+    //     ;
 
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
+    //     $query = $qb->getQuery();
+    //     return $query->getResult();
+    // }
 
     public function findBestRecipesByUserId($userId, $limit)
     {
         return $this->createQueryBuilder('r')
             ->where('r.user = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('r.note', 'DESC')
+            // ->orderBy('r.note', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult()

@@ -16,29 +16,29 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function findRecipesByCategoryId($category_id, $orderBy = null, $order = null)
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
+    // public function findRecipesByCategoryId($category_id, $orderBy = null, $order = null)
+    // {
+    //     $em = $this->getEntityManager();
+    //     $qb = $em->createQueryBuilder();
 
-        if ($orderBy && $order) {
-            $qb->select('r')
-                ->from('App\Entity\Recipe', 'r')
-                ->where('r.category = :category_id')
-                ->orderBy('r.' . $orderBy, $order)
-                ->setParameter('category_id', $category_id)
-            ;
-        } else {
-            $qb->select('r')
-                ->from('App\Entity\Recipe', 'r')
-                ->where('r.category = :category_id')
-                ->setParameter('category_id', $category_id)
-            ;
-        }
+    //     if ($orderBy && $order) {
+    //         $qb->select('r')
+    //             ->from('App\Entity\Recipe', 'r')
+    //             ->where('r.category = :category_id')
+    //             ->orderBy('r.' . $orderBy, $order)
+    //             ->setParameter('category_id', $category_id)
+    //         ;
+    //     } else {
+    //         $qb->select('r')
+    //             ->from('App\Entity\Recipe', 'r')
+    //             ->where('r.category = :category_id')
+    //             ->setParameter('category_id', $category_id)
+    //         ;
+    //     }
 
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
+    //     $query = $qb->getQuery();
+    //     return $query->getResult();
+    // }
 
     //    /**
     //     * @return Category[] Returns an array of Category objects

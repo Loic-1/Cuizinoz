@@ -34,10 +34,11 @@ class RecipeController extends AbstractController
     }
 
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
-    #[Route('/recipe/read/{orderBy?}/{order?}', name: 'app_recipe', defaults: ['orderBy' => 'note', 'ORDER' => 'DESC'])]
-    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService, $orderBy, $order): Response
+    #[Route('/recipe/read/', name: 'app_recipe')]
+    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
-        $recipes = $recipeRepository->findAllOrderedBy($orderBy, $order);
+        // $recipes = $recipeRepository->findAllOrderedBy($orderBy, $order);
+        $recipes = $recipeRepository->findAll();
 
 
 

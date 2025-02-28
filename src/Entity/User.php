@@ -106,6 +106,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'user_followees')]
     private Collection $followees;
 
+    /**
+     * @var Collection<int, Note>
+     */
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'user')]
+    private Collection $notes;
+
     public function __construct()
     {
         $this->compilations = new ArrayCollection();
@@ -116,6 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->recipes = new ArrayCollection();
         $this->followers = new ArrayCollection();
         $this->followees = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -498,6 +505,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeFollowee(self $followee): static
     {
         $this->followees->removeElement($followee);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): static
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes->add($note);
+            $note->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): static
+    {
+        if ($this->notes->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getUser() === $this) {
+                $note->setUser(null);
+            }
+        }
 
         return $this;
     }
