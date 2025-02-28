@@ -142,20 +142,12 @@ class RecipeController extends AbstractController
     {
         if ($recipe) {
 
-            // $notes = $recipe->getNotes()->toArray();
-
-            // $avgNote = array_sum($notes) / count($notes);
-
             $avgNote = $recipe->getAverageNote();
 
             $comment = new Comment();
 
             $commentForm = $this->createForm(CommentType::class, $comment);
             $commentForm->handleRequest($request);
-
-            $note = new Note();
-
-            $noteForm = $this->createForm(NoteType::class, $note);
 
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
 
@@ -171,6 +163,11 @@ class RecipeController extends AbstractController
                     "recipe" => $recipe->getId()
                 ]);
             }
+
+            $note = new Note();
+
+            $noteForm = $this->createForm(NoteType::class, $note);
+            $noteForm->handleRequest($request);
 
             if ($noteForm->isSubmitted() && $noteForm->isValid()) {
 
