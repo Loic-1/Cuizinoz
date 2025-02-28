@@ -11,7 +11,6 @@
 {% block body %}
 
 <div class="wrapper">
-
     
     <h2 class="h2_200_p">{{ recipe.name }}</h2>
 
@@ -55,7 +54,17 @@
         </p>
         <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
         <p>Catégorie: {{ recipe.category.name }}</p>
-        <p>Note: (temp)</p>
+        <p>Note: 
+            
+            <strong>
+                {{ avgNote ~ " / 5" }}
+            </strong>
+            
+            {% if recipe.notes|length > 0 %}
+
+            ({{ recipe.notes|length }} votes)</p>
+
+            {% endif %}
         <p>Ingrédients requis: <br>
         <ul>
             {% for contain in recipe.contains %}
@@ -98,8 +107,8 @@
         <p class="detail_comment_content">{{ comment.content }}</p>
         <p>
             <a href="{{ path('detail_user', { user: comment.user.id }) }}">                
-                {{ comment.user.pseudo }}
-            </a>,
+                {{ comment.user.pseudo }}<!--
+            --></a>,
             {{ comment.creationDateFr }}
         </p>
         <p>NOTE</p>
@@ -107,6 +116,14 @@
     {% endfor %}
 
     {% if app.user %}
+
+    {{ form_errors(addNoteForm) }}
+    {{ form_start(addNoteForm) }}
+    {{ form_row(addNoteForm.note) }}
+
+    <button type="submit">Noter</button>
+    {{ form_end(addNoteForm) }}
+
 
     {{ form_errors(addCommentForm) }}
     {{ form_start(addCommentForm) }}

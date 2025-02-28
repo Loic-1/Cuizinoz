@@ -43,7 +43,7 @@ class Recipe
     /**
      * @var Collection<int, Photo>
      */
-    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true, cascade:["persist"])] // Si Recipe meurt, alors ses photos mourront
+    #[ORM\OneToMany(targetEntity: Photo::class, mappedBy: 'recipe', orphanRemoval: true, cascade: ["persist"])] // Si Recipe meurt, alors ses photos mourront
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
@@ -331,5 +331,15 @@ class Recipe
         }
 
         return $this;
+    }
+
+    public function getAverageNote()
+    {
+        $sum = 0;
+
+        foreach ($this->notes as $note) {
+            $sum += $note->getNote();
+        }
+        return (count($this->notes) > 0) ? round($sum / count($this->notes), 1) : "NN";
     }
 }
