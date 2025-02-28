@@ -55,7 +55,7 @@
           href="{{ path('app_favorite', { user: app.user.id }) }}"
           title="Vos favoris"
         >
-          <i class="fa-heart fa-solid"></i>
+          <i class="fa-solid fa-heart"></i>
         </a>
 
         <a href="{{ path('create_recipe') }}" title="Créer une recette">
@@ -68,7 +68,8 @@
           href="{{ path('detail_user', { user: app.user.id }) }}"
           title="{{ app.user.pseudo }}"
         >
-          <i class="fa-regular fa-user"></i>
+          {# <i class="fa-regular fa-user"></i> #}
+          <i class="fa-solid fa-user"></i>
         </a>
 
         <a href="{{ path('app_logout') }}" title="Se déconnecter">
@@ -87,14 +88,21 @@
       </a>
 
       <div class="header_links_nav">
+        <a href="{{ path('app_recipe') }}"> Recettes </a>
+        <span> | </span>
+        <a href="{{ path('list_compilation') }}"> Collections </a>
+        <span> | </span>
+        <a href="#"> Catégories </a>
+        <span> | </span>
+        <a href="#"> Recette aléatoire </a>
         <a href="{{ path('app_login') }}">Connexion</a>
         <span>|</span>
         <a href="{{ path('app_register') }}">Enregistrement</a>
       </div>
 
-      {# <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p> #}
-
-      {% endif %}
+      {#
+      <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
+      #} {% endif %}
     </header>
 
     {% block body %} {% endblock %}
