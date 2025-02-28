@@ -112,7 +112,7 @@ class RecipeController extends AbstractController
                 $fichier = $pictureService->add($image, $folder, 300, 300);
 
                 $photo = new Photo();
-                // $photo->setName($fichier);
+                $photo->setName($fichier);
                 $recipe->addPhoto($photo);
             }
 
