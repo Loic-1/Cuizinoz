@@ -7,23 +7,19 @@ body %}
 
 <div class="wrapper">
   <section class="home_section_1">
-    <figure class="home_section_1_image_container">
-      {#
+    <figure class="home_section_1_background_image">
       <img
-        src="{{ asset('assets/chicken.jpg') }}"
+        src="{{ asset('assets/homePageBannerBackground.jpg') }}"
         alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
       />
-      #}
-      <img src="#" alt="" />
     </figure>
     <div class="home_section_1_overlay">
-      {#
-      <img
-        src="{{ asset('assets/chef.png') }}"
-        alt="Toque de cuisinier survolant l'image de couverture"
-      />
-      #}
-      <img src="#" alt="" />
+      <figure class="home_section_1_foreground_image">
+        <img
+          src="{{ asset('assets/homepageBannerForeground.png') }}"
+          alt="Toque de cuisinier survolant l'image de couverture"
+        />
+      </figure>
       <h3>Bienvenue sur Cuizinoz</h3>
       <p>l'application où on ose cuisiner !</p>
     </div>
