@@ -100,7 +100,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->where('r.user = :userId')
             ->setParameter('userId', $userId)
-            ->orderBy('r.note', 'DESC')
+            // ->orderBy('r.note', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
