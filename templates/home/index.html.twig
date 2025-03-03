@@ -19,30 +19,35 @@
           alt="Toque de cuisinier survolant l'image de couverture"
         />
       </figure>
-      <h3>Bienvenue sur Cuizinoz</h3>
+      <h1>Bienvenue sur Cuizinoz</h1>
       <p>l'application où on ose cuisiner !</p>
     </div>
   </section>
 
-  <h2>Recettes à la une</h2>
-
   <section class="home_section_2">
-    <div class="recipe_container_home">
+    <h2>Recettes à la une</h2>
+    <div class="home_section_2_recipe_container">
       {% for recipe in recipes %}
 
-      <div class="recipe_card">
-        <figure class="recipe_image_container">
+      <div class="home_section_2_recipe_card">
+        <figure class="home_section_2_recipe_image_container">
           {% if recipe.photos|length > 0 %}
-          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <a
+            href="{{ path('detail_recipe', { recipe: recipe.id }) }}"
+            title="{{ recipe.name }}"
+          >
             <img
               src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-              alt="{{ recipe.photos|first.alt }}"
+              alt="Photo de {{ recipe.name }}"
             />
           </a>
 
           {% else %}
 
-          <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <a
+            href="{{ path('detail_recipe', { recipe: recipe.id }) }}"
+            title="{{ recipe.name }}"
+          >
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
               alt="Pas encore de photo"
@@ -51,12 +56,14 @@
 
           {% endif %}
         </figure>
-        <div class="recipe_infos_container">
+        <div class="home_section_2_recipe_infos_container">
           <p>{{ recipe.name }}</p>
           <p>
             Une recette de
             <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-              {{ recipe.user.pseudo }}
+              <span class="home_section_2_user">{{
+                recipe.user.pseudo
+              }}</span>
             </a>
           </p>
           <a
@@ -64,15 +71,19 @@
               path('recipe_category', { category: recipe.category.id })
             }}"
           >
-            {{ recipe.category.name }}
+            <span class="home_section_2_category">{{
+              recipe.category.name
+            }}</span>
           </a>
-          <p>Note: (temp)</p>
+          <p>Note: <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> {{'(' ~ recipe.notes|length ~ ' votes' ~ ')'}}</p>
         </div>
       </div>
 
       {% endfor %}
     </div>
-    <a href="{{ path('app_recipe') }}">Découvrir plus de recettes</a>
+    <a href="{{ path('app_recipe') }}" class="home_section_2_recipe_btn"
+      >Découvrir plus de recettes</a
+    >
   </section>
 
   <section class="home_section_3">
