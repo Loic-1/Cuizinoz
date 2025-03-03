@@ -17,11 +17,11 @@ class HomeController extends AbstractController
     {
         // Recettes à la une (trié en fonction de la note [et du nombre de commentaires], définir un max(par défaut: 6))
 
-        $recipes = $recipeRepository->findNewBestRecipes(6);
+        $recipes = $recipeRepository->findBy([], [], 6);
 
         // Derniers commentaires (définir un max(par défaut: 6))
 
-        $comments = $commentRepository->findLastComments(6);
+        $comments = $commentRepository->findBy([], ["creationDate" => "DESC"], 4);
 
         // Catégories (pas de limite car peu de catégories)
 

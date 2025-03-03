@@ -16,21 +16,21 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findLastComments(int $limit)
-    {
+    // public function findLastComments(int $limit)
+    // {
 
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
+    //     $em = $this->getEntityManager();
+    //     $qb = $em->createQueryBuilder();
 
-        $qb->select('c')
-            ->from('App\Entity\Comment', 'c')
-            ->orderBy('c.creationDate', 'DESC')
-            ->setMaxResults($limit)
-        ;
+    //     $qb->select('c')
+    //         ->from('App\Entity\Comment', 'c')
+    //         ->orderBy('c.creationDate', 'DESC')
+    //         ->setMaxResults($limit)
+    //     ;
 
-        $query = $qb->getQuery();
-        return $query->getResult();
-    }
+    //     $query = $qb->getQuery();
+    //     return $query->getResult();
+    // }
 
     public function findLastCommentsByUserId($userId, $limit)
     {
