@@ -2,8 +2,7 @@
 
 <link rel="stylesheet" href="{{ asset('css/home.css') }}" />
 
-{% endblock %} #} {% block title %}Cuizinoz{% endblock %} {# HEADER #} {% block
-body %}
+{% endblock %} #} {% block title %}Cuizinoz{% endblock %} {% block body %}
 
 <div class="wrapper">
   <section class="home_section_1">
@@ -33,17 +32,15 @@ body %}
 
       <div class="recipe_card">
         <figure class="recipe_image_container">
-          {% if recipe.photos|length > 0 %} {# affiche la première photo de la
-          collection photos de recipe #}
+          {% if recipe.photos|length > 0 %}
           <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
             <img
               src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
               alt="{{ recipe.photos|first.alt }}"
-            />{# {{ recipe.photos|first.url }} #}
+            />
           </a>
 
-          {# recipe.photos == null -> pas de galerie de photos pour cette
-          recette #} {% else %}
+          {% else %}
 
           <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
             <img
@@ -137,10 +134,12 @@ body %}
     {% endif %}
   </section>
 
-    <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-      <i class="fa-regular fa-plus"></i>
-      <span>Créer une recette</span>
-    </a>
+  {% if app.user %}
+
+  <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+    <i class="fa-regular fa-plus"></i>
+    <span>Créer une recette</span>
+  </a>
 </div>
 
-{% endblock %}
+{% endif %} {% endblock %}
