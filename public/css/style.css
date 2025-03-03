@@ -140,6 +140,10 @@ header {
 
   background-color: var(--primary-background-color);
 
+  & img:hover {
+    filter: opacity(0.8);
+  }
+
   & .header_links_nav {
     display: flex;
     flex-direction: row;
