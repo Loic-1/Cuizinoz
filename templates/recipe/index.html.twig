@@ -95,24 +95,34 @@
 
 {% if app.user %}
 
-<div class="recipe_addRecipeForm_container">
-    <div class="addRecipeForm">
+<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+    <i class="fa-regular fa-plus"></i>
+    <span>Créer une recette</span>
+</a>
 
-        {{ form_errors(addRecipeForm) }}
-        {{ form_start(addRecipeForm) }}
+{% endif %}
+
+<!--
+    
+    
+    <div class="recipe_addRecipeForm_container">
+        <div class="addRecipeForm">
+            
+            {{ form_errors(addRecipeForm) }}
+            {{ form_start(addRecipeForm) }}
             {{ form_row(addRecipeForm.name) }}
             {{ form_row(addRecipeForm.preparationTime) }}
             {{ form_row(addRecipeForm.instructions) }}
             {{ form_row(addRecipeForm.category) }}
             {{ form_row(addRecipeForm.images) }}
-
+            
             <button type="submit">Publier</button>
-
-        {{ form_end(addRecipeForm) }}
-
+            
+            {{ form_end(addRecipeForm) }}
+            
+        </div>
+        <a href="{{ path('create_recipe') }}">Créer une recette</a>
     </div>
-    <a href="{{ path('create_recipe') }}">Créer une recette</a>
-</div>
-{% endif %}
+-->
 
 {% endblock %}
