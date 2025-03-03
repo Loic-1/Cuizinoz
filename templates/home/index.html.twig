@@ -21,12 +21,18 @@
       </figure>
       <h1>Bienvenue sur Cuizinoz</h1>
       <p>l'application où on ose cuisiner !</p>
+      <div class="home_section_1_arrow">
+        <i class="fa-solid fa-arrow-down"></i>
+      </div>
     </div>
   </section>
 
   <section class="home_section_2">
     <h2>Recettes à la une</h2>
     <div class="home_section_2_recipe_container">
+
+      {{ dump(recipes) }}
+
       {% for recipe in recipes %}
 
       <div class="home_section_2_recipe_card">
@@ -61,9 +67,7 @@
           <p>
             Une recette de
             <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-              <span class="home_section_2_user">{{
-                recipe.user.pseudo
-              }}</span>
+              <span class="home_section_2_user">{{ recipe.user.pseudo }}</span>
             </a>
           </p>
           <a
@@ -75,7 +79,13 @@
               recipe.category.name
             }}</span>
           </a>
-          <p>Note: <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> {{'(' ~ recipe.notes|length ~ ' votes' ~ ')'}}</p>
+          <p>
+            <!--Note:-->
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+            ><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+            ><i class="fa-solid fa-star-half-stroke"></i>
+            {{'(' ~ recipe.notes|length ~ ' votes' ~ ')'}}
+          </p>
         </div>
       </div>
 
@@ -87,17 +97,11 @@
   </section>
 
   <section class="home_section_3">
-    <p class="home_section_3_citation">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat sed
-      libero ipsum suscipit maiores, saepe perferendis ut blanditiis laboriosam
-      animi. Eos corrupti ex asperiores molestiae provident culpa ipsum placeat
-      dolore.
-    </p>
+    <p>“Cooking is love made visible through flavors.”</p>
   </section>
 
-  <h2>La communauté</h2>
-
   <section class="home_section_4">
+    <h2>La communauté</h2>
     <div class="home_section_4_comment_container">
       {% if comments|length > 0 %} {% for comment in comments %}
 
@@ -106,14 +110,20 @@
         <p>
           Dans
           <a href="{{ path('detail_recipe', { recipe: comment.recipe.id }) }}">
-            {{ comment.recipe.name }}
+            <span class="home_section_4_recipe">
+              {{ comment.recipe.name }}
+            </span>
           </a>
         </p>
-        <p>{{ comment.content }}</p>
-        <a href="{{ path('detail_user', { user: comment.user.id }) }}">
-          {{ comment.user.pseudo }} </a
-        >,
-        {{ comment.creationDateFr }}
+        <p class="home_section_4_comment_content">{{ comment.content }}</p>
+        <span>
+          <a href="{{ path('detail_user', { user: comment.user.id }) }}">
+            <span class="home_section_4_user">{{
+              comment.user.pseudo
+            }}</span></a
+          >,
+          {{ comment.creationDateFr }}
+        </span>
       </div>
 
       {% endfor %} {% else %}
@@ -124,21 +134,35 @@
     </div>
   </section>
 
-  <h2>Catégories</h2>
-
   <section class="home_section5">
-    {% if categories|length > 0 %} {% for category in categories %}
+    <h2>Catégories</h2>
 
-    <figure class="recipe_image_container">
-      <a href="{{ path('recipe_category', { category: category.id }) }}">
-        <img src="{{ category.photo }}" alt="" />
-      </a>
-    </figure>
-    <p>
-      {{ category.name }}
-    </p>
+    {% if categories|length > 0 %}
 
-    {% endfor %} {% else %}
+    <div class="home_section_5_category_container">
+      {% for category in categories %}
+
+      <div class="home_section_5_category_card">
+        <figure class="home_section_5_category_image_container">
+          <a
+            href="{{ path('recipe_category', { category: category.id }) }}"
+            title="{{ category.name }}"
+          >
+            <img
+              src="{{ category.photo }}"
+              alt="Photo de {{ category.name }}"
+            />
+          </a>
+        </figure>
+        <p>
+          {{ category.name }}
+        </p>
+      </div>
+
+      {% endfor %}
+    </div>
+
+    {% else %}
 
     <h3>Pas de catégories</h3>
 

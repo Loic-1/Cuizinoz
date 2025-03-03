@@ -9,6 +9,23 @@
   src: url("../fonts/Roboto_Serif/RobotoSerif-Italic-VariableFont_GRAD\,opsz\,wdth\,wght.ttf");
 }
 
+@font-face {
+  font-family: "Satisfy";
+  src: url("../fonts/Satisfy/Satisfy-Regular.ttf");
+}
+
+@keyframes up-down {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: 15px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
 :root {
   --primary-button-color: #ff503f;
   --secondary-button-color: #ff866f;
@@ -59,6 +76,12 @@
 
   --roboto-serif-italic-text-font-size: 16px;
   --roboto-serif-italic-text-font-weight: 400;
+
+  /* Satisfy */
+
+  --satisfy-font-family: "Satisfy";
+
+  --satisfy-font-size: 40px;
 }
 
 * {
@@ -70,7 +93,6 @@
 ::selection {
   background-color: var(--secondary-background-color);
   color: var(--tertiary-font-color);
-  /* padding: 10px; */
 }
 
 .h2_200_p {
@@ -125,7 +147,7 @@ a {
   text-decoration: none;
 }
 
-/* header/navbar */
+/* HEADER */
 
 header {
   position: fixed;
@@ -155,7 +177,7 @@ header {
     align-items: center;
 
     font-size: var(--roboto-standard-text-font-size);
-    font-weight: var(--roboto-standard-text-font-weight);
+    font-weight: var(--roboto-standard-h3-font-weight);
     font-family: var(--roboto-standard-font-family);
 
     & a {
@@ -249,6 +271,19 @@ header {
 
       color: var(--tertiary-font-color);
     }
+
+    & .home_section_1_arrow {
+      position: relative;
+
+      & i {
+        position: absolute;
+
+        font-size: 25px;
+        color: var(--tertiary-font-color);
+
+        animation: up-down 1s infinite;
+      }
+    }
   }
 }
 
@@ -258,7 +293,7 @@ header {
   align-items: center;
   gap: 50px;
 
-  padding: 100px 200px;
+  padding: 100px 200px 50px 200px;
 
   & h2 {
     font-family: var(--roboto-standard-font-family);
@@ -285,7 +320,6 @@ header {
       font-family: var(--roboto-standard-font-family);
       font-size: var(--roboto-standard-text-font-size);
       font-weight: var(--roboto-standard-text-font-weight);
-      color: var(--primary-font-color);
 
       & .home_section_2_recipe_image_container {
         width: 250px;
@@ -334,8 +368,6 @@ header {
           color: var(--primary-button-color);
         }
       }
-
-      /* border: 1px solid black; */
     }
   }
 
@@ -356,9 +388,143 @@ header {
 }
 
 .home_section_3 {
-  padding: 100px 200px;
+  padding: 80px 200px;
 
   background-color: var(--secondary-background-color);
+
+  & p {
+    font-family: var(--satisfy-font-family);
+    font-size: var(--satisfy-font-size);
+    color: var(--tertiary-font-color);
+
+    text-align: center;
+  }
+}
+
+.home_section_4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  padding: 100px 200px 50px 200px;
+
+  & h2 {
+    font-family: var(--roboto-standard-font-family);
+    font-size: var(--roboto-standard-h2-font-size);
+    font-weight: var(--roboto-standard-h2-font-weight);
+  }
+
+  & .home_section_4_comment_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+
+    width: 100%;
+
+    & .home_section_4_comment_card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+
+      padding: 15px 30px;
+
+      width: 100%;
+      border-radius: 10px;
+
+      box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+      -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+
+      font-family: var(--roboto-standard-font-family);
+      font-size: var(--roboto-standard-text-font-size);
+      font-weight: var(--roboto-standard-text-font-weight);
+
+      & .home_section_4_recipe,
+      .home_section_4_user {
+        font-family: var(--roboto-serif-italic-font-family);
+        color: var(--primary-font-color);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.home_section5 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  padding: 50px 200px 50px 200px;
+  /* padding: 100px 0px 50px 200px; */
+
+  & h2 {
+    font-family: var(--roboto-standard-font-family);
+    font-size: var(--roboto-standard-h2-font-size);
+    font-weight: var(--roboto-standard-h2-font-weight);
+  }
+
+  & .home_section_5_category_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+
+    width: 100%;
+
+    & .home_section_5_category_card {
+      position: relative;
+
+      width: 200px;
+      height: 150px;
+
+      & .home_section_5_category_image_container {
+        width: 100%;
+        height: 100%;
+
+        /* border: 1px solid black; */
+        border-radius: 10px;
+
+        overflow: hidden;
+
+        & img {
+          height: 100%;
+          width: auto;
+
+          transition: ease-in-out 0.2s;
+        }
+      }
+
+      & p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        font-family: var(--roboto-standard-font-family);
+        font-size: var(--roboto-standard-text-font-size);
+        font-weight: var(--roboto-standard-text-font-weight);
+        color: var(--tertiary-font-color);
+
+        opacity: 0;
+      }
+
+      &:hover img {
+        filter: brightness(0.3);
+        transform: scale(1.1);
+      }
+
+      &:hover p {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 /* liste des recettes */
@@ -666,6 +832,7 @@ header {
 
   padding: 15px;
 
+  border: 2px solid var(--primary-background-color);
   border-radius: 100px;
 
   text-decoration: none;
