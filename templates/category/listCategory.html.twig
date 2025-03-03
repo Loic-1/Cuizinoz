@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{# {% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
+
+{% endblock %} #}
+
+{% block title %}Nos recettes{% endblock %} 
+
+{% block body %}
+<div class="wrapper">
+
+    <h1>Catégories du site</h1>
+
+<div class="category_container">
+    
+    {% for category in categories %}
+
+    <div class="category_card">
+        <figure class="recipe_image_container">
+
+            <a href="#">
+                <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
+            </a>
+
+        </figure>
+
+        <h3>{{ category.name }}</h3>
+    </div>
+
+    {% endfor %}
+    
+</div>
+
+</div>
+{% endblock %}
