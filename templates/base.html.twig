@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -35,7 +35,7 @@
 
       <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
-          src="{{ asset('assets/logoCuizinoz60x60.png') }}"
+          src="{{ asset('assets/headerLogo.png') }}"
           alt="Logo Cuizinoz renvoyant vers la page d'accueil"
         />
       </a>
@@ -82,7 +82,7 @@
 
       <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
-          src="{{ asset('assets/logoCuizinoz60x60.png') }}"
+          src="{{ asset('assets/headerLogo.png') }}"
           alt="Logo Cuizinoz renvoyent vers la page d'accueil"
         />
       </a>
@@ -105,10 +105,10 @@
       #} {% endif %}
     </header>
 
-    {% block body %} {% endblock %}
-
-    {# <footer style="background-color: orange; max-height: calc(100vh - 100px)">
+    {% block body %} {% endblock %} {#
+    <footer style="background-color: orange; max-height: calc(100vh - 100px)">
       Footer
-    </footer> #}
+    </footer>
+    #}
   </body>
 </html>
