@@ -26,7 +26,7 @@ class Compilation
     /**
      * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'compilations')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'compilations', cascade: ['persist'])]
     private Collection $tags;
 
     /**
