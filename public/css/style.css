@@ -147,6 +147,10 @@ a {
   text-decoration: none;
 }
 
+.btn:active {
+  transform: scale(0.99);
+}
+
 /* HEADER */
 
 header {
@@ -213,6 +217,10 @@ header {
 
       &:hover {
         color: var(--secondary-button-color);
+      }
+
+      &:active {
+        transform: scale(0.95);
       }
     }
   }
@@ -454,6 +462,10 @@ header {
         &:hover {
           text-decoration: underline;
         }
+      }
+
+      .home_section_4_comment_title {
+        font-weight: var(--roboto-standard-h3-font-weight);
       }
     }
   }

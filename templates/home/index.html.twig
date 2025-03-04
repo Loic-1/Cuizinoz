@@ -31,8 +31,6 @@
     <h2>Recettes à la une</h2>
     <div class="home_section_2_recipe_container">
 
-      {{ dump(recipes) }}
-
       {% for recipe in recipes %}
 
       <div class="home_section_2_recipe_card">
@@ -91,7 +89,7 @@
 
       {% endfor %}
     </div>
-    <a href="{{ path('app_recipe') }}" class="home_section_2_recipe_btn"
+    <a href="{{ path('app_recipe') }}" class="home_section_2_recipe_btn btn"
       >Découvrir plus de recettes</a
     >
   </section>
@@ -106,7 +104,7 @@
       {% if comments|length > 0 %} {% for comment in comments %}
 
       <div class="home_section_4_comment_card">
-        <h4>{{ comment.title }}</h4>
+        <p class="home_section_4_comment_title">{{ comment.title }}</p>
         <p>
           Dans
           <a href="{{ path('detail_recipe', { recipe: comment.recipe.id }) }}">
@@ -171,7 +169,7 @@
 
   {% if app.user %}
 
-  <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+  <a href="{{ path('create_recipe') }}" class="addRecipe_btn btn">
     <i class="fa-regular fa-plus"></i>
     <span>Créer une recette</span>
   </a>
