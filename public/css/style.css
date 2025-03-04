@@ -166,8 +166,13 @@ header {
 
   background-color: var(--primary-background-color);
 
-  & img:hover {
-    filter: opacity(0.8);
+  & img {
+    height: 60px;
+    width: auto;
+
+    &:hover {
+      filter: opacity(0.8);
+    }
   }
 
   & .header_links_nav {
