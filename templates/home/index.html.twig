@@ -80,52 +80,64 @@
           {% if recipe.notes|length > 0 %} {% set roundedNote =
           (recipe.averageNote * 2)|round / 2 %}
 
-          {# <p>Round of {{ recipe.averageNote }} is {{ roundedNote }}</p> #}
-
-          <div class="home_section_2_star_container">
+          <div>
             {% if roundedNote == 0 %}
 
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
-            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i>
 
             {% elseif roundedNote == 5 %}
 
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i>
 
-            {% else %} {% for i in 1..roundedNote %}
+            {% else %} {% for i in 1..roundedNote %}<!--
+              --><i class="fa-solid fa-star"></i
+            ><!--
+            -->{% endfor %}<!--
 
-            <i class="fa-solid fa-star"></i>
+            Si roundedNote est différent de son arrondi à
+            l'entier inférieur, alors il est décimal et il
+            faut rajouter une demi-étoile
+            -->{% if roundedNote != roundedNote|round(0, 'floor') %}<!--
+              --><i class="fa-solid fa-star-half-stroke"></i
+            ><!--
+            -->{% endif %}<!--
 
-            {% endfor %} {# Si roundedNote est différent de son arrondi à
-            l'entier inférieur, alors il est décimal et il faut rajouter une
-            demi-étoile #} {% if roundedNote != roundedNote|round(0, 'floor') %}
-
-            <i class="fa-solid fa-star-half-stroke"></i>
-
-            {% endif %} {# Remplir différence jusqu'à 5 d'étoiles vides #} {%
-            for i in roundedNote + 1..5 %}
-
-            <i class="fa-regular fa-star"></i>
-
-            {% endfor %} {% endif %}
+              Remplir différence jusqu'à 5 d'étoiles vides
+            -->{% for i in roundedNote + 1..5 %}<!--
+              --><i class="fa-regular fa-star"></i
+            ><!--
+            -->{% endfor %} {% endif %}
           </div>
 
           {% else %}
 
-          <span>
-            <i class="fa-solid fa-star" style="color: grey"></i>
-            <i class="fa-solid fa-star" style="color: grey"></i>
-            <i class="fa-solid fa-star" style="color: grey"></i>
-            <i class="fa-solid fa-star" style="color: grey"></i>
-            <i class="fa-solid fa-star" style="color: grey"></i>
-          </span>
+          <div>
+            <i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i>
+          </div>
 
           {% endif %}
         </div>
