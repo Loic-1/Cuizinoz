@@ -77,13 +77,70 @@
               recipe.category.name
             }}</span>
           </a>
-          <p>
-            <!--Note:-->
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
-            ><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
-            ><i class="fa-solid fa-star-half-stroke"></i>
-            {{'(' ~ recipe.notes|length ~ ' votes' ~ ')'}}
-          </p>
+
+          {% if recipe.notes|length > 0 %} {% set roundedNote =
+          (recipe.averageNote * 2)|round / 2 %}
+
+          <div>
+            {% if roundedNote == 0 %}
+
+            <i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i
+            ><!--
+            --><i class="fa-regular fa-star"></i>
+
+            {% elseif roundedNote == 5 %}
+
+            <i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i
+            ><!--
+            --><i class="fa-solid fa-star"></i>
+
+            {% else %} {% for i in 1..roundedNote %}<!--
+              --><i class="fa-solid fa-star"></i
+            ><!--
+            -->{% endfor %}<!--
+
+            Si roundedNote est différent de son arrondi à
+            l'entier inférieur, alors il est décimal et il
+            faut rajouter une demi-étoile
+            -->{% if roundedNote != roundedNote|round(0, 'floor') %}<!--
+              --><i class="fa-solid fa-star-half-stroke"></i
+            ><!--
+            -->{% endif %}<!--
+
+              Remplir différence jusqu'à 5 d'étoiles vides
+            -->{% for i in roundedNote + 1..5 %}<!--
+              --><i class="fa-regular fa-star"></i
+            ><!--
+            -->{% endfor %} {% endif %}
+          </div>
+
+          {% else %}
+
+          <div>
+            <i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
+            ><!--
+            --><i class="fa-solid fa-star" style="color: #a0a0a0"></i>
+          </div>
+
+          {% endif %}
         </div>
       </div>
 

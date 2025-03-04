@@ -8,6 +8,14 @@
 <div class="wrapper">
   <h2 class="h2_200_p">{{ compilation.name }}</h2>
 
+
+  {% for tag in compilation.tags %}
+    <a href="{{ path('app_tag', { tag: tag.id }) }}">
+      {{ tag.name }}
+    </a>
+  {% endfor %}
+
+
   <div class="recipe_container">
     {% for recipe in recipes %} {# {% for recipe in pagination.items %} #}
 
