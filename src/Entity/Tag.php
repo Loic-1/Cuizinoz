@@ -21,7 +21,7 @@ class Tag
     /**
      * @var Collection<int, Compilation>
      */
-    #[ORM\ManyToMany(targetEntity: Compilation::class, inversedBy: 'tags')]
+    #[ORM\ManyToMany(targetEntity: Compilation::class, inversedBy: 'tags', cascade: ['persist'])]
     private Collection $compilations;
 
     public function __construct()

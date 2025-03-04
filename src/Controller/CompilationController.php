@@ -6,10 +6,12 @@ use App\Entity\User;
 use App\Entity\Compilation;
 use App\Entity\Recipe;
 use App\Entity\Save;
+use App\Entity\Tag;
 use App\Form\CompilationType;
 use App\Repository\CompilationRepository;
 use App\Repository\RecipeRepository;
 use App\Repository\SaveRepository;
+use App\Repository\TagRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,10 +52,11 @@ class CompilationController extends AbstractController
     }
 
     // Permet de créer une compilation pour le user spécifié
-    #[Route('/compilation/edit/addCompilation/{user}', name: 'create_compilation')]
-    public function createCompilation(User $user = null, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/compilation/edit/addCompilation/', name: 'create_compilation')]
+    public function createCompilation(Request $request, EntityManagerInterface $entityManager): Response
     {
 
+        $user = $this->getUser();
         if ($user) {
 
             $compilation = new Compilation();
@@ -69,13 +72,15 @@ class CompilationController extends AbstractController
                 $compilation->setUser($user);
                 $compilation->setCreationDate(new DateTime());
 
+                foreach ($compilation->getTags() as $tag) {
+                    $tag->addCompilation($compilation);
+                }
+
                 // Préparation du push puis push sur BDD
                 $entityManager->persist($compilation);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('app_compilation', [
-                    'user' => $user->getId()
-                ]);
+                return $this->redirectToRoute('app_compilation');
             }
 
             // Envoi du form tant qu'il n'est pas submit pour permettre son affichage

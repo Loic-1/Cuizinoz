@@ -7,12 +7,11 @@
 <div class="wrapper">
   {{ form_errors(addCompilationForm) }}
 
-  {{ form_start(addCompilationForm) }}
-  {{ form_row(addCompilationForm.name) }}
-  {{ form_row(addCompilationForm.tags) }}
-  {# {{ form_row(addCompilationForm.recipes) }} #}
+  {{ form_start(addCompilationForm, {'attr': {'data-turbo': false}}) }}
+    {{ form_row(addCompilationForm.name) }}
+    {{ form_row(addCompilationForm.tags) }}
 
-  <button type="submit">Ajouter</button>
+    <button type="submit">Ajouter</button>
 
   {{ form_end(addCompilationForm) }}
 </div>
