@@ -136,6 +136,56 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    // Permet de modifier la recipe spécifiée, puis de la renvoyer pour l'afficher
+    #[Route('/recipe/edit/{recipe}', name: 'edit_recipe')]
+    public function editRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($recipe) {
+
+            // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
+            $form = $this->createForm(RecipeType::class, $recipe);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                // on récupère les entrées dans les champs du form
+                $recipe = $form->getData();
+
+                // on prépare le push vers la BDD
+                $entityManager->persist($recipe);
+                // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
+                $entityManager->flush();
+
+                return $this->redirectToRoute("detail_recipe", [
+                    "recipe" => $recipe->getId()
+                ]);
+            }
+
+            return $this->render('recipe/editRecipe.html.twig', [
+                'recipe' => $recipe,
+                'editRecipeForm' => $form
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
+    #[Route('/recipe/random', name: 'random_recipe')]
+    public function randomRecipe(RecipeRepository $recipeRepository)
+    {
+        $randomId = random_int(0, count($recipeRepository->findAll()) - 1);
+
+        $recipe = $recipeRepository->find($randomId);
+
+        if ($recipe) {   
+            return $this->redirectToRoute('detail_recipe', [
+                'recipe' => $recipe->getId(),
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
     // Renvoie la recipe spécifiée, permet de publier un comment pour la recipe
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
     public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
@@ -189,40 +239,6 @@ class RecipeController extends AbstractController
                 'addCommentForm' => $commentForm,
                 'addNoteForm' => $noteForm,
                 'avgNote' => $avgNote,
-            ]);
-        } else {
-            return $this->redirectToRoute('app_home');
-        }
-    }
-
-    // Permet de modifier la recipe spécifiée, puis de la renvoyer pour l'afficher
-    #[Route('/recipe/edit/{recipe}', name: 'edit_recipe')]
-    public function editRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        if ($recipe) {
-
-            // le 2ème paramètre permet de "préremplir" le form avec les données de $recipe
-            $form = $this->createForm(RecipeType::class, $recipe);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-
-                // on récupère les entrées dans les champs du form
-                $recipe = $form->getData();
-
-                // on prépare le push vers la BDD
-                $entityManager->persist($recipe);
-                // on push les données d'un coup, rapide et efficace -> https://www.doctrine-project.org/projects/doctrine-orm/en/3.3/reference/working-with-objects.html#persisting-entities
-                $entityManager->flush();
-
-                return $this->redirectToRoute("detail_recipe", [
-                    "recipe" => $recipe->getId()
-                ]);
-            }
-
-            return $this->render('recipe/editRecipe.html.twig', [
-                'recipe' => $recipe,
-                'editRecipeForm' => $form
             ]);
         } else {
             return $this->redirectToRoute('app_home');
