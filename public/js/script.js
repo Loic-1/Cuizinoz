@@ -38,18 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // const sortBtns = document.querySelectorAll(".sort_btn");
+  const addRecipeToCompilationBtns = document.querySelectorAll(
+    ".compilation_add_recipe_btn"
+  );
 
-  // sortBtns.forEach((sortBtn) => {
-  //   sortBtn.addEventListener("click", async function () {
-  //     const orderBy = sortBtn.dataset.orderby;
-  //     const order = sortBtn.dataset.order;
-  //     console.log(orderBy, order);
+  addRecipeToCompilationBtns.forEach((addRecipeToCompilationBtn) => {
+    addRecipeToCompilationBtn.addEventListener("click", async function () {
 
-  //     await fetch(`${api_url}/recipe/read/${orderBy}/${order}`)
-  //       .then((res) => res.json())
-  //       .then((data) => console.log(data))
-  //       .catch((err) => console.error("Failed to fetch recipes", err));
-  //   });
-  // });
+      const recipeId = addRecipeToCompilationBtn.dataset.recipe;
+      const compilationId = addRecipeToCompilationBtn.dataset.compilation;
+      
+      await fetch(`${api_url}/compilation/edit/addRecipe/${compilationId}/${recipeId}`)
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err))
+    });
+  });
 });

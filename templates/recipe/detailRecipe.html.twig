@@ -6,6 +6,12 @@
 
 {% endblock %} #}
 
+{% block javascripts %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
 {% block title %}{{ recipe.name ~ " - " ~ recipe.user.pseudo}}{% endblock %}
 
 {% block body %}
@@ -91,7 +97,8 @@
             <div>
                 {% for compilation in app.user.compilations %}
                     {{ compilation.name }}
-                    <a href="{{ path('add_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">Ajouter</a>
+                    {# <a href="{{ path('add_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">Ajouter</a> #}
+                    <button class="compilation_add_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}>Ajouter</button>
                 {% endfor %}
             </div>
 
