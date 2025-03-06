@@ -31,7 +31,8 @@
   --secondary-button-color: #ff866f;
 
   --primary-background-color: #fafafa;
-  --secondary-background-color: #ff6f61;
+  /* --secondary-background-color: #ff6f61; */
+  --secondary-background-color: #f26254;
 
   --primary-font-color: #1d1c1b;
   --secondary-font-color: #3f3735;
@@ -385,7 +386,8 @@ header {
   }
 
   & .home_section_2_recipe_btn {
-    background-color: var(--primary-button-color);
+    /* background-color: var(--primary-button-color); */
+    background-color: var(--secondary-background-color);
     padding: 20px;
     border-radius: 100px;
 
