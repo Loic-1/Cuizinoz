@@ -31,8 +31,6 @@
 
   <body>
     <header>
-      {% if app.user %}
-
       <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
           src="{{ asset('assets/headerLogo.png') }}"
@@ -48,7 +46,17 @@
         <a href="{{ path('list_category') }}"> Catégories </a>
         <span> | </span>
         <a href="{{ path('random_recipe') }}"> Recette aléatoire </a>
+
+        {% if not app.user %}
+
+        <a href="{{ path('app_login') }}">Connexion</a>
+        <span>|</span>
+        <a href="{{ path('app_register') }}">Enregistrement</a>
+
+        {% endif %}
       </nav>
+
+      {% if app.user %}
 
       <div class="header_links_btn">
         <a
@@ -59,55 +67,24 @@
         </a>
 
         <a href="{{ path('create_recipe') }}" title="Créer une recette">
-            <i class="fa-solid fa-plus"></i>
-            Créer une recette
+          <i class="fa-solid fa-plus"></i>
+          Créer une recette
         </a>
-        
+
         <a
           href="{{ path('detail_user', { user: app.user.id }) }}"
           title="{{ app.user.pseudo }}"
         >
-          {# <i class="fa-regular fa-user"></i> #}
           <i class="fa-solid fa-user"></i>
         </a>
 
         <a href="{{ path('app_logout') }}" title="Se déconnecter">
           <i class="fa-solid fa-right-from-bracket"></i>
-          {# <i class="fa-solid fa-power-off"></i> #}
         </a>
       </div>
-
-      {% else %}
-
-      <a href="{{ path('app_home') }}" title="Retour à l'accueil">
-        <img
-          src="{{ asset('assets/headerLogo.png') }}"
-          alt="Logo Cuizinoz renvoyant vers la page d'accueil"
-        />
-      </a>
-
-      <div class="header_links_nav">
-        <a href="{{ path('app_recipe') }}"> Recettes </a>
-        <span> | </span>
-        <a href="{{ path('list_compilation') }}"> Collections </a>
-        <span> | </span>
-        <a href="#"> Catégories </a>
-        <span> | </span>
-        <a href="#"> Recette aléatoire </a>
-        <a href="{{ path('app_login') }}">Connexion</a>
-        <span>|</span>
-        <a href="{{ path('app_register') }}">Enregistrement</a>
-      </div>
-
-      {#
-      <p>Connectez-vous pour avoir accès à plus de fonctionnalités!</p>
-      #} {% endif %}
+      {% endif %}
     </header>
 
-    {% block body %} {% endblock %} {#
-    <footer style="background-color: orange; max-height: calc(100vh - 100px)">
-      Footer
-    </footer>
-    #}
+    {% block body %} {% endblock %}
   </body>
 </html>
