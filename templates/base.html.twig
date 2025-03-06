@@ -40,7 +40,7 @@
         />
       </a>
 
-      <div class="header_links_nav">
+      <nav class="header_links_nav">
         <a href="{{ path('app_recipe') }}"> Recettes </a>
         <span> | </span>
         <a href="{{ path('list_compilation') }}"> Collections </a>
@@ -48,7 +48,7 @@
         <a href="{{ path('list_category') }}"> Catégories </a>
         <span> | </span>
         <a href="{{ path('random_recipe') }}"> Recette aléatoire </a>
-      </div>
+      </nav>
 
       <div class="header_links_btn">
         <a
@@ -63,7 +63,7 @@
             <i class="fa-solid fa-plus"></i>
           </i>
         </a>
-
+        
         <a
           href="{{ path('detail_user', { user: app.user.id }) }}"
           title="{{ app.user.pseudo }}"
@@ -83,7 +83,7 @@
       <a href="{{ path('app_home') }}" title="Retour à l'accueil">
         <img
           src="{{ asset('assets/headerLogo.png') }}"
-          alt="Logo Cuizinoz renvoyent vers la page d'accueil"
+          alt="Logo Cuizinoz renvoyant vers la page d'accueil"
         />
       </a>
 
