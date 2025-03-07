@@ -78,12 +78,14 @@
             }}</span>
           </a>
 
-          {% if recipe.notes|length > 0 %} {% set roundedNote =
+          {% if recipe.notes|length > 0 %}
+          
+          {% set roundedNote =
           (recipe.averageNote * 2)|round / 2 %}
         
           {{ recipe.averageNote }} => {{ roundedNote }}
 
-          <div>
+          {# <div>
             {% if roundedNote == 0 %}
 
             <i class="fa-regular fa-star"></i
@@ -108,7 +110,8 @@
             ><!--
             --><i class="fa-solid fa-star"></i>
 
-            {% else %} {% for i in 1..roundedNote %}<!--
+            {% else %}
+            {% for i in 1..(roundedNote|round(0, 'ceil')) %}<!--
               --><i class="fa-solid fa-star"></i
             ><!--
             -->{% endfor %}<!--
@@ -116,13 +119,13 @@
             Si roundedNote est différent de son arrondi à
             l'entier inférieur, alors il est décimal et il
             faut rajouter une demi-étoile
-            -->{% if roundedNote != roundedNote|round(0, 'floor') %}<!--
+            -->{% if roundedNote != roundedNote|round%}<!--
               --><i class="fa-solid fa-star-half-stroke"></i
             ><!--
             -->{% endif %}<!--
 
-              Remplir différence jusqu'à 5 d'étoiles vides
-            -->{% for i in roundedNote + 1..5 %}<!--
+              Remplir différence jusqu'à 5 étoiles vides
+            -->{% for i in (roundedNote|round(0, 'floor') + 1)..5 %}<!--
               --><i class="fa-regular fa-star"></i
             ><!--
             -->{% endfor %} {% endif %}
@@ -130,7 +133,8 @@
 
           {% else %}
 
-          <div>
+          {# Si pas de note #}
+          {# <div>
             <i class="fa-solid fa-star" style="color: #a0a0a0"></i
             ><!--
             --><i class="fa-solid fa-star" style="color: #a0a0a0"></i
@@ -142,8 +146,32 @@
             --><i class="fa-solid fa-star" style="color: #a0a0a0"></i>
           </div>
 
-          {% endif %}
-        </div>
+          {% endif %} #}
+        {# </div>  #}
+
+        {# > Star score system #}
+        {% set note = 3.4 %}
+        {# {% set fullStars = note|round(0, 'floor') %} #}
+        {% set fullStars = note %}
+        {# {% set partialStar = (note - fullStars)|round(0, 'ceil') %} #}
+        {% set emptyStars = 5 - fullStars %}
+        {# {% set emptyStars = 5 - fullStars - (partialStar ? 1 : 0) %} #}
+ 
+        {% for i in range(1, fullStars) %}
+            <i class="fa-solid fa-star fullstars"></i>
+        {% endfor %}
+ 
+        {# {% if partialStar %}
+            <i class="fa-solid fa-star-half-stroke halfstars"></i>
+        {% endif %} #}
+ 
+        {% if emptyStars %}
+            {% for i in range(1, emptyStars) %}
+                <i class="fa-solid fa-star emptystars"></i>
+            {% endfor %}
+        {% endif %}
+        {% endif %}
+
       </div>
 
       {% endfor %}
