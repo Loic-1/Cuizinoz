@@ -75,13 +75,23 @@
             </a>
 
             {% if app.user %}
+                        
+                <div class="recipe_actions">
 
-            <div class="recipe_actions">
-                <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-            </div>
+                    {% if recipe.isFavorite(recipe, app.user) %}
 
+                        <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+
+                    {% else %}
+
+                        <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                        
+                    {% endif %}
+
+                </div>
+                    
             {% endif %}
-
+                    
         </div>
     </div>
 

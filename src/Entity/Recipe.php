@@ -342,4 +342,16 @@ class Recipe
         }
         return (count($this->notes) > 0) ? round($sum / count($this->notes), 1) : "NN";
     }
+
+    public function isFavorite(Recipe $recipe, User $user) {
+
+        $isFavorite = false;
+        foreach ($user->getFavorites() as $favorite) {
+            if ($favorite->getRecipe() == $recipe) {
+                $isFavorite = true;
+                break;
+            }
+        }
+        return ($isFavorite);
+    }
 }
