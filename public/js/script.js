@@ -38,20 +38,47 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  const addRecipeToCompilationBtns = document.querySelectorAll(
-    ".compilation_add_recipe_btn"
-  );
+  // add recipe to compilation
+  document
+    .querySelectorAll(".compilation_add_recipe_btn")
+    .forEach((addRecipeToCompilationBtn) => {
+      addRecipeToCompilationBtn.addEventListener("click", async function () {
+        const recipeId = addRecipeToCompilationBtn.dataset.recipe;
+        const compilationId = addRecipeToCompilationBtn.dataset.compilation;
 
-  addRecipeToCompilationBtns.forEach((addRecipeToCompilationBtn) => {
-    addRecipeToCompilationBtn.addEventListener("click", async function () {
-
-      const recipeId = addRecipeToCompilationBtn.dataset.recipe;
-      const compilationId = addRecipeToCompilationBtn.dataset.compilation;
-      
-      await fetch(`${api_url}/compilation/edit/addRecipe/${compilationId}/${recipeId}`)
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err))
+        await fetch(
+          `${api_url}/compilation/edit/addRecipe/${compilationId}/${recipeId}`
+        )
+          .then((res) => {
+            res.json();
+            console.log(res.status);
+          })
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+      });
     });
-  });
+
+  // remove recipe from compilation
+  document
+    .querySelectorAll(".remove_compilation_recipe_btn")
+    .forEach((removeRecipeFromCompilationBtn) => {
+      removeRecipeFromCompilationBtn.addEventListener(
+        "click",
+        async function () {
+          const recipeId = removeRecipeFromCompilationBtn.dataset.recipe;
+          const compilationId =
+            removeRecipeFromCompilationBtn.dataset.compilation;
+
+          await fetch(
+            `${api_url}/compilation/edit/removeRecipe/${compilationId}/${recipeId}`
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              document.getElementById("recipe-card-" + recipeId).remove();
+            })
+            .catch((err) => console.error(err));
+        }
+      );
+    });
 });

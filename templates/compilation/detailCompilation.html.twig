@@ -2,24 +2,29 @@
 
 <link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
 
-{% endblock %} #} {% block title %} Vos collections {% endblock %} {% block body
-%}
+{% endblock %} #}
+
+{% block javascripts %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
+{% block title %} Vos collections {% endblock %} {% block body %}
 
 <div class="wrapper">
   <h2 class="h2_200_p">{{ compilation.name }}</h2>
 
-
   {% for tag in compilation.tags %}
-    <a href="{{ path('app_tag', { tag: tag.id }) }}">
-      {{ tag.name }}
-    </a>
+  <a href="{{ path('app_tag', { tag: tag.id }) }}">
+    {{ tag.name }}
+  </a>
   {% endfor %}
-
 
   <div class="recipe_container">
     {% for recipe in recipes %} {# {% for recipe in pagination.items %} #}
 
-    <div class="recipe_card">
+    <div class="recipe_card" id="{{ 'recipe-card-' ~ recipe.id }}">
       <figure class="recipe_image_container">
         {% if recipe.photos|length > 0 %}
 
@@ -54,24 +59,11 @@
 
         {% if app.user %}
 
-        <div class="recipe_actions">
-          <a
-            href="{{
-              path('add_favorite', { user: app.user.id, recipe: recipe.id })
-            }}"
-          >
-            <i class="fa-regular fa-heart"></i>
-          </a>
-          <a
-            href="{{
-              path('remove_recipe_compilation', {
-                compilation: compilation.id,
-                recipe: recipe.id
-              })
-            }}"
-          >
-            <i class="fa-solid fa-minus"></i>
-          </a>
+        <div class="recipe_actions" >
+            <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+            {% if app.user == compilation.user %}
+            <i class="fa-solid fa-minus remove_compilation_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}></i>
+            {% endif %}
         </div>
 
         {% endif %}

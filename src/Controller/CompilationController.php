@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CompilationController extends AbstractController
 {
@@ -187,21 +188,44 @@ class CompilationController extends AbstractController
     }
 
     // Permet de retirer une recipe d'une compilation
+    // #[Route('/compilation/edit/removeRecipe/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
+    // public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($compilation && $recipe) {
+
+    //         $compilation->removeRecipe($recipe);
+
+    //         $entityManager->persist($compilation);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute("detail_compilation", [
+    //             'compilation' => $compilation->getId()
+    //         ]);
+    //     } else {
+    //         return $this->redirectToRoute('app_home');
+    //     }
+    // }
+
     #[Route('/compilation/edit/removeRecipe/{compilation}/{recipe}', name: 'remove_recipe_compilation')]
     public function removeRecipeCompilation(Compilation $compilation = null, Recipe $recipe = null, EntityManagerInterface $entityManager): Response
     {
-        if ($compilation && $recipe) {
-
-            $compilation->removeRecipe($recipe);
-
-            $entityManager->persist($compilation);
-            $entityManager->flush();
-
-            return $this->redirectToRoute("detail_compilation", [
-                'compilation' => $compilation->getId()
-            ]);
-        } else {
-            return $this->redirectToRoute('app_home');
+        if (!$compilation) {
+            return new JsonResponse(['error' => 'compilation not found'], 404);
         }
+
+        if (!$recipe) {
+            return new JsonResponse(['error' => 'recipe not found'], 404);
+        }
+
+        if ($compilation->getUser() != $this->getUser()) {
+            return new JsonResponse(['error' => 'user not owner of compilation'], 403);
+        }
+
+        $compilation->removeRecipe($recipe);
+
+        $entityManager->persist($compilation);
+        $entityManager->flush();
+
+        return new JsonResponse(['success' => 'recipe removal was succesful'], 200);
     }
 }
