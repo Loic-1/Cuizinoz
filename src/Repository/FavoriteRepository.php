@@ -33,15 +33,17 @@ class FavoriteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function isUnique($recipe_id) {
+    public function isUnique($recipeId, $userId) {
 
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
         $qb->select('f')
         ->from('App\Entity\Favorite', 'f')
-        ->where('f.recipe = :recipe_id')
-        ->setParameter('recipe_id', $recipe_id)
+        ->where('f.recipe = :recipeId')
+        ->andWhere('f.user = :userId')
+        ->setParameter('recipeId', $recipeId)
+        ->setParameter('userId', $userId)
         ;
 
         $query = $qb->getQuery();

@@ -17,15 +17,44 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteController extends AbstractController
 {
+    // Renvoir tous les favoris du user actuel
+    #[Route('/favorite', name: 'app_favorite')]
+    public function listOwnFavorites(FavoriteRepository $favoriteRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $user = $this->getUser();
+        
+        if ($user) {
+            
+            $query = $favoriteRepository->createQueryBuilder('f')
+            ->where('f.user = :userId')
+            ->setParameter('userId', $user)
+            ->getQuery();
+            
+            $pagination = $paginator->paginate(
+                $query,
+                $request->query->getInt('page', 1),
+                12,
+            );
+            
+            return $this->render('favorite/index.html.twig', [
+                'pagination' => $pagination,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
     // Renvoie tous les favorites du user spécifié
-    #[Route('/favorite/{user}', name: 'app_favorite')]
+    #[Route('/favorite/{user}', name: 'user_favorite')]
     public function listFavorites(User $user = null, FavoriteRepository $favoriteRepository, PaginatorInterface $paginator, Request $request): Response
     {
         if ($user) {
 
-            $favorites = $favoriteRepository->findFavorites($user->getId());
-
-            $query = $favoriteRepository->createQueryBuilder('r')->getQuery();
+            $query = $favoriteRepository
+                ->createQueryBuilder('f')
+                ->where('f.user = userId')
+                ->setParameter('userId', $user)
+                ->getQuery();
 
             $pagination = $paginator->paginate(
                 $query,
@@ -34,7 +63,6 @@ class FavoriteController extends AbstractController
             );
 
             return $this->render('favorite/index.html.twig', [
-                'favorites' => $favorites,
                 'pagination' => $pagination,
             ]);
         } else {
@@ -83,7 +111,7 @@ class FavoriteController extends AbstractController
             return new JsonResponse(["error" => "recipe not found"], 404);
         }
 
-        if (count($favoriteRepository->isUnique($recipe->getId())) > 0) {
+        if (count($favoriteRepository->isUnique($recipe->getId(), $user)) > 0) {
             return new JsonResponse(["error" => "recipe already in favorite"], 400);
         }
 
@@ -129,14 +157,16 @@ class FavoriteController extends AbstractController
             return new JsonResponse(["error" => "user not found"], 404);
         }
 
+        if ($user != $favorite->getUser()) {
+            return new JsonResponse(['error' => 'user not owner of favorite'], 403);
+        }
+
         if (!$recipe || !$favorite) {
             return new JsonResponse(['error' => 'recipe or favorite not found'], 404);
         }
 
-        // $user->removeFavorite($favorite);
         $recipe->removeFavorite($favorite);
 
-        // $entityManager->persist($user);
         $entityManager->persist($recipe);
         $entityManager->flush();
 

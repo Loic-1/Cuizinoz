@@ -1,138 +1,133 @@
-{% extends 'base.html.twig' %}
-
-{# {% block stylesheets %}
+{% extends 'base.html.twig' %} {# {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
-{% endblock %} #}
-
-{% block javascripts %}
+{% endblock %} #} {% block javascripts %}
 
 <script src="{{ asset('js/script.js') }}"></script>
 
-{% endblock %}
+{% endblock %} {% block title %}Nos recettes | Cuizinoz{% endblock %} {% block
+body %}
 
-{% block title %}Nos recettes{% endblock %}
+<div class="wrapper">
+  <h2>Nos recettes</h2>
 
-{% block body %}
-
-<h2>Nos recettes</h2>
-
-<ul>
+  <ul>
     <li>
-        Note
-        <a href="{{ path('app_recipe', { orderBy: 'note', order: 'ASC' }) }}">
-            <i class="fa-solid fa-arrow-down-1-9 sort_btn" data-orderBy="note" data-order="ASC"></i>
-        </a>
-        <a href="{{ path('app_recipe', { orderBy: 'note', order: 'DESC' }) }}">
-            <i class="fa-solid fa-arrow-up-1-9 sort_btn" data-orderBy="note" data-order="DESC"></i>
-        </a>
+      Note
+      <a href="{{ path('app_recipe', { orderBy: 'note', order: 'ASC' }) }}">
+        <i
+          class="fa-solid fa-arrow-down-1-9 sort_btn"
+          data-orderBy="note"
+          data-order="ASC"
+        ></i>
+      </a>
+      <a href="{{ path('app_recipe', { orderBy: 'note', order: 'DESC' }) }}">
+        <i
+          class="fa-solid fa-arrow-up-1-9 sort_btn"
+          data-orderBy="note"
+          data-order="DESC"
+        ></i>
+      </a>
     </li>
     <li>
-        A - Z
-        <a href="{{ path('app_recipe', { orderBy: 'name', order: 'ASC' }) }}">
-            <i class="fa-solid fa-arrow-down-a-z sort_btn" data-orderBy="name" data-order="ASC"></i>
-        </a>
-        <a href="{{ path('app_recipe', { orderBy: 'name', order: 'DESC' }) }}">
-            <i class="fa-solid fa-arrow-up-a-z sort_btn" data-orderBy="name" data-order="DESC"></i>
-        </a>
+      A - Z
+      <a href="{{ path('app_recipe', { orderBy: 'name', order: 'ASC' }) }}">
+        <i
+          class="fa-solid fa-arrow-down-a-z sort_btn"
+          data-orderBy="name"
+          data-order="ASC"
+        ></i>
+      </a>
+      <a href="{{ path('app_recipe', { orderBy: 'name', order: 'DESC' }) }}">
+        <i
+          class="fa-solid fa-arrow-up-a-z sort_btn"
+          data-orderBy="name"
+          data-order="DESC"
+        ></i>
+      </a>
     </li>
-</ul>
+  </ul>
 
-<div class="recipe_container">
+  <div class="recipe_container">
     {% for recipe in pagination.items %}
 
     <div class="recipe_card">
+      <figure class="recipe_image_container">
+        {% if recipe.photos|length > 0 %}
 
-        <figure class="recipe_image_container">
+        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <img
+            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+            alt="Photo de {{ recipe.name }}"
+          />
+        </a>
 
-            {% if recipe.photos|length > 0 %}
+        {% else %}
 
-            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}">{# {{ recipe.photos|first.url }} #}
-            </a>
+        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+          <img
+            src={{ asset('assets/Question_mark_alternate.svg') }}
+            alt="Pas encore de photo"
+          />
+        </a>
 
-            {% else %}
+        {% endif %}
+      </figure>
+      <div class="recipe_infos_container">
+        <p>{{ recipe.name }}</p>
+        <p>
+          Une recette de
+          <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+            {{ recipe.user.pseudo }}
+          </a>
+        </p>
+        <p>Note: (temp)</p>
+        <a
+          href="{{ path('recipe_category', { category: recipe.category.id }) }}"
+        >
+          {{ recipe.category.name }}
+        </a>
 
-            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
-                    alt="Pas encore de photo">
-            </a>
+        {% if app.user %}
 
-            {% endif %}
+        <div class="recipe_actions">
+          {% if recipe.isFavorite(recipe, app.user) %}
 
-        </figure>
-        <div class="recipe_infos_container">
-            <p>{{ recipe.name }}</p>
-            <p>Une recette de
-                <a href="{{ path('detail_user', {user: recipe.user.id}) }}">
-                    {{ recipe.user.pseudo }}
-                </a>
-            </p>
-            <p>Note: (temp)</p>
-            <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
-                {{ recipe.category.name }}
-            </a>
+          <i
+            class="fa-solid fa-heart heart-favorite-btn"
+            data-recipe={{ recipe.id }}
+          ></i>
 
-            {% if app.user %}
-                        
-                <div class="recipe_actions">
+          {% else %}
 
-                    {% if recipe.isFavorite(recipe, app.user) %}
+          <i
+            class="fa-regular fa-heart heart-favorite-btn"
+            data-recipe={{ recipe.id }}
+          ></i>
 
-                        <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-
-                    {% else %}
-
-                        <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-                        
-                    {% endif %}
-
-                </div>
-                    
-            {% endif %}
-                    
+          {% endif %}
         </div>
+
+        {% endif %}
+      </div>
     </div>
 
     {% endfor %}
+  </div>
 
-</div>
-
-<div class="pagination">
+  <div class="pagination">
     {{ knp_pagination_render(pagination) }}
-</div>
+  </div>
 
-{% if app.user %}
+  {% if app.user %}
 
-<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+  <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
     <i class="fa-regular fa-plus"></i>
     <span>Créer une recette</span>
-</a>
+  </a>
 
-{% endif %}
-
-<!--
-    
-    
-    <div class="recipe_addRecipeForm_container">
-        <div class="addRecipeForm">
-            
-            {{ form_errors(addRecipeForm) }}
-            {{ form_start(addRecipeForm) }}
-            {{ form_row(addRecipeForm.name) }}
-            {{ form_row(addRecipeForm.preparationTime) }}
-            {{ form_row(addRecipeForm.instructions) }}
-            {{ form_row(addRecipeForm.category) }}
-            {{ form_row(addRecipeForm.images) }}
-            
-            <button type="submit">Publier</button>
-            
-            {{ form_end(addRecipeForm) }}
-            
-        </div>
-        <a href="{{ path('create_recipe') }}">Créer une recette</a>
-    </div>
--->
+  {% endif %}
+</div>
 
 {% endblock %}
