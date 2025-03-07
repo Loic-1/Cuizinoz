@@ -6,7 +6,9 @@
 %}
 
 <div class="wrapper">
-  <h2 class="h2_200_p">Vos collections créées</h2>
+<h1>Vos collections</h1>
+
+  <h2 class="h2_200_p">Créations</h2>
 
   <div class="compilation_container">
     {% for compilation in user.compilations %}
@@ -26,7 +28,7 @@
     </a>
   </div>
 
-  <h2 class="h2_200_p">Vos collections sauvegardées</h2>
+  <h2 class="h2_200_p">Sauvegardes</h2>
 
   <div class="compilation_container">
     {% for save in user.saves %}
