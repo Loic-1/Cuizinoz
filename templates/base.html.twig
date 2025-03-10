@@ -22,6 +22,13 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
     {% endblock %} {% block javascripts %} {#
     <script src="{{ asset('js/script.js') }}"></script>
     #} {% block importmap %}{{
@@ -59,10 +66,7 @@
       {% if app.user %}
 
       <div class="header_links_btn">
-        <a
-          href="{{ path('app_favorite') }}"
-          title="Vos favoris"
-        >
+        <a href="{{ path('app_favorite') }}" title="Vos favoris">
           <i class="fa-solid fa-heart"></i>
         </a>
 
