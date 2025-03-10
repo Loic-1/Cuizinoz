@@ -53,27 +53,25 @@ body %}
     {% for recipe in pagination.items %}
 
     <div class="recipe_card">
+      <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
       <figure class="recipe_image_container">
         {% if recipe.photos|length > 0 %}
 
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
           <img
             src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
             alt="Photo de {{ recipe.name }}"
           />
-        </a>
 
         {% else %}
 
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
           <img
             src={{ asset('assets/Question_mark_alternate.svg') }}
             alt="Pas encore de photo"
           />
-        </a>
-
-        {% endif %}
-      </figure>
+          
+          {% endif %}
+        </figure>
+      </a>
       <div class="recipe_infos_container">
         <p>{{ recipe.name }}</p>
         <p>
@@ -91,7 +89,7 @@ body %}
         -->
         {% set roundedNote = (recipe.averageNote * 2)|round / 2 %}
 
-        <div title={{ recipe.averageNote ~ "/5" }}>
+        <div class="star_container" title={{ recipe.averageNote ~ "/5" }}>
             <!-- Remplissage d'étoiles pleines -->
             {% if roundedNote|round(0, 'floor') > 0 %} 
               {% for i in range(1, roundedNote|round(0, 'floor'), 1) %}
@@ -120,7 +118,7 @@ body %}
 
       {% else %}
 
-        <div title="Non noté">
+        <div class="star_container" title="Non noté">
           {% for i in range(1, 5, 1) %}
 
             <i class="fa-solid fa-star" style="color: #a0a0a0"></i>
