@@ -15,14 +15,16 @@ body %}
   <ul>
     <li>
       Note
-      <a href="{{ path('app_recipe', { orderBy: 'note', order: 'ASC' }) }}">
+      {# 0, 1, ... #}
+      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
         <i
           class="fa-solid fa-arrow-down-1-9 sort_btn"
           data-orderBy="note"
           data-order="ASC"
         ></i>
       </a>
-      <a href="{{ path('app_recipe', { orderBy: 'note', order: 'DESC' }) }}">
+      {# ..., 1, 0 #}
+      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
         <i
           class="fa-solid fa-arrow-up-1-9 sort_btn"
           data-orderBy="note"
@@ -32,14 +34,16 @@ body %}
     </li>
     <li>
       A - Z
-      <a href="{{ path('app_recipe', { orderBy: 'name', order: 'ASC' }) }}">
+      {# De A à Z #}
+      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
         <i
-          class="fa-solid fa-arrow-down-a-z sort_btn"
-          data-orderBy="name"
-          data-order="ASC"
+        class="fa-solid fa-arrow-down-a-z sort_btn"
+        data-orderBy="name"
+        data-order="ASC"
         ></i>
       </a>
-      <a href="{{ path('app_recipe', { orderBy: 'name', order: 'DESC' }) }}">
+      {# De Z à A #}
+      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
         <i
           class="fa-solid fa-arrow-up-a-z sort_btn"
           data-orderBy="name"

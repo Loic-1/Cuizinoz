@@ -38,15 +38,22 @@ class RecipeController extends AbstractController
     }
 
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
-    #[Route('/recipe/read/', name: 'app_recipe')]
-    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
+    #[Route('/recipe/read/{?order}/{?direction}', name: 'app_recipe')]
+    // #[Route('/recipe/read/{?order}/{?direction}', name: 'app_recipe', defaults: ['order' => 'name', 'direction' => 'DESC'])]
+    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, $order = "name", $direction = "desc"): Response
     {
-        // $recipes = $recipeRepository->findAllOrderedBy($orderBy, $order);
-        $recipes = $recipeRepository->findAll();
+        $query = $recipeRepository
+            ->createQueryBuilder('r')
+            ->orderBy('r.' . $order, $direction)
+            ->getQuery();
 
-
-
-        $query = $recipeRepository->createQueryBuilder('r')->getQuery();
+        // $query = $recipeRepository
+        //     ->createQueryBuilder('r')
+        //     ->leftJoin('r.notes', 'n')
+        //     ->addSelect('(CASE WHEN COUNT(n) > 0 THEN AVG(n.note) ELSE 0 END) AS HIDDEN avgNote')
+        //     ->groupBy('r.id')
+        //     ->orderBy('avgNote', $direction)
+        //     ->getQuery();
 
         $pagination = $paginator->paginate(
             $query,
@@ -54,48 +61,12 @@ class RecipeController extends AbstractController
             12,
         );
 
-
-
-        $user = $this->getUser();
-        $recipe = new Recipe();
-
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            // On récupère les images
-            $images = $form->get('images')->getData();
-            foreach ($images as $image) {
-                // On définit le dossier de destination
-                $folder = 'gallery';
-
-                // On appelle le service d'ajout
-                $fichier = $pictureService->add($image, $folder, 300, 300);
-
-                $photo = new Photo();
-                $photo->setName($fichier);
-                $recipe->addPhoto($photo);
-            }
-
-            $recipe = $form->getData();
-            $recipe->setUser($user);
-
-            $entityManager->persist($recipe);
-            $entityManager->flush();
-
-            // recharge la liste des recettes pour que la nouvelle recette s'affiche directement
-            return $this->redirectToRoute("app_recipe");
-        }
-
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $recipes,
-            'addRecipeForm' => $form,
             'pagination' => $pagination
         ]);
     }
 
-    // FONCTION PERDUE, JSP CE QU'ELLE FAIT lÀ
+    // Renvoie le form de création de recette
     #[Route('/recipe/edit/addRecipe', name: 'create_recipe')]
     public function createRecipe(Request $request, EntityManagerInterface $entityManager, PictureService $pictureService): Response
     {
@@ -177,7 +148,7 @@ class RecipeController extends AbstractController
 
         $recipe = $recipeRepository->find($randomId);
 
-        if ($recipe) {   
+        if ($recipe) {
             return $this->redirectToRoute('detail_recipe', [
                 'recipe' => $recipe->getId(),
             ]);
