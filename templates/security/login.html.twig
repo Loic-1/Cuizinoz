@@ -4,7 +4,7 @@
 
 {% endblock %} #} {% block title %}Log in!{% endblock %} {% block body %}
 <div class="wrapper">
-  <form method="post">
+  <form method="post" class="form-group">
     {% if error %}
     <div class="alert alert-danger">
       {{ error.messageKey|trans(error.messageData, 'security') }}
@@ -23,7 +23,7 @@
       value="{{ last_username }}"
       name="_username"
       id="username"
-      class="form-control"
+      class="form-control w-25"
       autocomplete="email"
       required
       autofocus
@@ -33,7 +33,7 @@
       type="password"
       name="_password"
       id="password"
-      class="form-control"
+      class="form-control w-25"
       autocomplete="current-password"
       required
     />
@@ -54,7 +54,15 @@
     </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+    <div class="d-flex flex-column">
+      <button class="btn btn-lg btn-primary mt-4" type="submit" style="width: 250px;">Se connecter</button>
+
+      <p class="m-3 text-center w-100">OU</p>
+
+      <a href="#">
+        <button class="btn btn-lg btn-primary" style="width: 250px;">Créer un compte</button>
+      </a>
+    </div>
   </form>
 </div>
 {% endblock %}
