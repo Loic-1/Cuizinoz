@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("load script.js");
+ 
 
   const api_url = "http://localhost:8000";
 

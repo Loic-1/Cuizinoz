@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Comment;
 use App\Entity\Note;
 use App\Entity\User;
@@ -10,6 +11,7 @@ use App\Entity\Recipe;
 use App\Form\CommentType;
 use App\Form\NoteType;
 use App\Form\RecipeType;
+use App\Form\SearchType;
 use App\Repository\RecipeRepository;
 use App\Service\PictureService;
 use DateTime;
@@ -41,18 +43,17 @@ class RecipeController extends AbstractController
     #[Route('/recipe/read', name: 'app_recipe')]
     public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $query = $recipeRepository
-            ->createQueryBuilder('r')
-            ->getQuery();
+        $data = new SearchData();
+        $data->page = $request->get('page', 1);
+        $filterForm = $this->createForm(SearchType::class, $data);
+        $filterForm->handleRequest($request);
 
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->getInt('page', 1),
-            12,
-        );
+        $recipes = $recipeRepository->findSearch($data);
 
         return $this->render('recipe/index.html.twig', [
-            'pagination' => $pagination
+            'filterForm' => $filterForm->createView(),
+            'recipes' => $recipes,
+            // 'pagination' => $pagination
         ]);
     }
 

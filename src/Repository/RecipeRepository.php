@@ -3,17 +3,24 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Data\SearchData;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Recipe>
  */
 class RecipeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private PaginatorInterface $paginator;
+
+    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
     {
         parent::__construct($registry, Recipe::class);
+        $this->paginator = $paginator;
     }
 
     public function findNotAdded($compilation_id)
@@ -64,36 +71,40 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    // public function findNewBestRecipes(int $limit)
-    // {
+    public function findSearch(SearchData $search): PaginationInterface
+    {
+        $query = $this
+            ->createQueryBuilder('r')
+            ->select('c', 'r')
+            ->join('r.category', 'c');
 
-    //     $em = $this->getEntityManager();
-    //     $qb = $em->createQueryBuilder();
+        if (!empty($search->q)) {
+            $query = $query
+                ->andWhere('r.name LIKE :q')
+                ->setParameter('q', "%{$search->q}%");
+        }
 
-    //     $qb->select('r')
-    //         ->from('App\Entity\Recipe', 'r')
-    //         // ->orderBy('r.note', 'DESC')
-    //         // ->orderBy('count(r.comments)', 'DESC')
-    //         ->setMaxResults($limit)
-    //     ;
+        if (!empty($search->noteMin)) {
+            $query = $query
+                ->andWhere('r.id >= :noteMin')
+                ->setParameter('noteMin', $search->noteMin);
+        }
 
-    //     $query = $qb->getQuery();
-    //     return $query->getResult();
-    // }
+        if (!empty($search->noteMax)) {
+            $query = $query
+                ->andWhere('r.id <= :noteMax')
+                ->setParameter('noteMax', $search->noteMax);
+        }
 
-    // public function findAllOrderedBy($orderBy, $order)
-    // {
-    //     $em = $this->getEntityManager();
-    //     $qb = $em->createQueryBuilder();
+        if (!empty($search->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
 
-    //     $qb->select('r')
-    //         ->from('App\Entity\Recipe', 'r')
-    //         ->orderBy('r.' . $orderBy, $order)
-    //     ;
-
-    //     $query = $qb->getQuery();
-    //     return $query->getResult();
-    // }
+        $query = $query->getQuery();
+        return $this->paginator->paginate($query, $search->page, 12);
+    }
 
     public function findBestRecipesByUserId($userId, $limit)
     {

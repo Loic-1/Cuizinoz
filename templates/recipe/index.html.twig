@@ -2,33 +2,37 @@
 
 <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
-{% endblock %} #} {% block javascripts %}
-
-<script src="{{ asset('js/script.js') }}"></script>
-
-{% endblock %} {% block title %}Nos recettes | Cuizinoz{% endblock %} {% block
-body %}
-
-<div class="wrapper">
-  <h1>Nos recettes</h1>
-  <div class="recipe_container">
-    {% for recipe in pagination.items %}
-
-    <div class="recipe_card">
+{% endblock %} #} {% block title %}Nos recettes | Cuizinoz{% endblock %} {% block
+  body %}
+  
+  <div class="wrapper">
+    <h1>Nos recettes</h1>
+    
+    
+    <div>
+      {% include "recipe/_filter.html.twig" with { filterForm: filterForm } only %}
+    </div>
+    
+    
+    
+    <div class="recipe_container">
+      {% for recipe in recipes %}
+      
+      <div class="recipe_card">
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-      <figure class="recipe_image_container">
-        {% if recipe.photos|length > 0 %}
-
+        <figure class="recipe_image_container">
+          {% if recipe.photos|length > 0 %}
+          
           <img
-            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-            alt="Photo de {{ recipe.name }}"
+          src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+          alt="Photo de {{ recipe.name }}"
           />
-
-        {% else %}
-
+          
+          {% else %}
+          
           <img
-            src={{ asset('assets/Question_mark_alternate.svg') }}
-            alt="Pas encore de photo"
+          src={{ asset('assets/Question_mark_alternate.svg') }}
+          alt="Pas encore de photo"
           />
           
           {% endif %}
@@ -50,91 +54,93 @@ body %}
           3.8 => 4
         -->
         {% set roundedNote = (recipe.averageNote * 2)|round / 2 %}
-
+        
         <div class="star_container" title={{ recipe.averageNote ~ "/5" }}>
-            <!-- Remplissage d'étoiles pleines -->
-            {% if roundedNote|round(0, 'floor') > 0 %} 
-              {% for i in range(1, roundedNote|round(0, 'floor'), 1) %}
-              
-                <i class="fa-solid fa-star"></i>
-              
-              {% endfor %}
-            {% endif %}
-
-            <!-- Ajout demi-étoile si roundedNote décimal -->
-            {% if roundedNote != roundedNote|round(0, 'floor') %}
-
-              <i class="fa-solid fa-star-half-stroke"></i>
-
-            {% endif %}
-
-            <!-- Complétion avec étoiles vides si besoin -->
-            {% if roundedNote|round(0, 'ceil') < 5 %}
-              {% for i in range(roundedNote|round(0, 'ceil'), 4, 1) %}
-              
-                <i class="fa-regular fa-star"></i>
-              
-              {% endfor %}
-            {% endif %}
-        </div>
-
-      {% else %}
-
-        <div class="star_container" title="Non noté">
-          {% for i in range(1, 5, 1) %}
-
-            <i class="fa-solid fa-star" style="color: #a0a0a0"></i>
-              
+          <!-- Remplissage d'étoiles pleines -->
+          {% if roundedNote|round(0, 'floor') > 0 %} 
+          {% for i in range(1, roundedNote|round(0, 'floor'), 1) %}
+          
+          <i class="fa-solid fa-star"></i>
+          
           {% endfor %}
-        </div>
-
-      {% endif %}
-
-        <a
-          href="{{ path('recipe_category', { category: recipe.category.id }) }}"
-        >
-          {{ recipe.category.name }}
-        </a>
-
-        {% if app.user %}
-
-        <div class="recipe_actions">
-          {% if recipe.isFavorite(recipe, app.user) %}
-
-          <i
-            class="fa-solid fa-heart heart-favorite-btn"
-            data-recipe={{ recipe.id }}
-          ></i>
-
-          {% else %}
-
-          <i
-            class="fa-regular fa-heart heart-favorite-btn"
-            data-recipe={{ recipe.id }}
-          ></i>
-
+          {% endif %}
+          
+          <!-- Ajout demi-étoile si roundedNote décimal -->
+          {% if roundedNote != roundedNote|round(0, 'floor') %}
+          
+          <i class="fa-solid fa-star-half-stroke"></i>
+          
+          {% endif %}
+          
+          <!-- Complétion avec étoiles vides si besoin -->
+          {% if roundedNote|round(0, 'ceil') < 5 %}
+          {% for i in range(roundedNote|round(0, 'ceil'), 4, 1) %}
+          
+          <i class="fa-regular fa-star"></i>
+          
+          {% endfor %}
           {% endif %}
         </div>
-
+        
+        {% else %}
+        
+        <div class="star_container" title="Non noté">
+          {% for i in range(1, 5, 1) %}
+          
+          <i class="fa-solid fa-star" style="color: #a0a0a0"></i>
+          
+          {% endfor %}
+        </div>
+        
+        {% endif %}
+        
+        <a
+        href="{{ path('recipe_category', { category: recipe.category.id }) }}"
+        >
+        {{ recipe.category.name }}
+      </a>
+      
+      {% if app.user %}
+      
+      <div class="recipe_actions">
+        {% if recipe.isFavorite(recipe, app.user) %}
+        
+        <i
+        class="fa-solid fa-heart heart-favorite-btn"
+        data-recipe={{ recipe.id }}
+        ></i>
+        
+        {% else %}
+        
+        <i
+        class="fa-regular fa-heart heart-favorite-btn"
+        data-recipe={{ recipe.id }}
+        ></i>
+        
         {% endif %}
       </div>
+      
+      {% endif %}
     </div>
-
-    {% endfor %}
   </div>
-
-  <div class="pagination">
-    {{ knp_pagination_render(pagination) }}
-  </div>
-
-  {% if app.user %}
-
-  <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-    <i class="fa-regular fa-plus"></i>
-    <span>Créer une recette</span>
-  </a>
-
-  {% endif %}
+  
+  {% endfor %}
 </div>
 
+<div class="pagination">
+  {{ knp_pagination_render(recipes) }}
+</div>
+
+{% if app.user %}
+
+<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+  <i class="fa-regular fa-plus"></i>
+  <span>Créer une recette</span>
+</a>
+
+{% endif %}
+</div>
+
+
+<script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}
