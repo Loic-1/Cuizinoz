@@ -620,7 +620,7 @@ header {
         }
       }
 
-      & .recipe_actions{
+      & .recipe_actions {
         width: fit-content;
 
         font-size: 20px;
@@ -837,16 +837,54 @@ header {
   transform: translate(-50%);
 }
 
-/* HOMEPAGE */
+/* FOOOTER */
 
-.recipe_container_home {
-  display: grid;
-  grid-template-columns: repeat(3, 200px);
-  gap: 50px;
-  justify-content: center;
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 
-  padding: 50px 200px;
+  margin-top: 50px;
+  padding: 100px 200px 150px 200px;
+
+  background-color: var(--secondary-background-color);
+
+  font-family: var(--roboto-standard-font-family);
+  font-size: var(--roboto-standard-text-font-size);
+  font-weight: var(--roboto-standard-text-font-weight);
+
+  & .footer_contact,
+  .footer_services,
+  .footer_about_us {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    & .footer_column_title {
+      font-size: var(--roboto-standard-h3-font-size);
+      font-weight: var(--roboto-standard-h3-font-weight);
+      color: var(--tertiary-font-color);
+    }
+
+    & .footer_column_text {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      & a {
+        color: var(--tertiary-font-color);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  border: 1px solid black;
 }
+
+/* ADD RECIPE BUTTON */
 
 .addRecipe_btn {
   position: fixed;

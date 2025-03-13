@@ -84,5 +84,47 @@
     </header>
 
     {% block body %} {% endblock %}
+
+    <footer>
+      <div class="footer_contact">
+        <p class="footer_column_title">Nous contacter</p>
+
+        <div class="footer_column_text">
+          <address>
+            <!-- Need to detect if on mobile -->
+            <a href="tel:01 23 45 67 89">
+              +33 1 23 45 67 89
+            </a>
+          </address>
+          <a href="mailto:contact@cuizinoz.fr">
+            contact@cuizinoz.fr
+          </a>
+        </div>
+      </div>
+
+      <div class="footer_services">
+        <p class="footer_column_title">Services clients</p>
+        
+        <div class="footer_column_text">
+          <a href="#">FAQ</a>
+          <a href="#">Newsletter</a>
+        </div>
+        </div>
+
+      <div class="footer_about_us">
+        <p class="footer_column_title">L'entreprise</p>
+
+        <div class="footer_column_text">
+          <a href="#">À propos de nous</a>
+          <a href="#">Écologie</a>
+          <a href="#">Carrières</a>
+          <!-- Make view for this -->
+          <a href="#">CGU</a>
+          <!-- Make view for this -->
+          <a href="#">Politique de confidentialité</a>
+          <a href="#">Accessibilité</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
