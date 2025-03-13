@@ -38,22 +38,12 @@ class RecipeController extends AbstractController
     }
 
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
-    #[Route('/recipe/read/{?order}/{?direction}', name: 'app_recipe')]
-    // #[Route('/recipe/read/{?order}/{?direction}', name: 'app_recipe', defaults: ['order' => 'name', 'direction' => 'DESC'])]
-    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request, $order = "name", $direction = "desc"): Response
+    #[Route('/recipe/read', name: 'app_recipe')]
+    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $query = $recipeRepository
             ->createQueryBuilder('r')
-            ->orderBy('r.' . $order, $direction)
             ->getQuery();
-
-        // $query = $recipeRepository
-        //     ->createQueryBuilder('r')
-        //     ->leftJoin('r.notes', 'n')
-        //     ->addSelect('(CASE WHEN COUNT(n) > 0 THEN AVG(n.note) ELSE 0 END) AS HIDDEN avgNote')
-        //     ->groupBy('r.id')
-        //     ->orderBy('avgNote', $direction)
-        //     ->getQuery();
 
         $pagination = $paginator->paginate(
             $query,

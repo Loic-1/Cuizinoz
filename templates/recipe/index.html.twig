@@ -11,48 +11,6 @@ body %}
 
 <div class="wrapper">
   <h1>Nos recettes</h1>
-
-  <ul>
-    <li>
-      Note
-      {# 0, 1, ... #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
-        <i
-          class="fa-solid fa-arrow-down-1-9 sort_btn"
-          data-orderBy="note"
-          data-order="ASC"
-        ></i>
-      </a>
-      {# ..., 1, 0 #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
-        <i
-          class="fa-solid fa-arrow-up-1-9 sort_btn"
-          data-orderBy="note"
-          data-order="DESC"
-        ></i>
-      </a>
-    </li>
-    <li>
-      A - Z
-      {# De A à Z #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
-        <i
-        class="fa-solid fa-arrow-down-a-z sort_btn"
-        data-orderBy="name"
-        data-order="ASC"
-        ></i>
-      </a>
-      {# De Z à A #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
-        <i
-          class="fa-solid fa-arrow-up-a-z sort_btn"
-          data-orderBy="name"
-          data-order="DESC"
-        ></i>
-      </a>
-    </li>
-  </ul>
-
   <div class="recipe_container">
     {% for recipe in pagination.items %}
 
