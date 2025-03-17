@@ -386,11 +386,6 @@ header {
             text-decoration: underline;
           }
         }
-
-        & i {
-          font-size: 20px;
-          color: var(--primary-button-color);
-        }
       }
     }
   }
@@ -936,6 +931,13 @@ footer {
   &:hover span {
     display: unset;
   }
+}
+
+/* _STARS */
+
+.stars_container {
+  font-size: 20px;
+  color: var(--primary-button-color);
 }
 
 /* RESPONSIVENESS */
