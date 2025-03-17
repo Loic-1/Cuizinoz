@@ -40,43 +40,26 @@
 
   --action-font-size: 25px;
 
-  /* Roboto-Standard */
+  /* Roboto fonts */
 
   --roboto-standard-font-family: "Roboto-Standard";
 
-  --roboto-standard-h1-font-size: 40px;
-  --roboto-standard-h1-font-weight: 600;
-
-  --roboto-standard-h2-font-size: 32px;
-  --roboto-standard-h2-font-weight: 500;
-
-  --roboto-standard-h3-font-size: 24px;
-  --roboto-standard-h3-font-weight: 500;
-
-  --roboto-standard-subtitle-font-size: 20px;
-  --roboto-standard-subtitle-font-weight: 300;
-
-  --roboto-standard-text-font-size: 16px;
-  --roboto-standard-text-font-weight: 400;
-
-  /* Roboto-Serif-Italic */
-
   --roboto-serif-italic-font-family: "Roboto-Serif-Italic";
 
-  --roboto-serif-italic-h1-font-size: 40px;
-  --roboto-serif-italic-h1-font-weight: 600;
+  --roboto-h1-font-size: 40px;
+  --roboto-h1-font-weight: 600;
 
-  --roboto-serif-italic-h2-font-size: 32px;
-  --roboto-serif-italic-h2-font-weight: 500;
+  --roboto-h2-font-size: 32px;
+  --roboto-h2-font-weight: 500;
 
-  --roboto-serif-italic-h3-font-size: 24px;
-  --roboto-serif-italic-h3-font-weight: 500;
+  --roboto-h3-font-size: 24px;
+  --roboto-h3-font-weight: 500;
 
-  --roboto-serif-italic-subtitle-font-size: 20px;
-  --roboto-serif-italic-subtitle-font-weight: 300;
+  --roboto-subtitle-font-size: 20px;
+  --roboto-subtitle-font-weight: 300;
 
-  --roboto-serif-italic-text-font-size: 16px;
-  --roboto-serif-italic-text-font-weight: 400;
+  --roboto-text-font-size: 16px;
+  --roboto-text-font-weight: 400;
 
   /* Satisfy */
 
@@ -107,6 +90,7 @@
 body {
   color: var(--primary-font-color);
   background-color: var(--primary-background-color);
+  font-family: var(--roboto-standard-font-family);
 }
 
 .wrapper {
@@ -125,9 +109,8 @@ body {
   justify-content: center;
   gap: 15px;
 
-  font-family: var(--roboto-standard-font-family);
-  font-size: var(--roboto-standard-text-font-size);
-  font-weight: var(--roboto-standard-text-font-weight);
+  font-size: var(--roboto-text-font-size);
+  font-weight: var(--roboto-text-font-weight);
 
   & .current,
   .page:hover a {
@@ -190,9 +173,8 @@ header {
     gap: 15px;
     align-items: center;
 
-    font-size: var(--roboto-standard-text-font-size);
-    font-weight: var(--roboto-standard-h3-font-weight);
-    font-family: var(--roboto-standard-font-family);
+    font-size: var(--roboto-text-font-size);
+    font-weight: var(--roboto-h3-font-weight);
 
     & a {
       color: var(--primary-font-color);
@@ -203,7 +185,7 @@ header {
     }
 
     & span {
-      font-size: var(--roboto-standard-subtitle-font-size);
+      font-size: var(--roboto-subtitle-font-size);
 
       &:hover {
         cursor: default;
@@ -281,16 +263,15 @@ header {
     }
 
     & h1 {
-      font-family: var(--roboto-standard-font-family);
-      font-size: var(--roboto-standard-h1-font-size);
-      font-weight: var(--roboto-standard-h1-font-weight);
+      font-size: var(--roboto-h1-font-size);
+      font-weight: var(--roboto-h1-font-weight);
       color: var(--tertiary-font-color);
     }
 
     & p {
       font-family: var(--roboto-serif-italic-font-family);
-      font-size: var(--roboto-serif-italic-subtitle-font-size);
-      font-weight: var(--roboto-standard-subtitle-font-weight);
+      font-size: var(--roboto-subtitle-font-size);
+      font-weight: var(--roboto-subtitle-font-weight);
 
       color: var(--tertiary-font-color);
     }
@@ -320,9 +301,8 @@ header {
   padding: 100px 200px 50px 200px;
 
   & h2 {
-    font-family: var(--roboto-standard-font-family);
-    font-size: var(--roboto-standard-h2-font-size);
-    font-weight: var(--roboto-standard-h2-font-weight);
+    font-size: var(--roboto-h2-font-size);
+    font-weight: var(--roboto-h2-font-weight);
   }
 
   & .home_section_2_recipe_container {
@@ -341,9 +321,8 @@ header {
       width: 100%;
       height: fit-content; /* !!!!!!! */
 
-      font-family: var(--roboto-standard-font-family);
-      font-size: var(--roboto-standard-text-font-size);
-      font-weight: var(--roboto-standard-text-font-weight);
+      font-size: var(--roboto-text-font-size);
+      font-weight: var(--roboto-text-font-weight);
 
       & .home_section_2_recipe_image_container {
         width: 250px;
@@ -396,9 +375,8 @@ header {
     padding: 20px;
     border-radius: 100px;
 
-    font-family: var(--roboto-standard-font-family);
-    font-size: var(--roboto-standard-text-font-size);
-    font-weight: var(--roboto-standard-text-font-weight);
+    font-size: var(--roboto-text-font-size);
+    font-weight: var(--roboto-text-font-weight);
     color: var(--tertiary-font-color);
 
     &:hover {
@@ -430,9 +408,8 @@ header {
   padding: 100px 200px 50px 200px;
 
   & h2 {
-    font-family: var(--roboto-standard-font-family);
-    font-size: var(--roboto-standard-h2-font-size);
-    font-weight: var(--roboto-standard-h2-font-weight);
+    font-size: var(--roboto-h2-font-size);
+    font-weight: var(--roboto-h2-font-weight);
   }
 
   & .home_section_4_comment_container {
@@ -457,9 +434,8 @@ header {
       -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
       -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
 
-      font-family: var(--roboto-standard-font-family);
-      font-size: var(--roboto-standard-text-font-size);
-      font-weight: var(--roboto-standard-text-font-weight);
+      font-size: var(--roboto-text-font-size);
+      font-weight: var(--roboto-text-font-weight);
 
       & .home_section_4_recipe,
       .home_section_4_user {
@@ -472,7 +448,7 @@ header {
       }
 
       .home_section_4_comment_title {
-        font-weight: var(--roboto-standard-h3-font-weight);
+        font-weight: var(--roboto-h3-font-weight);
       }
     }
   }
@@ -488,9 +464,8 @@ header {
   /* padding: 100px 0px 50px 200px; */
 
   & h2 {
-    font-family: var(--roboto-standard-font-family);
-    font-size: var(--roboto-standard-h2-font-size);
-    font-weight: var(--roboto-standard-h2-font-weight);
+    font-size: var(--roboto-h2-font-size);
+    font-weight: var(--roboto-h2-font-weight);
   }
 
   & .home_section_5_category_container {
@@ -530,9 +505,8 @@ header {
         left: 50%;
         transform: translate(-50%, -50%);
 
-        font-family: var(--roboto-standard-font-family);
-        font-size: var(--roboto-standard-text-font-size);
-        font-weight: var(--roboto-standard-text-font-weight);
+        font-size: var(--roboto-text-font-size);
+        font-weight: var(--roboto-text-font-weight);
         color: var(--tertiary-font-color);
 
         opacity: 0;
@@ -604,9 +578,8 @@ header {
       flex-direction: column;
       gap: 10px;
 
-      font-family: var(--roboto-standard-font-family);
-      font-size: var(--roboto-standard-text-font-size);
-      font-weight: var(--roboto-standard-text-font-weight);
+      font-size: var(--roboto-text-font-size);
+      font-weight: var(--roboto-text-font-weight);
 
       & a {
         font-family: var(--roboto-serif-italic-font-family);
@@ -858,9 +831,8 @@ footer {
 
   background-color: var(--secondary-background-color);
 
-  font-family: var(--roboto-standard-font-family);
-  font-size: var(--roboto-standard-text-font-size);
-  font-weight: var(--roboto-standard-text-font-weight);
+  font-size: var(--roboto-text-font-size);
+  font-weight: var(--roboto-text-font-weight);
 
   & .footer_contact,
   .footer_services,
@@ -870,8 +842,8 @@ footer {
     gap: 15px;
 
     & .footer_column_title {
-      font-size: var(--roboto-standard-h3-font-size);
-      font-weight: var(--roboto-standard-h3-font-weight);
+      font-size: var(--roboto-h3-font-size);
+      font-weight: var(--roboto-h3-font-weight);
       color: var(--tertiary-font-color);
     }
 
@@ -924,9 +896,8 @@ footer {
 
     color: var(--tertiary-font-color);
 
-    font-size: var(--roboto-standard-text-font-size);
-    font-weight: var(--roboto-standard-text-font-weight);
-    font-family: var(--roboto-standard-font-family);
+    font-size: var(--roboto-text-font-size);
+    font-weight: var(--roboto-text-font-weight);
   }
 
   &:hover span {
