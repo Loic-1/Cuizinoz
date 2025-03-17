@@ -266,12 +266,14 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 25px;
 
     width: fit-content;
 
     & .home_section_1_foreground_image {
-      width: 100px;
+      max-width: 100px;
+      width: 35%;
 
       & img {
         width: 100%;
@@ -674,7 +676,7 @@ header {
     -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
 
     & .compilation_detail_link {
-     color: var(--primary-font-color);
+      color: var(--primary-font-color);
 
       & .compilation_infos_container {
         display: flex;
