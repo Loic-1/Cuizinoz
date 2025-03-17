@@ -688,46 +688,6 @@ header {
   }
 }
 
-/* COMPILATION */
-
-/* .compilation_container {
-  display: grid;
-  grid-template-columns: repeat(4, 200px);
-  gap: 50px;
-
-  justify-content: center;
-
-  width: 100%;
-
-  padding: 50px 200px;
-}
-
-.compilation_card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  width: 200px;
-  height: 200px;
-  padding: 30px 10px;
-
-  border-radius: 10px;
-
-  -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
-}
-
-.compilation_actions {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-
-  font-size: var(--action-font-size);
-} */
-
 /* DÉTAIL RECETTE */
 
 .detail_recipe_container {
