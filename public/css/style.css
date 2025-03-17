@@ -298,6 +298,7 @@ header {
 
       & i {
         position: absolute;
+        transform: translateX(-50%);
 
         font-size: 25px;
         color: var(--tertiary-font-color);
