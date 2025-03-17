@@ -272,7 +272,7 @@ header {
     width: fit-content;
 
     & .home_section_1_foreground_image {
-      max-width: 100px;
+      max-width: 90px;
       width: 35%;
 
       & img {
@@ -893,8 +893,6 @@ footer {
       }
     }
   }
-
-  /* border: 1px solid black; */
 }
 
 /* ADD RECIPE BUTTON */
@@ -938,4 +936,21 @@ footer {
   &:hover span {
     display: unset;
   }
+}
+
+/* RESPONSIVENESS */
+
+@media (max-width: 480px) {
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (max-width: 1280px) {
+}
+
+@media (max-width: 1536px) {
 }
