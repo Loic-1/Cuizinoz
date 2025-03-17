@@ -6,30 +6,34 @@
 %}
 
 <div class="wrapper">
-  <h1 class="h2_200_p">Les collections du site</h1>
+  <h1 class="p-l_200-p p-t_50-p">Les collections du site</h1>
 
   <div class="compilation_container">
+
     {% for compilation in compilations %}
-    <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}">
+
       <div class="compilation_card">
-        <p>{{ compilation.name }}</p>
-        <strong> {{ compilation.recipes | length }} </strong>
-        {% if app.user %}
-        <div class="compilation_actions">
-          <a
-            href="{{
-              path('add_compilation', {
-                compilation: compilation.id,
-                user: app.user.id
-              })
-            }}"
-          >
-            <i class="fa-regular fa-floppy-disk"></i>
-          </a>
-        </div>
-        {% endif %}
+        <a href="{{ path('detail_compilation', { compilation: compilation.id }) }}" class="compilation_detail_link">
+          <div class="compilation_infos_container">
+            <p>{{ compilation.name }}</p>
+            <p>{{ compilation.user.pseudo }}</p>
+            <p><strong> {{ compilation.recipes | length }}</strong> recettes </p>
+          </div>
+
+          {% if app.user %}
+
+            <a href="{{ path('add_compilation', { compilation: compilation.id, user: app.user.id }) }}" title="Sauvegarder la recette" class="compilation_save_link">
+              <i class="fa-regular fa-floppy-disk"></i>
+            </a>
+
+          {% endif %}
+        </a>
       </div>
-    </a>
+
+    {% else %}
+
+    <p>Pas de collections</p>
+
     {% endfor %}
   </div>
 
