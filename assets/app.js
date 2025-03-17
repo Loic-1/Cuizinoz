@@ -7,11 +7,12 @@ const slider = document.getElementById("note-slider");
 
 if (slider) {
   const range = noUiSlider.create(slider, {
-    start: [20, 80],
+    start: [0, 5],
     connect: true,
+    step: 1,
     range: {
       min: 0,
-      max: 100,
+      max: 5,
     },
   });
 
