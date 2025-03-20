@@ -6,6 +6,7 @@
 
 {% block javascripts %}
 
+{{ parent() }} {# This keeps the JavaScript from base.html.twig #}
 <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
@@ -102,7 +103,4 @@
 
 {% endif %}
 </div>
-
-
-<script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}
