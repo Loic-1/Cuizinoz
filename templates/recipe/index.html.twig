@@ -2,75 +2,44 @@
 
 <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
-{% endblock %} #} {% block javascripts %}
+{% endblock %} #}
+
+{% block javascripts %}
 
 <script src="{{ asset('js/script.js') }}"></script>
 
-{% endblock %} {% block title %}Nos recettes | Cuizinoz{% endblock %} {% block
-body %}
+{% endblock %}
 
-<div class="wrapper">
-  <h1 class="p-l_200-p p-t_50-p">Nos recettes</h1>
+{% block title %}Nos recettes | Cuizinoz{% endblock %}
 
-  <ul>
-    <li>
-      Note
-      {# 0, 1, ... #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
-        <i
-          class="fa-solid fa-arrow-down-1-9 sort_btn"
-          data-orderBy="note"
-          data-order="ASC"
-        ></i>
-      </a>
-      {# ..., 1, 0 #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
-        <i
-          class="fa-solid fa-arrow-up-1-9 sort_btn"
-          data-orderBy="note"
-          data-order="DESC"
-        ></i>
-      </a>
-    </li>
-    <li>
-      A - Z
-      {# De A à Z #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'ASC' }) }}">
-        <i
-        class="fa-solid fa-arrow-down-a-z sort_btn"
-        data-orderBy="name"
-        data-order="ASC"
-        ></i>
-      </a>
-      {# De Z à A #}
-      <a href="{{ path('app_recipe', { order: 'name', direction: 'DESC' }) }}">
-        <i
-          class="fa-solid fa-arrow-up-a-z sort_btn"
-          data-orderBy="name"
-          data-order="DESC"
-        ></i>
-      </a>
-    </li>
-  </ul>
+{% block body %}
+  
+  <div class="wrapper">
+    <h1>Nos recettes</h1>
+    
+    <div>
+      {% include "recipe/_filter.html.twig" with { filterForm: filterForm } only %}
+    </div>
+    
+    <div class="recipe_container">
+      {% for recipe in recipes %}
+      
+      <div class="recipe_card">
 
-  <div class="recipe_container">
-    {% for recipe in pagination.items %}
-
-    <div class="recipe_card">
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-      <figure class="recipe_image_container">
-        {% if recipe.photos|length > 0 %}
-
+        <figure class="recipe_image_container">
+          {% if recipe.photos|length > 0 %}
+          
           <img
-            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-            alt="Photo de {{ recipe.name }}"
+          src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+          alt="Photo de {{ recipe.name }}"
           />
-
-        {% else %}
-
+          
+          {% else %}
+          
           <img
-            src={{ asset('assets/Question_mark_alternate.svg') }}
-            alt="Pas encore de photo"
+          src={{ asset('assets/Question_mark_alternate.svg') }}
+          alt="Pas encore de photo"
           />
           
           {% endif %}
@@ -88,50 +57,52 @@ body %}
         {% include "components/_stars.html.twig" with { recipe: recipe } only %}
 
         <a
-          href="{{ path('recipe_category', { category: recipe.category.id }) }}"
+        href="{{ path('recipe_category', { category: recipe.category.id }) }}"
         >
-          {{ recipe.category.name }}
-        </a>
-
-        {% if app.user %}
-
-        <div class="recipe_actions">
-          {% if recipe.isFavorite(recipe, app.user) %}
-
-          <i
-            class="fa-solid fa-heart heart-favorite-btn"
-            data-recipe={{ recipe.id }}
-          ></i>
-
-          {% else %}
-
-          <i
-            class="fa-regular fa-heart heart-favorite-btn"
-            data-recipe={{ recipe.id }}
-          ></i>
-
-          {% endif %}
-        </div>
-
+        {{ recipe.category.name }}
+      </a>
+      
+      {% if app.user %}
+      
+      <div class="recipe_actions">
+        {% if recipe.isFavorite(recipe, app.user) %}
+        
+        <i
+        class="fa-solid fa-heart heart-favorite-btn"
+        data-recipe={{ recipe.id }}
+        ></i>
+        
+        {% else %}
+        
+        <i
+        class="fa-regular fa-heart heart-favorite-btn"
+        data-recipe={{ recipe.id }}
+        ></i>
+        
         {% endif %}
       </div>
+      
+      {% endif %}
     </div>
-
-    {% endfor %}
   </div>
-
-  <div class="pagination">
-    {{ knp_pagination_render(pagination) }}
-  </div>
-
-  {% if app.user %}
-
-  <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-    <i class="fa-regular fa-plus"></i>
-    <span>Créer une recette</span>
-  </a>
-
-  {% endif %}
+  
+  {% endfor %}
 </div>
 
+<div class="pagination">
+  {{ knp_pagination_render(recipes) }}
+</div>
+
+{% if app.user %}
+
+<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+  <i class="fa-regular fa-plus"></i>
+  <span>Créer une recette</span>
+</a>
+
+{% endif %}
+</div>
+
+
+<script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}

@@ -6,28 +6,32 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="{{
       asset("assets/logoCuizinoz50x50.png")
-    }}"> {% block stylesheets %}
+    }}"> 
+    
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
-      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+        integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
-    />
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+      />
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+      {# NoUISlider #}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.css" integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    {% endblock %} {% block javascripts %} {#
-    <script src="{{ asset('js/script.js') }}"></script>
-    #} {% block importmap %}{{
-      importmap("app")
-    }}{% endblock %} {% endblock %}
+      <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+
+    {% endblock %} 
+    
+   
   </head>
 
   <body>
@@ -126,5 +130,23 @@
         </div>
       </div>
     </footer>
+    
+{% block javascripts %}
+{#     
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_script_tags('app') }} #}
+
+    {# {{ encore_entry_script_tags('app') | replace('src=' : 'defer src=') | raw}} #}
+    {#
+    <script src="{{ asset('js/script.js') }}"></script>
+    #}
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js" integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {% block importmap %}{{
+      importmap("app")
+    }}{% endblock %} 
+  
+  {% endblock %}
   </body>
 </html>
