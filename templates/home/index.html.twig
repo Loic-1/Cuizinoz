@@ -8,7 +8,8 @@
   <section class="home_section_1">
     <figure class="home_section_1_background_image">
       <img
-        src="{{ asset('assets/homePageBannerBackground.jpg') }}"
+        {# src="{{ asset('assets/homePageBannerBackground.jpg') }}" #}
+        src="{{ asset('assets/test1.jpg') }}"
         alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
       />
     </figure>
@@ -61,11 +62,11 @@
           {% endif %}
         </figure>
         <div class="home_section_2_recipe_infos_container">
-          <p>{{ recipe.name }}</p>
+          <strong>{{ recipe.name }}</strong>
           <p>
             Une recette de
             <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-              <span class="home_section_2_user">{{ recipe.user.pseudo }}</span>
+              <span class="home_section_2_user" style="color: dark-orange;">{{ recipe.user.pseudo }}</span>
             </a>
           </p>
           <a
@@ -91,11 +92,11 @@
   </section>
 
   <section class="home_section_3">
-    <p>“Cooking is love made visible through flavors.”</p>
+    <blockquote>“Cooking is love made visible through flavors.”</blockquote>
   </section>
 
   <section class="home_section_4">
-    <h2>La communauté</h2>
+    <h2>À la mode</h2>
     <div class="home_section_4_comment_container">
       {% if comments|length > 0 %} {% for comment in comments %}
 
