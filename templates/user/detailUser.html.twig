@@ -171,7 +171,9 @@
                         {{ recipe.user.pseudo }}
                     </a>
                 </p>
-                <p>Note: (temp)</p>
+                
+                {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+
                 <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
                     {{ recipe.category.name }}
                 </a>

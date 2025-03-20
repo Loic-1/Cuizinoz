@@ -2,23 +2,30 @@
 
 <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
-{% endblock %} #} {% block title %}Nos recettes | Cuizinoz{% endblock %} {% block
-  body %}
+{% endblock %} #}
+
+{% block javascripts %}
+
+<script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
+{% block title %}Nos recettes | Cuizinoz{% endblock %}
+
+{% block body %}
   
   <div class="wrapper">
     <h1>Nos recettes</h1>
-    
     
     <div>
       {% include "recipe/_filter.html.twig" with { filterForm: filterForm } only %}
     </div>
     
-    
-    
     <div class="recipe_container">
       {% for recipe in recipes %}
       
       <div class="recipe_card">
+
       <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
         <figure class="recipe_image_container">
           {% if recipe.photos|length > 0 %}
@@ -47,53 +54,8 @@
           </a>
         </p>
         
-        {% if recipe.notes|length > 0 %}
-        <!-- Note arrondie au demi ou entier le plus proche -->
-        <!--
-          1.3 => 1.5
-          3.8 => 4
-        -->
-        {% set roundedNote = (recipe.averageNote * 2)|round / 2 %}
-        
-        <div class="star_container" title={{ recipe.averageNote ~ "/5" }}>
-          <!-- Remplissage d'étoiles pleines -->
-          {% if roundedNote|round(0, 'floor') > 0 %} 
-          {% for i in range(1, roundedNote|round(0, 'floor'), 1) %}
-          
-          <i class="fa-solid fa-star"></i>
-          
-          {% endfor %}
-          {% endif %}
-          
-          <!-- Ajout demi-étoile si roundedNote décimal -->
-          {% if roundedNote != roundedNote|round(0, 'floor') %}
-          
-          <i class="fa-solid fa-star-half-stroke"></i>
-          
-          {% endif %}
-          
-          <!-- Complétion avec étoiles vides si besoin -->
-          {% if roundedNote|round(0, 'ceil') < 5 %}
-          {% for i in range(roundedNote|round(0, 'ceil'), 4, 1) %}
-          
-          <i class="fa-regular fa-star"></i>
-          
-          {% endfor %}
-          {% endif %}
-        </div>
-        
-        {% else %}
-        
-        <div class="star_container" title="Non noté">
-          {% for i in range(1, 5, 1) %}
-          
-          <i class="fa-solid fa-star" style="color: #a0a0a0"></i>
-          
-          {% endfor %}
-        </div>
-        
-        {% endif %}
-        
+        {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+
         <a
         href="{{ path('recipe_category', { category: recipe.category.id }) }}"
         >
