@@ -146,7 +146,7 @@
                     
                     {% include "components/_stars.html.twig" with { recipe: recipe } only %}
 
-                    <a href="{{ path('recipe_category', { category: recipe.category.id }) }}">
+                    <a href="{{ path('detail_category', { category: recipe.category.id }) }}">
                         {{ recipe.category.name }}
                     </a>
         
@@ -228,9 +228,6 @@
                 </a>
             </p>
             <p>{{ comment.content }}</p>
-            <a href="{{ path('detail_user', {user: comment.user.id}) }}">        
-                {{ comment.user.pseudo }}
-            </a>,
             {{ comment.creationDateFr }}
             </div>
         
