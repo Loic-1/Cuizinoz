@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{# {% block stylesheets %}
+
+  <link rel="stylesheet" href="{{ asset('css/detailCategory.css') }}" />
+
+{% endblock stylesheets %} #}
+
+{% block javascripts %}
+
+  {{ parent() }}
+  <script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block body %}
+<div class="wrapper">
+  <h1 class="h2_200_p">{{category.name ~ "s"}}</h1>
+
+  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}  
+
+</div>
+{% endblock body %}
