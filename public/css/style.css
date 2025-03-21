@@ -394,7 +394,7 @@ header {
 
   background-color: var(--secondary-background-color);
 
-  & p {
+  & blockquote {
     font-family: var(--satisfy-font-family);
     font-size: var(--satisfy-font-size);
     color: var(--tertiary-font-color);
