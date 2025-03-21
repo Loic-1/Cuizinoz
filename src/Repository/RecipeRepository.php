@@ -71,7 +71,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSearch(SearchData $search): PaginationInterface
+    public function findSearch(SearchData $search, $options = null): PaginationInterface
     {
         $query = $this
             ->createQueryBuilder('r')
@@ -100,6 +100,14 @@ class RecipeRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('c.id IN (:categories)')
                 ->setParameter('categories', $search->categories);
+        }
+
+        if (!empty($options)) {
+            foreach ($options as $key => $value) {
+                $query = $query
+                    ->andWhere('r.' . $key . ' = :value')
+                    ->setParameter('value', $value);
+            }
         }
 
         $query = $query->getQuery();
