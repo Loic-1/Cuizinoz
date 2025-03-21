@@ -59,6 +59,29 @@ class UserController extends AbstractController
         }
     }
 
+    // Renvoie l'utilisateur spécifié, ceux qui le suivent et ceux qu'il suit
+    #[Route('/detailOwn', name: 'detailOwn_user')]
+    public function detailOwnUser(UserRepository $userRepository, CompilationRepository $compilationRepository, RecipeRepository $recipeRepository, CommentRepository $commentRepository): Response
+    {
+        $user = $this->getUser();
+
+        $followers = $user->getFollowers();
+        $followees = $user->getFollowees();
+        
+        $compilations = $compilationRepository->findLastCompilationsByUserId($user->getId(), 3);
+        $recipes = $recipeRepository->findBestRecipesByUserId($user->getId(), 3);
+        $comments = $commentRepository->findLastCommentsByUserId($user->getId(), 3);
+
+        return $this->render('user/detailOwnUser.html.twig', [
+            'user' => $user,
+            'followers' => $followers,
+            'followees' => $followees,
+            'compilations' => $compilations,
+            'recipes' => $recipes,
+            'comments' => $comments,
+        ]);
+    }
+
     // Permet au follower de suivre le followee (tous deux des users)
     #[Route('/follow/{follower}/{followee}', name: 'follow_user')]
     public function followUser(User $follower = null, User $followee = null, EntityManagerInterface $entityManager): Response
@@ -167,5 +190,21 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/deleteProfile', name: "delete_user")]
+    public function deleteUser(EntityManagerInterface $entityManager)
+    {
+        $user = $this->getUser();
+
+        $user->setPseudo("Anonyme");
+        $user->setBiography("Anonyme");
+        $user->setProfilePicture(null);
+        $user->setEmail(hash('sha256', $user->getEmail()) . uniqid());
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_logout');
     }
 }

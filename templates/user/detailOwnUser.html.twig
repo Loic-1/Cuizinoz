@@ -8,7 +8,7 @@
 
 {% block javascripts %}
 
-    <script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
 
@@ -22,15 +22,17 @@
 
     <section class="detail_user_photo_info_container">
         <figure class="detail_user_photo_container">
+
             {% if user.profilePicture %}
 
-                <img src="{{ user.profilePicture }}" alt={{ "Photo de profil " ~ user.pseudo }} class="detail_user_photo">
+                <img src="{{ user.profilePicture }}" alt="{{ "Photo de profil de " ~ user.pseudo }}" class="detail_user_photo">
 
             {% else %}
 
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas de photo de profil" class="detail_user_photo">
 
             {% endif %}
+
         </figure>
         <div class="detail_user_info_container">
 
@@ -49,18 +51,21 @@
 
     </section>
 
-    {% if app.user and app.user != user%}
+    <section class="detail_user_actions_container">
 
-        <section class="detail_user_actions_container">
-            {# {% if app.user != user %} #}
+        <a href="{{ path('edit_user', { user: user.id }) }}">
+            Modifier le profil
+        </a>
 
-            <a href="{{ path('follow_user', { follower: app.user.id, followee: user.id }) }}">
-                <button>Suivre</button>
-            </a>
+        <a href="{{ path('delete_user') }}">
+            Supprimer propre compte <i class="fa-solid fa-trash"></i>
+        </a>
 
-            {# {% endif %} #}
-        </section>
-    {% endif %}
+        <a href="{{ path('edit_picture_user', { user: user.id }) }}">
+            Modifier la photo de profil
+        </a>
+
+    </section>
 
     <h1>TODO: Popup des followers et des followees</h1>
 
