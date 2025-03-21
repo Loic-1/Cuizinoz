@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends AbstractController
 {
@@ -63,6 +64,10 @@ class UserController extends AbstractController
     #[Route('/detailOwn', name: 'detailOwn_user')]
     public function detailOwnUser(UserRepository $userRepository, CompilationRepository $compilationRepository, RecipeRepository $recipeRepository, CommentRepository $commentRepository): Response
     {
+        if (!$this->getUser()) {
+            return new JsonResponse(["error" => "Vous etre pas utilisateur"], 401);
+        }
+
         $user = $this->getUser();
 
         $followers = $user->getFollowers();
@@ -195,6 +200,10 @@ class UserController extends AbstractController
     #[Route('/deleteProfile', name: "delete_user")]
     public function deleteUser(EntityManagerInterface $entityManager)
     {
+        if (!$this->getUser()) {
+            return new JsonResponse(["error" => "Vous etre pas utilisateur"], 401);
+        }
+
         $user = $this->getUser();
 
         $user->setPseudo("Anonyme");
