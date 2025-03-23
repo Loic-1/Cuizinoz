@@ -33,7 +33,7 @@ class RecipeController extends AbstractController
             $filterForm = $this->createForm(SearchType::class, $data);
             $filterForm->handleRequest($request);
 
-            $recipes = $recipeRepository->findSearch($data, ['user' => $user]);
+            $recipes = $recipeRepository->findSearch($data, $user->getId());
 
             return $this->render('recipe/listUserRecipe.html.twig', [
                 'user' => $user,
