@@ -21,9 +21,7 @@
   {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}  
 
   {% if app.user %}
-    <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-      <i class="fa-regular fa-plus"></i> <span>Créer une recette</span>
-    </a>
+    {% include "components/_addRecipeBtn.html.twig" %}
   {% endif %}
 
 </div>
