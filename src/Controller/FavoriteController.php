@@ -4,14 +4,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Recipe;
+use App\Data\SearchData;
 use App\Entity\Favorite;
+use App\Form\SearchType;
+use App\Repository\RecipeRepository;
 use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -19,29 +22,23 @@ class FavoriteController extends AbstractController
 {
     // Renvoir tous les favoris du user actuel
     #[Route('/favorite', name: 'app_favorite')]
-    public function listOwnFavorites(FavoriteRepository $favoriteRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listOwnFavorites(FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository, Request $request): Response
     {
         $user = $this->getUser();
-        
-        if ($user) {
-            
-            $query = $favoriteRepository->createQueryBuilder('f')
-            ->where('f.user = :userId')
-            ->setParameter('userId', $user)
-            ->getQuery();
-            
-            $pagination = $paginator->paginate(
-                $query,
-                $request->query->getInt('page', 1),
-                12,
-            );
-            
-            return $this->render('favorite/index.html.twig', [
-                'pagination' => $pagination,
-            ]);
-        } else {
-            return $this->redirectToRoute('app_home');
-        }
+
+        $data = new SearchData();
+        $data->page = $request->get('page', 1);
+        $filterForm = $this->createForm(SearchType::class, $data);
+        $filterForm->handleRequest($request);
+
+        $recipes = $recipeRepository->findSearch($data);
+        // $recipes = $favoriteRepository->findSearch($data);
+
+        return $this->render('favorite/index.html.twig', [
+            'user' => $user,
+            'filterForm' => $filterForm,
+            'recipes' => $recipes,
+        ]);
     }
 
     // Renvoie tous les favorites du user spécifié
