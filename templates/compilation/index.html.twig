@@ -1,9 +1,20 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/userCompilation.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block title %}Vos collections{% endblock %} {% block body
-%}
+  <link rel="stylesheet" href="{{ asset('css/userCompilation.css') }}" />
+
+{% endblock %} #}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Vos collections{% endblock %}
+
+{% block body %}
 
 <div class="wrapper">
 <h1>Vos collections</h1>

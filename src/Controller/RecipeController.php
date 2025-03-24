@@ -35,10 +35,13 @@ class RecipeController extends AbstractController
 
             $recipes = $recipeRepository->findSearch($data, $user->getId());
 
+            $metaDescription = "Vous aimez cuisiner ? Découvrez toutes les recettes de " . $user->getPseudo() . " sur Cuizinoz, filtrez-les par catégorie, note ou nom, et explorez-les pour trouver l'inspiration !";
+
             return $this->render('recipe/listUserRecipe.html.twig', [
                 'user' => $user,
                 'filterForm' => $filterForm,
                 'recipes' => $recipes,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
@@ -56,9 +59,12 @@ class RecipeController extends AbstractController
 
         $recipes = $recipeRepository->findSearch($data);
 
+        $metaDescription = "Vous aimez cuisiner ? Découvrez toutes les recettes de Cuizinoz, filtrez-les par catégorie, note ou nom, et explorez leurs saveurs pour trouver l'inspiration !";
+
         return $this->render('recipe/index.html.twig', [
             'filterForm' => $filterForm->createView(),
             'recipes' => $recipes,
+            'metaDescription' => $metaDescription,
         ]);
     }
 
@@ -98,8 +104,11 @@ class RecipeController extends AbstractController
             return $this->redirectToRoute("app_recipe");
         }
 
+        $metaDescription = "Vous aimez cuisiner ? Créez votre recette en choisissant vos ingrédients, en rédigeant les instructions et en la publiant sur Cuizinoz pour la partager avec tous !";
+
         return $this->render('recipe/createRecipe.html.twig', [
-            'addRecipeForm' => $form
+            'addRecipeForm' => $form,
+            'metaDescription' => $metaDescription,
         ]);
     }
 
@@ -128,9 +137,12 @@ class RecipeController extends AbstractController
                 ]);
             }
 
+            $metaDescription = "Vous aimez cuisiner ? Modifiez votre recette : photos, description, temps de préparation, ingrédients, et bien plus sur Cuizinoz !";
+
             return $this->render('recipe/editRecipe.html.twig', [
                 'recipe' => $recipe,
-                'editRecipeForm' => $form
+                'editRecipeForm' => $form,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
@@ -201,11 +213,14 @@ class RecipeController extends AbstractController
                 ]);
             }
 
+            $metaDescription = "Vous aimez cuisiner ? Découvrez la recette « " . $recipe->getName() . " » en détail, ses photos, ses instructions, ses commentaires et sa note, commentez et notez !";
+
             return $this->render('recipe/detailRecipe.html.twig', [
                 'recipe' => $recipe,
                 'addCommentForm' => $commentForm,
                 'addNoteForm' => $noteForm,
                 'avgNote' => $avgNote,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute('app_home');

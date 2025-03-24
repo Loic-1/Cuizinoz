@@ -34,10 +34,13 @@ class FavoriteController extends AbstractController
         $recipes = $recipeRepository->findSearch($data);
         // $recipes = $favoriteRepository->findSearch($data);
 
+        $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes vos recettes favorites sur Cuizinoz et gérez-les facilement : retirez celles que vous ne souhaitez plus !";
+
         return $this->render('favorite/index.html.twig', [
             'user' => $user,
             'filterForm' => $filterForm,
             'recipes' => $recipes,
+            'metaDescription' => $metaDescription,
         ]);
     }
 

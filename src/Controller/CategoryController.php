@@ -30,10 +30,13 @@ class CategoryController extends AbstractController
 
             $recipes = $recipeRepository->findSearch($data);
 
+            $metaDescription = "Vous aimez cuisiner ? Créez des recettes facilement, choisissez vos ingrédients et la description et publiez la recette pour en faire profiter tout le monde !";
+
             return $this->render('category/detailCategory.html.twig', [
                 'category' => $category,
                 'recipes' => $recipes,
                 'filterForm' => $filterForm,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
 
@@ -46,8 +49,11 @@ class CategoryController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
+        $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes les catégories des recettes présentes sur Cuizinoz, des apéritifs aux desserts, afin de satisfaire tous les gourmands !";
+
         return $this->render('category/listCategory.html.twig', [
             'categories' => $categories,
+            'metaDescription' => $metaDescription,
         ]);
     }
 }

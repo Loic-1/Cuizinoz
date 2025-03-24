@@ -1,6 +1,8 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
+{# {% block stylesheets %}
+
+  <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
 {% endblock %} #}
 
@@ -10,6 +12,12 @@
   <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
 
 {% block title %}Nos recettes | Cuizinoz{% endblock %}
 

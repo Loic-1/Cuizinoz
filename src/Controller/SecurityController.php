@@ -18,9 +18,12 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $metaDescription = "Vous aimez cuisiner ? Connectez-vous à votre compte pour accéder à plus de fonctionnalités : création de recettes, de collections et mise en favoris !";
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'metaDescription' => $metaDescription,
         ]);
     }
 

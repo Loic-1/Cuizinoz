@@ -45,15 +45,17 @@ class UserController extends AbstractController
             $recipes = $recipeRepository->findBestRecipesByUserId($user->getId(), 3);
             $comments = $commentRepository->findLastCommentsByUserId($user->getId(), 3);
 
+            $metaDescription = "Vous aimez cuisiner ? Accédez au profil de " . $user->getPseudo() . ", découvrez ses infos, et retrouvez ses créations de recettes, collections et derniers commentaires !";
+
             return $this->render('user/detailUser.html.twig', [
                 'user' => $user,
                 'followers' => $followers,
                 'followees' => $followees,
                 'users' => $users,
-                // new
                 'compilations' => $compilations,
                 'recipes' => $recipes,
                 'comments' => $comments,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
@@ -72,10 +74,12 @@ class UserController extends AbstractController
 
         $followers = $user->getFollowers();
         $followees = $user->getFollowees();
-        
+
         $compilations = $compilationRepository->findLastCompilationsByUserId($user->getId(), 3);
         $recipes = $recipeRepository->findBestRecipesByUserId($user->getId(), 3);
         $comments = $commentRepository->findLastCommentsByUserId($user->getId(), 3);
+
+        $metaDescription = "Vous aimez cuisiner ? Accédez à votre page personnelle, modifiez vos infos, et retrouvez vos créations de recettes, collections et derniers commentaires !";
 
         return $this->render('user/detailOwnUser.html.twig', [
             'user' => $user,
@@ -84,6 +88,7 @@ class UserController extends AbstractController
             'compilations' => $compilations,
             'recipes' => $recipes,
             'comments' => $comments,
+            'metaDescription' => $metaDescription,
         ]);
     }
 
@@ -136,34 +141,30 @@ class UserController extends AbstractController
 
     // Permet de modifier les attributs du user spécifié
     #[Route('/edit/{user}', name: 'edit_user')]
-    public function editUser(User $user = null, EntityManagerInterface $entityManager, Request $request): Response
+    public function editUser(EntityManagerInterface $entityManager, Request $request): Response
     {
+        $user = $this->getUser();
 
-        if ($user) {
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-            $form = $this->createForm(UserType::class, $user);
-            $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
 
-                $user = $form->getData();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                return $this->redirectToRoute('detail_user', [
-                    'user' => $user->getId()
-                ]);
-            }
-
-            return $this->render('user/editUser.html.twig', [
-                'user' => $user->getId(),
-                'editUserForm' => $form
-            ]);
-        } else {
-
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('detailOwn_user');
         }
+
+        $metaDescription = "Vous aimez cuisiner ? Modifiez vos infos personnelles et personnalisez votre profil !";
+
+        return $this->render('user/editUser.html.twig', [
+            'user' => $user->getId(),
+            'editUserForm' => $form,
+            'metaDescription' => $metaDescription,
+        ]);
     }
 
     // NOT USED YET

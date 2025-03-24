@@ -1,5 +1,14 @@
-{% extends 'base.html.twig' %} {% block title %}Création de recette{% endblock
-%} {% block body %}
+{% extends 'base.html.twig' %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Création de recette{% endblock title%}
+
+{% block body %}
 
 <div class="wrapper">
 
@@ -24,4 +33,4 @@
   </div>
 </div>
 
-{% endblock %}
+{% endblock body %}

@@ -31,8 +31,11 @@ class CompilationController extends AbstractController
         // trouve toutes les compilations stockées en BDD
         $compilations = $compilationRepository->findAll();
 
+        $metaDescription = "Vous aimez cuisiner ? Découvrez et explorez toutes les collections de recettes créées par vous et les autres passionnés de cuisine sur Cuizinoz !";
+
         return $this->render('compilation/listCompilation.html.twig', [
-            'compilations' => $compilations
+            'compilations' => $compilations,
+            'metaDescription' => $metaDescription,
         ]);
     }
 
@@ -43,8 +46,11 @@ class CompilationController extends AbstractController
 
         if ($user) {
 
+            $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes les collections que vous avez créées, et celles sauvegardées, vous pouvez également créer une nouvelle collection !";
+
             return $this->render('compilation/index.html.twig', [
-                'user' => $user
+                'user' => $user,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
 
@@ -84,9 +90,12 @@ class CompilationController extends AbstractController
                 return $this->redirectToRoute('app_compilation');
             }
 
+            $metaDescription = "Vous aimez cuisiner ? Créez des collections regroupant vos recettes favorites par thème en un clic, vous permettant de les retrouver plus facilement !";
+
             // Envoi du form tant qu'il n'est pas submit pour permettre son affichage
             return $this->render('compilation/addCompilation.html.twig', [
-                'addCompilationForm' => $form
+                'addCompilationForm' => $form,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute("app_home");
@@ -156,10 +165,13 @@ class CompilationController extends AbstractController
 
             $recipes = $recipeRepository->findSearch($data);
 
+            $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes les recettes dans la collection « " . $compilation->getName() . " », et filtrez-les selon votre convenance grâce à notre filtre performant !";
+
             return $this->render('compilation/detailCompilation.html.twig', [
                 'compilation' => $compilation,
                 'filterForm' => $filterForm,
                 'recipes' => $recipes,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute("app_home");

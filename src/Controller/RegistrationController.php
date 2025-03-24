@@ -61,8 +61,11 @@ class RegistrationController extends AbstractController
             return $security->login($user, 'form_login', 'main');
         }
 
+        $metaDescription = "Vous aimez cuisiner ? Créez un compte gratuitement pour accéder à plus de fonctionnalités : création de recettes, de collections et mise en favoris !";
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'metaDescription' => $metaDescription,
         ]);
     }
 

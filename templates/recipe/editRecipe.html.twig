@@ -1,12 +1,20 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/editRecipe.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block title %}
+  <link rel="stylesheet" href="{{ asset('css/editRecipe.css') }}" />
 
-{{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo}}
+{% endblock %} #}
 
-{% endblock %} {% block body %}
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %} {{"Modification " ~ recipe.name ~ " - " ~ recipe.user.pseudo}} {% endblock title %}
+
+{% block body %}
 
 <div class="wrapper">
   <h1 class="h2_200_p">Modifier {{ recipe.name }}</h1>

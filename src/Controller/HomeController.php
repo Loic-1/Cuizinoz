@@ -27,10 +27,13 @@ class HomeController extends AbstractController
 
         $categories = $categoryRepository->findAll();
 
+        $metaDescription = "Vous aimez cuisiner ? Cuizinoz est là pour vous aider à trouver la recette idéale à toutes les occasions - N'hésitez plus et faites un essai dès maintenant !";
+
         return $this->render('home/index.html.twig', [
             'recipes' => $recipes,
             'comments' => $comments,
             'categories' => $categories,
+            'metaDescription' => $metaDescription,
         ]);
     }
 }

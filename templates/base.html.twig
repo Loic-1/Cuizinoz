@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block meta_description %}
+
+      <!-- meta-description content goes here -->
+
+    {% endblock meta_description %}
+
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="{{
       asset("assets/logoCuizinoz50x50.png")
@@ -87,7 +94,9 @@
       {% endif %}
     </header>
 
-    {% block body %} {% endblock %}
+    {% block body %}
+      <!-- body content goes here -->
+    {% endblock %}
 
     <footer>
       <div class="footer_contact">

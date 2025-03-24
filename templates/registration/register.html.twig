@@ -1,8 +1,20 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block title %}Register{% endblock %} {% block body %}
+  <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+
+{% endblock %} #}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %} Register {% endblock title %}
+
+{% block body %}
 <div class="wrapper">
   {% for flash_error in app.flashes('verify_email_error') %}
   <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
@@ -25,4 +37,4 @@
   <button type="submit" class="btn">Register</button>
   {{ form_end(registrationForm) }}
 </div>
-{% endblock %}
+{% endblock body %}

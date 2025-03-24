@@ -1,8 +1,20 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block title %}Log in!{% endblock %} {% block body %}
+  <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+
+{% endblock stylesheets %} #}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Log in!{% endblock title %}
+
+{% block body %}
 <div class="wrapper">
   <form method="post" class="form-group">
     {% if error %}

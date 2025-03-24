@@ -16,9 +16,12 @@ class TagController extends AbstractController
         if ($tag) {
             $compilations = $tag->getCompilations();
 
+            $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes les collections de Cuizinoz avec le tag « " . $tag->getName() . " » et découvrez de nouvelles recettes à essayer par thématique !";
+
             return $this->render('tag/index.html.twig', [
                 'compilations' => $compilations,
-                'tag' => $tag
+                'tag' => $tag,
+                'metaDescription' => $metaDescription,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
