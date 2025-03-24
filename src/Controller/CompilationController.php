@@ -2,24 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Entity\Compilation;
-use App\Entity\Recipe;
-use App\Entity\Save;
-use App\Entity\Tag;
-use App\Form\CompilationType;
-use App\Repository\CompilationRepository;
-use App\Repository\RecipeRepository;
-use App\Repository\SaveRepository;
-use App\Repository\TagRepository;
 use DateTime;
+use App\Entity\Save;
+use App\Entity\User;
+use App\Entity\Recipe;
+use App\Data\SearchData;
+use App\Form\SearchType;
+use App\Entity\Compilation;
+use App\Form\CompilationType;
+use App\Repository\SaveRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CompilationRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CompilationController extends AbstractController
 {
@@ -145,23 +145,21 @@ class CompilationController extends AbstractController
 
     // Permet d'afficher le détail d'une compilation
     #[Route('/compilation/detail/{compilation}', name: 'detail_compilation')]
-    public function detailCompilation(Compilation $compilation = null, RecipeRepository $recipeRepository, Request $request, PaginatorInterface $paginator): Response
+    public function detailCompilation(Compilation $compilation = null, RecipeRepository $recipeRepository, Request $request): Response
     {
         if ($compilation) {
 
-            $recipes = $compilation->getRecipes();
-            // $query = $recipeRepository->createQueryBuilder('r')->getQuery();
+            $data = new SearchData();
+            $data->page = $request->get('page', 1);
+            $filterForm = $this->createForm(SearchType::class, $data);
+            $filterForm->handleRequest($request);
 
-            // $pagination = $paginator->paginate(
-            //     $query,
-            //     $request->query->getInt('page', 1),
-            //     8,
-            // );
+            $recipes = $recipeRepository->findSearch($data);
 
             return $this->render('compilation/detailCompilation.html.twig', [
                 'compilation' => $compilation,
+                'filterForm' => $filterForm,
                 'recipes' => $recipes,
-                // 'pagination' => $pagination
             ]);
         } else {
             return $this->redirectToRoute("app_home");

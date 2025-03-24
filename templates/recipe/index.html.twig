@@ -6,8 +6,8 @@
 
 {% block javascripts %}
 
-{{ parent() }} {# This keeps the JavaScript from base.html.twig #}
-<script src="{{ asset('js/script.js') }}"></script>
+  {{ parent() }}
+  <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
 
@@ -15,92 +15,14 @@
 
 {% block body %}
   
-  <div class="wrapper">
-    <h1>Nos recettes</h1>
+<div class="wrapper">
+  <h1>Nos recettes</h1>
     
-    <div>
-      {% include "components/_filter.html.twig" with { filterForm: filterForm } only %}
-    </div>
-    
-    <div class="recipe_container">
-      {% for recipe in recipes %}
-      
-      <div class="recipe_card">
+  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}  
 
-      <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-        <figure class="recipe_image_container">
-          {% if recipe.photos|length > 0 %}
-          
-          <img
-          src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-          alt="Photo de {{ recipe.name }}"
-          />
-          
-          {% else %}
-          
-          <img
-          src={{ asset('assets/Question_mark_alternate.svg') }}
-          alt="Pas encore de photo"
-          />
-          
-          {% endif %}
-        </figure>
-      </a>
-      <div class="recipe_infos_container">
-        <p>{{ recipe.name }}</p>
-        <p>
-          Une recette de
-          <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-            {{ recipe.user.pseudo }}
-          </a>
-        </p>
-        
-        {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+  {% if app.user %}
+    {% include "components/_addRecipeBtn.html.twig" %}
+  {% endif %}
 
-        <a
-        href="{{ path('recipe_category', { category: recipe.category.id }) }}"
-        >
-        {{ recipe.category.name }}
-      </a>
-      
-      {% if app.user %}
-      
-      <div class="recipe_actions">
-        {% if recipe.isFavorite(recipe, app.user) %}
-        
-        <i
-        class="fa-solid fa-heart heart-favorite-btn"
-        data-recipe={{ recipe.id }}
-        ></i>
-        
-        {% else %}
-        
-        <i
-        class="fa-regular fa-heart heart-favorite-btn"
-        data-recipe={{ recipe.id }}
-        ></i>
-        
-        {% endif %}
-      </div>
-      
-      {% endif %}
-    </div>
-  </div>
-  
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {{ knp_pagination_render(recipes) }}
-</div>
-
-{% if app.user %}
-
-<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-  <i class="fa-regular fa-plus"></i>
-  <span>Créer une recette</span>
-</a>
-
-{% endif %}
 </div>
 {% endblock %}

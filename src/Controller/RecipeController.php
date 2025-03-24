@@ -16,23 +16,29 @@ use App\Repository\RecipeRepository;
 use App\Service\PictureService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-use function PHPUnit\Framework\isEmpty;
-
 class RecipeController extends AbstractController
 {
     // Renvoie le user spécifié pour récupérer ses recettes plus tard
     #[Route('/recipe/userRecipes/{id}', name: 'user_recipe')]
-    public function userRecipes(User $user = null)
+    public function userRecipes(User $user = null, RecipeRepository $recipeRepository, Request $request)
     {
         if ($user) {
+            $data = new SearchData();
+            $data->page = $request->get('page', 1);
+            $filterForm = $this->createForm(SearchType::class, $data);
+            $filterForm->handleRequest($request);
+
+            $recipes = $recipeRepository->findSearch($data, $user->getId());
+
             return $this->render('recipe/listUserRecipe.html.twig', [
                 'user' => $user,
+                'filterForm' => $filterForm,
+                'recipes' => $recipes,
             ]);
         } else {
             return $this->redirectToRoute('app_home');
@@ -41,7 +47,7 @@ class RecipeController extends AbstractController
 
     // Renvoie une liste des recipe, permet de créer une nouvelle recipe
     #[Route('/recipe/read', name: 'app_recipe')]
-    public function listRecipes(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listRecipes(RecipeRepository $recipeRepository, Request $request): Response
     {
         $data = new SearchData();
         $data->page = $request->get('page', 1);
@@ -53,7 +59,6 @@ class RecipeController extends AbstractController
         return $this->render('recipe/index.html.twig', [
             'filterForm' => $filterForm->createView(),
             'recipes' => $recipes,
-            // 'pagination' => $pagination
         ]);
     }
 

@@ -1,84 +1,92 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
+{# {% block stylesheets %}
+
+  <link rel="stylesheet" href="{{ asset('css/detailCompilation.css') }}" />
 
 {% endblock %} #}
 
 {% block javascripts %}
 
-<script src="{{ asset('js/script.js') }}"></script>
+  <script src="{{ asset('js/script.js') }}"></script>
 
-{% endblock %}
+{% endblock javascripts %}
 
-{% block title %} Vos collections {% endblock %} {% block body %}
+{% block title %} {{ compilation.name }} | Cuizinoz {% endblock %}
+
+{% block body %}
 
 <div class="wrapper">
-  <h1 class="h2_200_p">{{ compilation.name }}</h1>
+  <h1 class="p-l_200-p p-t_50-p">{{ compilation.name }}</h1>
 
   {% for tag in compilation.tags %}
-  <a href="{{ path('app_tag', { tag: tag.id }) }}">
-    {{ tag.name }}
-  </a>
+
+    <a href="{{ path('app_tag', { tag: tag.id }) }}">
+      {{ tag.name }}
+    </a>
+
   {% endfor %}
 
+  {% include "components/_filterForm.html.twig" with { filterForm: filterForm } only %}
+
   <div class="recipe_container">
-    {% for recipe in recipes %} {# {% for recipe in pagination.items %} #}
 
-    <div class="recipe_card" id="{{ 'recipe-card-' ~ recipe.id }}">
-      <figure class="recipe_image_container">
-        {% if recipe.photos|length > 0 %}
+    {% for recipe in recipes %} 
 
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-          <img
-            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-            alt="{{ recipe.photos|first.alt }}"
-          />
-        </a>
+      <div class="recipe_card" id="{{ 'recipe-card-' ~ recipe.id }}">
+        <figure class="recipe_image_container">
 
-        {% else %}
+          {% if recipe.photos|length > 0 %}
 
-        <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
-            alt="Pas encore de photo"
-          />
-        </a>
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img
+                src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+                alt="{{ recipe.photos|first.alt }}"
+              />
+            </a>
 
-        {% endif %}
-      </figure>
-      <div class="recipe_infos_container">
-        <p>{{ recipe.name }}</p>
-        <p>
-          Une recette de
-          <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-            {{ recipe.user.pseudo }}
-          </a>
-        </p>
-        
-        {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+          {% else %}
 
-        <p>{{ recipe.category.name }}</p>
+            <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                alt="Pas encore de photo"
+              />
+            </a>
 
-        {% if app.user %}
+          {% endif %}
+        </figure>
+        <div class="recipe_infos_container">
+          <p>{{ recipe.name }}</p>
+          <p>
+            Une recette de
+            <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+              {{ recipe.user.pseudo }}
+            </a>
+          </p>
+          
+          {% include "components/_stars.html.twig" with { recipe: recipe } only %}
 
-        <div class="recipe_actions" >
-            <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-            {% if app.user == compilation.user %}
-            <i class="fa-solid fa-minus remove_compilation_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}></i>
-            {% endif %}
+          <p>{{ recipe.category.name }}</p>
+
+          {% if app.user %}
+
+            <div class="recipe_actions" >
+                <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                {% if app.user == compilation.user %}
+                <i class="fa-solid fa-minus remove_compilation_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}></i>
+                {% endif %}
+            </div>
+
+          {% endif %}
         </div>
-
-        {% endif %}
       </div>
-    </div>
 
-    {% endfor %} {# {% endfor %} #}
+    {% endfor %}
   </div>
 
-  {#
   <div class="pagination">
-    {{ knp_pagination_render(pagination) }}
+    {{ knp_pagination_render(recipes) }}
   </div>
-  #}
 </div>
 {% endblock %}

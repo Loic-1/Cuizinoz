@@ -2,24 +2,38 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Category;
+use App\Form\SearchType;
+use App\Repository\RecipeRepository;
 use App\Repository\CategoryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryController extends AbstractController
 {
     // Renvoie une liste des recettes appartenant à la catégorie, ainsi que la catégorie
-    #[Route('/category/detailCategory/{category}', name: 'recipe_category')]
-    public function index(Category $category = null): Response
+    #[Route('/category/detailCategory/{category}', name: 'detail_category')]
+    public function detailCategory(Category $category = null, RecipeRepository $recipeRepository, Request $request): Response
     {
         if ($category) {
-            $recipes = $category->getRecipes();
 
-            return $this->render('category/index.html.twig', [
+            $data = new SearchData();
+            $data->page = $request->get('page', 1);
+
+            $filterForm = $this->createForm(SearchType::class, $data);
+            $filterForm->handleRequest($request);
+
+            $data->addCategory($category);
+
+            $recipes = $recipeRepository->findSearch($data);
+
+            return $this->render('category/detailCategory.html.twig', [
+                'category' => $category,
                 'recipes' => $recipes,
-                'category' => $category
+                'filterForm' => $filterForm,
             ]);
         } else {
 

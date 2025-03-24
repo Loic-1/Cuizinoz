@@ -71,7 +71,7 @@
           </p>
           <a
             href="{{
-              path('recipe_category', { category: recipe.category.id })
+              path('detail_category', { category: recipe.category.id })
             }}"
           >
             <span class="home_section_2_category">{{
@@ -140,7 +140,7 @@
       <div class="home_section_5_category_card">
         <figure class="home_section_5_category_image_container">
           <a
-            href="{{ path('recipe_category', { category: category.id }) }}"
+            href="{{ path('detail_category', { category: category.id }) }}"
             title="{{ category.name }}"
           >
             <img
@@ -165,11 +165,7 @@
   </section>
 
   {% if app.user %}
-
-  <a href="{{ path('create_recipe') }}" class="addRecipe_btn btn">
-    <i class="fa-regular fa-plus"></i>
-    <span>Créer une recette</span>
-  </a>
+    {% include "components/_addRecipeBtn.html.twig" %}
+  {% endif %}
 </div>
-
-{% endif %} {% endblock %}
+{% endblock %}

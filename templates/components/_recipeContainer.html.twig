@@ -1,0 +1,77 @@
+<div class="filter_recipes_pagination_container">
+
+    <div class="recipe_filter">
+        {% include "components/_filterForm.html.twig" with { filterForm: filterForm } only %}
+    </div>
+    
+    <div class="recipe_container">
+        {% for recipe in recipes %}
+        
+            <div class="recipe_card">
+
+                <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                <figure class="recipe_image_container">
+                    {% if recipe.photos|length > 0 %}
+                    
+                    <img
+                        src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+                        alt="Photo de {{ recipe.name }}"
+                    />
+                    
+                    {% else %}
+                    
+                    <img
+                        src={{ asset('assets/Question_mark_alternate.svg') }}
+                        alt="Pas encore de photo"
+                    />
+                    
+                    {% endif %}
+                </figure>
+                </a>
+
+                <div class="recipe_infos_container">
+                <strong>{{ recipe.name }}</strong>
+                <p>
+                    Une recette de
+                    <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+                    {{ recipe.user.pseudo }}
+                    </a>
+                </p>
+                
+                {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+
+                <a href="{{ path('detail_category', { category: recipe.category.id }) }}">
+                    {{ recipe.category.name }}
+                </a>
+                
+                    {% if app.user %}
+                
+                        <div class="recipe_actions">
+                            {% if recipe.isFavorite(recipe, app.user) %}
+                            
+                                <i
+                                class="fa-solid fa-heart heart-favorite-btn"
+                                data-recipe={{ recipe.id }}
+                                ></i>
+
+                            {% else %}
+
+                                <i
+                                class="fa-regular fa-heart heart-favorite-btn"
+                                data-recipe={{ recipe.id }}
+                                ></i>
+
+                            {% endif %}
+                        </div>
+
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+    {{ knp_pagination_render(recipes) }}
+    </div>
+
+</div>

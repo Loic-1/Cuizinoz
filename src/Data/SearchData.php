@@ -2,6 +2,10 @@
 
 namespace App\Data;
 
+use App\Entity\Category;
+
+use function PHPSTORM_META\type;
+
 class SearchData
 {
     /**
@@ -28,4 +32,11 @@ class SearchData
      * @var null|integer
      */
     public $noteMin;
+
+    public function addCategory($category)
+    {
+        if ($category instanceof Category) {
+            array_push($this->categories, $category);
+        }
+    }
 }
