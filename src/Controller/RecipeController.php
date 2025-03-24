@@ -2,24 +2,28 @@
 
 namespace App\Controller;
 
-use App\Data\SearchData;
-use App\Entity\Comment;
+use DateTime;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Note;
 use App\Entity\User;
 use App\Entity\Photo;
 use App\Entity\Recipe;
-use App\Form\CommentType;
 use App\Form\NoteType;
+use App\Entity\Comment;
+use App\Data\SearchData;
 use App\Form\RecipeType;
 use App\Form\SearchType;
-use App\Repository\RecipeRepository;
+use App\Form\CommentType;
 use App\Service\PictureService;
-use DateTime;
+use App\Repository\RecipeRepository;
+use App\Service\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RecipeController extends AbstractController
 {
@@ -225,5 +229,43 @@ class RecipeController extends AbstractController
         } else {
             return $this->redirectToRoute('app_home');
         }
+    }
+
+    #[Route('/downloadRecipe/{recipe}', name: 'download_recipe')]
+    public function downloadRecipe(Recipe $recipe = null, PdfService $pdf)
+    {
+        // // options pdf
+        // $pdfOptions = new Options();
+        // $pdfOptions->set('defaultFont', 'Arial');
+
+        // // nvlle instance DomPdf avec options custom
+        // $domPdf = new Dompdf($pdfOptions);
+
+        // // définit template test
+        // $html = $this->renderView('special/recipePdf.html.twig', [
+        //     'title' => 'testTitle',
+        // ]);
+
+        // // charge template test
+        // $domPdf->loadHtml($html);
+
+        // // format et orientation
+        // $domPdf->setPaper('A4', 'landscape');
+
+        // // on prépare et on affiche
+        // $domPdf->render();
+        // $domPdf->stream("recipePdf.pdf", [
+        //     "Attachment" => false,
+        // ]);
+
+        if ($recipe) {
+            $html = $this->render('special/recipePdf.html.twig', [
+                'title' => 'titleTest',
+            ]);
+
+            $pdf->showPdfFile($html);
+            return new JsonResponse("ok");
+        }
+
     }
 }
