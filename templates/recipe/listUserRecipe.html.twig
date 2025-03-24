@@ -1,13 +1,26 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block javascripts %}
+  <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
 
-<script src="{{ asset('js/script.js') }}"></script>
+{% endblock stylesheets %} #}
 
-{% endblock %} {% block title %}Recettes {{ user.pseudo }}{% endblock %} {%
-block body %}
+{% block javascripts %}
+
+  <script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock javascripts %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Recettes {{ user.pseudo }}{% endblock title %}
+
+{% block body %}
 
 <div class="wrapper">
   <h1>Recettes {{ user.pseudo }}</h1>
@@ -16,4 +29,4 @@ block body %}
   
 </div>
 
-{% endblock %}
+{% endblock body %}

@@ -6,6 +6,12 @@
 
 {% endblock %} #}
 
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
 {% block title %}Nos recettes{% endblock %} 
 
 {% block body %}
@@ -20,7 +26,7 @@
     <div class="category_card">
         <figure class="recipe_image_container">
 
-            <a href="#">
+            <a href="{{ path('detail_category', { category: category.id }) }}">
                 <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
             </a>
 

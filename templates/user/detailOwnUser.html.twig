@@ -2,15 +2,21 @@
 
 {# {% block stylesheets %}
 
-<link rel="stylesheet" href="{{ asset('css/detailUser.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/detailUser.css') }}" />
 
 {% endblock %} #}
 
 {% block javascripts %}
 
-<script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
 
 {% block title %}Hello UserController!{% endblock %}
 
@@ -58,7 +64,7 @@
         </a>
 
         <a href="{{ path('delete_user') }}">
-            Supprimer propre compte <i class="fa-solid fa-trash"></i>
+            Supprimer votre compte <i class="fa-solid fa-trash"></i>
         </a>
 
         <a href="{{ path('edit_picture_user', { user: user.id }) }}">

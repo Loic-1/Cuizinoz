@@ -1,8 +1,20 @@
-{% extends 'base.html.twig' %} {# {% block stylesheets %}
+{% extends 'base.html.twig' %}
 
-<link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+{# {% block stylesheets %}
 
-{% endblock %} #} {% block title %}Cuizinoz{% endblock %} {% block body %}
+  <link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+
+{% endblock %} #}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Cuizinoz{% endblock %}
+
+{% block body %}
 
 <div class="wrapper">
   <section class="home_section_1">

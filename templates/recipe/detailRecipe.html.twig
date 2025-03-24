@@ -2,17 +2,23 @@
 
 {# {% block stylesheets %}
 
-<link rel="stylesheet" href="{{ asset('css/detailRecipe.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/detailRecipe.css') }}" />
 
 {% endblock %} #}
 
 {% block javascripts %}
 
-<script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
 
-{% block title %}{{ recipe.name ~ " - " ~ recipe.user.pseudo}}{% endblock %}
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}{{ recipe.name ~ " - " ~ recipe.user.pseudo ~ " | Cuizinoz"}}{% endblock %}
 
 {% block body %}
 

@@ -2,7 +2,7 @@
 
 {# {% block stylesheets %}
 
-<link rel="stylesheet" href="{{ asset('css/listFavorites.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/listFavorites.css') }}" />
 
 {% endblock %} #}
 
@@ -11,6 +11,12 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
 {% endblock %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
 
 {% block title %}Vos favoris | Cuizinoz{% endblock %}
 
