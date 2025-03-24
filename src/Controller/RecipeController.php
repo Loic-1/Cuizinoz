@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RecipeController extends AbstractController
 {
@@ -232,40 +231,37 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/downloadRecipe/{recipe}', name: 'download_recipe')]
-    public function downloadRecipe(Recipe $recipe = null, PdfService $pdf)
+    public function downloadRecipe(Recipe $recipe = null)
     {
-        // // options pdf
-        // $pdfOptions = new Options();
-        // $pdfOptions->set('defaultFont', 'Arial');
-
-        // // nvlle instance DomPdf avec options custom
-        // $domPdf = new Dompdf($pdfOptions);
-
-        // // définit template test
-        // $html = $this->renderView('special/recipePdf.html.twig', [
-        //     'title' => 'testTitle',
-        // ]);
-
-        // // charge template test
-        // $domPdf->loadHtml($html);
-
-        // // format et orientation
-        // $domPdf->setPaper('A4', 'landscape');
-
-        // // on prépare et on affiche
-        // $domPdf->render();
-        // $domPdf->stream("recipePdf.pdf", [
-        //     "Attachment" => false,
-        // ]);
-
         if ($recipe) {
-            $html = $this->render('special/recipePdf.html.twig', [
-                'title' => 'titleTest',
+            // options pdf
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            // nvlle instance DomPdf avec options custom
+            $domPdf = new Dompdf($pdfOptions);
+
+            // définit template test
+            $html = $this->renderView('special/recipePdf.html.twig', [
+                'recipe' => $recipe,
             ]);
 
-            $pdf->showPdfFile($html);
-            return new JsonResponse("ok");
-        }
+            // charge template test
+            $domPdf->loadHtml($html);
 
+            // format et orientation
+            $domPdf->setPaper('A4', 'landscape');
+
+            $domPdf->render();
+
+            // Récupération du contenu du PDF
+            $output = $domPdf->output();
+
+            // Retourne une réponse Symfony avec le PDF
+            return new Response($output, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="recipePdf.pdf"',
+            ]);
+        }
     }
 }
