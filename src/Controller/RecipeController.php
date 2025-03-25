@@ -238,19 +238,16 @@ class RecipeController extends AbstractController
             $pdfOptions = new Options();
             $pdfOptions->set('defaultFont', 'Arial');
 
-            // nvlle instance DomPdf avec options custom
+            // instance DomPdf avec options custom
             $domPdf = new Dompdf($pdfOptions);
 
-            // définit template test
+            // définit template et paramètres
             $html = $this->renderView('special/recipePdf.html.twig', [
                 'recipe' => $recipe,
             ]);
 
-            // charge template test
+            // charge template
             $domPdf->loadHtml($html);
-
-            // format et orientation
-            $domPdf->setPaper('A4', 'landscape');
 
             $domPdf->render();
 
@@ -260,7 +257,8 @@ class RecipeController extends AbstractController
             // Retourne une réponse Symfony avec le PDF
             return new Response($output, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="recipePdf.pdf"',
+                // 'Content-Disposition' => 'inline; filename="recipePdf.pdf"',
+                'Content-Disposition' => 'inline; filename="' . $recipe->getName() . ' Cuizinoz.pdf"',
             ]);
         }
     }

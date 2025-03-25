@@ -3,60 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" />
+    <title>{{ recipe.name }}</title>
   </head>
   <body>
-    <h1>{{ recipe.name }}</h1>
+    <h1 style="text-align: center;">
+      {{ recipe.name }}
+    </h1>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-      minima non vel in aspernatur eveniet, iste vitae sapiente, exercitationem
-      velit, ipsum eaque ex veritatis odit aut. Ullam libero perspiciatis est.
-      Quae dolore reiciendis libero eos illo, dicta voluptate iure iusto dolor
-      molestias tempora vero rem, minima cum id facilis! Magnam consequatur quia
-      temporibus nesciunt voluptatum esse error ea maiores dignissimos!
-      Temporibus fugiat officia, laudantium dicta repellendus, aspernatur at
-      enim, minima non reprehenderit aperiam. Aliquid quia illo omnis ullam
-      neque quaerat! Neque aut nesciunt qui reprehenderit tempore eaque
-      consequuntur porro pariatur! Minima nam optio aut voluptatum! Et ab non
-      quisquam distinctio aut omnis maxime id aliquid iure pariatur sint dolore
-      numquam, nisi at excepturi inventore voluptas saepe hic quas nulla
-      laboriosam. Expedita, deleniti repellendus incidunt possimus esse,
-      reprehenderit aliquam atque suscipit voluptates, libero ipsum dolores
-      veniam error nostrum sint dolor? Dignissimos perspiciatis optio ullam at
-      quod ad, earum dicta quisquam modi? Ullam, fugit voluptatibus quod nulla,
-      eum amet debitis tenetur illum quam harum voluptatum ducimus quo
-      temporibus vero dolorum consequuntur, magni maxime suscipit quas fugiat
-      dolores molestiae pariatur? Nihil, ex molestias. Dicta nisi aliquam
-      tenetur perspiciatis maiores nesciunt magni eligendi quibusdam repellat
-      laboriosam modi, sunt quam aspernatur molestias eaque nihil cum facere
-      sint ducimus. Non in nihil eius labore libero fugit. Odit, facilis quos?
-      Magnam, a assumenda veritatis atque odio nulla beatae ad iste doloribus,
-      qui architecto aspernatur, accusamus aliquid fuga! Aperiam natus tempore
-      recusandae est eum labore molestias ea iure! Doloribus quae libero
-      distinctio nihil adipisci possimus reprehenderit ipsum quibusdam sunt
-      rerum minima dolorem delectus, assumenda deserunt consequuntur asperiores
-      corrupti doloremque cupiditate nisi incidunt recusandae quaerat? Laborum
-      earum incidunt ipsam. Tempora iure officiis dignissimos ipsa. Soluta,
-      praesentium ut animi dignissimos, provident at quis reiciendis quod fugit
-      voluptate corporis blanditiis, dolor quaerat quos neque autem ipsum
-      voluptates! Dicta quisquam rerum totam. Odit, doloribus sint iure eligendi
-      rerum hic provident facere veniam quibusdam nisi accusantium mollitia
-      itaque quo accusamus dolore. Consequatur voluptate quidem saepe dolorem
-      cum velit, adipisci molestiae perferendis exercitationem neque! At quam
-      quibusdam similique suscipit ut hic odit possimus esse ullam impedit,
-      ipsum excepturi voluptatem dolorum accusantium autem nihil, quae
-      repudiandae beatae ab fugit! Vitae illum dolorem fuga beatae iste!
-      Accusamus et qui similique rerum, eaque sapiente cum! Magni pariatur
-      officia non aperiam soluta obcaecati officiis totam necessitatibus sunt in
-      eum consectetur ratione illum, quia sint recusandae dolores praesentium
-      architecto. Maxime illo molestias quis, odit omnis unde neque doloremque
-      illum reiciendis enim maiores voluptatibus, et totam veritatis, ad officia
-      accusamus sapiente. In exercitationem architecto ipsa vero molestiae, odit
-      dolorum pariatur. Numquam beatae iste saepe hic doloremque placeat libero
-      cupiditate possimus recusandae quis, voluptas minus! Fugiat ipsam odio,
-      ducimus obcaecati saepe adipisci non, illo enim, eligendi suscipit nobis
-      quidem ipsa eius?
-    </p>
+    <section class="figure_and_description" style="background-color: magenta;">
+      <figure>
+        <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}" />
+      </figure>
+      
+      <div class="description">
+        <p>
+          <strong>Temps de préparation :</strong><!----> {{ recipe.preparationTime }} minutes
+        </p>
+        <p>
+          <strong>Catégorie :</strong><!----> {{ recipe.category }}
+        </p>
+        <p>
+          <strong>Ingrédients requis :</strong><br>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem, placeat molestias! Recusandae aliquam necessitatibus assumenda illum, qui asperiores sequi soluta! Veritatis eveniet nobis eos dignissimos consequuntur? Provident corporis maiores quaerat.
+        </p>
+      </div>
+    </section>
+    
+    <section class="instructions" style="background-color: cyan;">
+      <p>
+        {{ recipe.instructions }}
+      </p>
+    </section>
+      
+      <footer style="position: absolute; bottom: 0; width: 100%; text-align: center;">
+        &copy; Cuizinoz {{ "now"|date("Y") }}
+      </footer>
   </body>
 </html>
