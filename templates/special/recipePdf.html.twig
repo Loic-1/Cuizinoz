@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" />
+    <title>{{ recipe.name }}</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">
+      {{ recipe.name }}
+    </h1>
+
+    <section class="figure_and_description" style="background-color: magenta;">
+      <figure>
+        <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}" />
+      </figure>
+      
+      <div class="description">
+        <p>
+          <strong>Temps de préparation :</strong><!----> {{ recipe.preparationTime }} minutes
+        </p>
+        <p>
+          <strong>Catégorie :</strong><!----> {{ recipe.category }}
+        </p>
+        <p>
+          <strong>Ingrédients requis :</strong><br>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem, placeat molestias! Recusandae aliquam necessitatibus assumenda illum, qui asperiores sequi soluta! Veritatis eveniet nobis eos dignissimos consequuntur? Provident corporis maiores quaerat.
+        </p>
+      </div>
+    </section>
+    
+    <section class="instructions" style="background-color: cyan;">
+      <p>
+        {{ recipe.instructions }}
+      </p>
+    </section>
+      
+      <footer style="position: absolute; bottom: 0; width: 100%; text-align: center;">
+        &copy; Cuizinoz {{ "now"|date("Y") }}
+      </footer>
+  </body>
+</html>

@@ -2,24 +2,27 @@
 
 namespace App\Controller;
 
-use App\Data\SearchData;
-use App\Entity\Comment;
+use DateTime;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Note;
 use App\Entity\User;
 use App\Entity\Photo;
 use App\Entity\Recipe;
-use App\Form\CommentType;
 use App\Form\NoteType;
+use App\Entity\Comment;
+use App\Data\SearchData;
 use App\Form\RecipeType;
 use App\Form\SearchType;
-use App\Repository\RecipeRepository;
+use App\Form\CommentType;
 use App\Service\PictureService;
-use DateTime;
+use App\Repository\RecipeRepository;
+use App\Service\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class RecipeController extends AbstractController
 {
@@ -224,6 +227,39 @@ class RecipeController extends AbstractController
             ]);
         } else {
             return $this->redirectToRoute('app_home');
+        }
+    }
+
+    #[Route('/downloadRecipe/{recipe}', name: 'download_recipe')]
+    public function downloadRecipe(Recipe $recipe = null)
+    {
+        if ($recipe) {
+            // options pdf
+            $pdfOptions = new Options();
+            $pdfOptions->set('defaultFont', 'Arial');
+
+            // instance DomPdf avec options custom
+            $domPdf = new Dompdf($pdfOptions);
+
+            // définit template et paramètres
+            $html = $this->renderView('special/recipePdf.html.twig', [
+                'recipe' => $recipe,
+            ]);
+
+            // charge template
+            $domPdf->loadHtml($html);
+
+            $domPdf->render();
+
+            // Récupération du contenu du PDF
+            $output = $domPdf->output();
+
+            // Retourne une réponse Symfony avec le PDF
+            return new Response($output, 200, [
+                'Content-Type' => 'application/pdf',
+                // 'Content-Disposition' => 'inline; filename="recipePdf.pdf"',
+                'Content-Disposition' => 'inline; filename="' . $recipe->getName() . ' Cuizinoz.pdf"',
+            ]);
         }
     }
 }
