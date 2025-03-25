@@ -43,14 +43,21 @@
 
   <body>
     <header>
-      <a href="{{ path('app_home') }}" title="Retour à l'accueil">
+      <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_img">
         <img
           src="{{ asset('assets/headerLogo.png') }}"
           alt="Logo Cuizinoz renvoyant vers la page d'accueil"
         />
       </a>
 
-      <nav class="header_links_nav">
+      <nav class="header_links_nav" id="menu">
+        {# <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_menu_img">
+          <img
+            src="{{ asset('assets/headerLogo.png') }}"
+            alt="Logo Cuizinoz renvoyant vers la page d'accueil"
+          />
+        </a> #}
+
         <a href="{{ path('app_recipe') }}"> Recettes </a>
         <span> | </span>
         <a href="{{ path('list_compilation') }}"> Collections </a>
@@ -68,30 +75,34 @@
         {% endif %}
       </nav>
 
-      {% if app.user %}
-
+      
       <div class="header_links_btn">
-        <a href="{{ path('app_favorite') }}" title="Vos favoris">
-          <i class="fa-solid fa-heart"></i>
-        </a>
+        {% if app.user %}
 
-        <a href="{{ path('create_recipe') }}" title="Créer une recette">
-          <i class="fa-solid fa-plus"></i>
-          <!-- Créer une recette -->
-        </a>
+          <a href="{{ path('app_favorite') }}" title="Vos favoris">
+            <i class="fa-solid fa-heart"></i>
+          </a>
 
-        <a
-          href="{{ path('detailOwn_user') }}"
-          title="{{ app.user.pseudo }}"
-        >
-          <i class="fa-solid fa-user"></i>
-        </a>
+          <a href="{{ path('create_recipe') }}" title="Créer une recette">
+            <i class="fa-solid fa-plus"></i>
+            <!-- Créer une recette -->
+          </a>
 
-        <a href="{{ path('app_logout') }}" title="Se déconnecter">
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </a>
+          <a href="{{ path('detailOwn_user') }}" title="Votre profil">
+            <i class="fa-solid fa-user"></i>
+          </a>
+
+          <a href="{{ path('app_logout') }}" title="Se déconnecter">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </a>
+
+        {% endif %}
+
+        <div class="menu_buttons">
+          <i class="fa-solid fa-align-right hidden" id="header-close-menu-btn"></i>
+          <i class="fa-solid fa-align-justify" id="header-open-menu-btn"></i>
+        </div>
       </div>
-      {% endif %}
     </header>
 
     {% block body %}

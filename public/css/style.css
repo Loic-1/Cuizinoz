@@ -101,10 +101,9 @@ body {
   padding-top: 100px;
 }
 
-/* .hidden {
-  position: absolute;
-  visibility: hidden;
-} */
+.hidden {
+  display: none;
+}
 
 .pagination {
   display: flex;
@@ -162,6 +161,7 @@ header {
 
   background-color: var(--primary-background-color);
 
+  /* & .header_img { */
   & img {
     height: 60px;
     width: auto;
@@ -180,6 +180,10 @@ header {
     font-size: var(--roboto-text-font-size);
     font-weight: var(--roboto-h3-font-weight);
 
+    text-wrap: nowrap;
+
+    transition: 0.2s ease-in-out;
+
     & a {
       color: var(--primary-font-color);
 
@@ -195,6 +199,10 @@ header {
         cursor: default;
       }
     }
+
+    /* .header_menu_img {
+      display: none;
+    } */
   }
 
   & .header_links_btn {
@@ -213,6 +221,10 @@ header {
       &:active {
         transform: scale(0.95);
       }
+    }
+
+    & .menu_buttons {
+      /* display: none; */
     }
   }
 }
@@ -975,6 +987,52 @@ footer {
     background-color: bisque;
   }
 
+  /**/
+
+  header {
+    position: fixed;
+    bottom: 0;
+
+    & .header_links_nav {
+      position: absolute;
+      right: 0;
+      bottom: 100px;
+
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px;
+
+      height: calc(100vh - 100px);
+      padding: 50px;
+
+      background-color: var(--primary-background-color);
+
+      transform: translateX(100%);
+
+      & span {
+        display: none;
+      }
+
+      & .menu_buttons {
+        /* display: block; */
+      }
+    }
+  }
+
+  .wrapper {
+    padding: 0;
+  }
+
+  footer {
+    margin-bottom: 100px;
+  }
+
+  .addRecipe_btn {
+    display: none;
+  }
+
+  /**/
+
   /* HOMEPAGE */
 
   .home_section_2 {
@@ -986,11 +1044,17 @@ footer {
     row-gap: 75px;
   }
 
-  .home_section5 .home_section_5_category_container .home_section_5_category_card p {
+  .home_section5
+    .home_section_5_category_container
+    .home_section_5_category_card
+    p {
     opacity: 1;
   }
 
-  .home_section5 .home_section_5_category_container .home_section_5_category_card img {
+  .home_section5
+    .home_section_5_category_container
+    .home_section_5_category_card
+    img {
     filter: brightness(0.3);
   }
 
@@ -1007,6 +1071,14 @@ footer {
 
   body {
     background-color: beige;
+  }
+
+  /* HEADER */
+
+  header {
+    & .header_links_btn {
+      gap: 25px;
+    }
   }
 
   /* HOMEPAGE */
@@ -1045,5 +1117,19 @@ footer {
 
   body {
     background-color: bisque;
+  }
+
+  /* HEADER */
+
+  header {
+    justify-content: flex-end;
+
+    & .header_img {
+      display: none;
+    }
+
+    & .header_links_btn {
+      gap: 30px;
+    }
   }
 }

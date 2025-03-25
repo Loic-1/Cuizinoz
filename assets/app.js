@@ -21,13 +21,38 @@ if (slider) {
 
   range.on("slide", function (values, handle) {
     if (handle === 0) {
-        noteMin.value = Math.round(values[0])
+      noteMin.value = Math.round(values[0]);
     }
 
     if (handle === 1) {
-        noteMax.value = Math.round(values[1])
+      noteMax.value = Math.round(values[1]);
     }
 
     console.log(values, handle);
   });
 }
+
+/* menu */
+
+const closeMenuBtn = document.getElementById("header-close-menu-btn");
+const openMenuBtn = document.getElementById("header-open-menu-btn");
+
+const menu = document.getElementById("menu");
+
+closeMenuBtn.addEventListener("click", function () {
+  console.log("close menu");
+
+  menu.style.transform = "translateX(100%)";
+
+  openMenuBtn.classList.remove("hidden");
+  closeMenuBtn.classList.add("hidden");
+});
+
+openMenuBtn.addEventListener("click", function () {
+  console.log("open menu");
+
+  menu.style.transform = "none";
+
+  closeMenuBtn.classList.remove("hidden");
+  openMenuBtn.classList.add("hidden");
+});
