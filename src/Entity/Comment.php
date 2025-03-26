@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentRepository;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\NoteRepository;
+
+use App\Repository\CommentRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 use function Symfony\Component\Clock\now;
+use Doctrine\Migrations\Configuration\EntityManager\ManagerRegistryEntityManager;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -105,4 +109,18 @@ class Comment
 
         return $this;
     }
+
+    // public function findUserNoteOnRecipeOrNull(User $user, Recipe $recipe)
+    // {
+    //     if ($user && $recipe) {
+
+    //         $entityManager = $this->;
+
+    //         return $this->
+
+    //         return ($noteRepository->findUserNoteOnRecipeOrNull($user->getId(), $recipe->getId()));
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

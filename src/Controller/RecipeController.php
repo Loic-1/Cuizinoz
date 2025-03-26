@@ -15,6 +15,7 @@ use App\Data\SearchData;
 use App\Form\RecipeType;
 use App\Form\SearchType;
 use App\Form\CommentType;
+use App\Repository\NoteRepository;
 use App\Service\PictureService;
 use App\Repository\RecipeRepository;
 use App\Service\PdfService;
@@ -171,7 +172,7 @@ class RecipeController extends AbstractController
 
     // Renvoie la recipe spécifiée, permet de publier un comment pour la recipe
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
-    public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager, NoteRepository $nr, PaginatorInterface $paginator): Response
     {
         if ($recipe) {
 
@@ -217,6 +218,20 @@ class RecipeController extends AbstractController
                 ]);
             }
 
+            $commentsData = [];
+            foreach($recipe->getComments() as $comment) {
+                $commentsData[] = [
+                    "comment" => $comment,
+                    "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $recipe)
+                ];
+            }
+
+            $comments = $paginator->paginate(
+                $commentsData,
+                $request->query->getInt('page', 1),
+                5,
+            );
+
             $metaDescription = "Vous aimez cuisiner ? Découvrez la recette « " . $recipe->getName() . " » en détail, ses photos, ses instructions, ses commentaires et sa note, commentez et notez !";
 
             return $this->render('recipe/detailRecipe.html.twig', [
@@ -224,6 +239,7 @@ class RecipeController extends AbstractController
                 'addCommentForm' => $commentForm,
                 'addNoteForm' => $noteForm,
                 'avgNote' => $avgNote,
+                'comments' => $comments,
                 'metaDescription' => $metaDescription,
             ]);
         } else {
@@ -264,12 +280,20 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/recipe/{recipe}/comments', name: 'list_comments_recipe')]
-    public function listCommentsRecipe(Recipe $recipe = null, PaginatorInterface $paginator, Request $request)
+    public function listCommentsRecipe(NoteRepository $nr, Recipe $recipe = null, PaginatorInterface $paginator, Request $request)
     {
         if ($recipe) {
 
+            $commentsData = [];
+            foreach($recipe->getComments() as $comment) {
+                $commentsData[] = [
+                    "comment" => $comment,
+                    "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $recipe)
+                ];
+            }
+
             $comments = $paginator->paginate(
-                $recipe->getComments(),
+                $commentsData,
                 $request->query->getInt('page', 1),
                 5,
             );

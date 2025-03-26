@@ -16,6 +16,18 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    public function findUserNoteOnRecipeOrNull($user, $recipe)
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.user = :userId')
+            ->andWhere('n.recipe = :recipeId')
+            ->setParameter('userId', $user)
+            ->setParameter('recipeId', $recipe)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     //    /**
     //     * @return Note[] Returns an array of Note objects
     //     */

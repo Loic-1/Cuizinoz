@@ -16,7 +16,41 @@
                 <br>
                 {{ comment.creationDateFr }}
             </p>
-            {% include "components/_stars.html.twig" with { recipe: comment.recipe } %}
+            <div class="comment_note">
+                {% if note %}
+
+                    {% if note.note == 0 %}
+
+                        {% for i in range(0, 4, 1) %}
+                            <i class="fa-regular fa-star"></i>
+                        {% endfor %}
+
+                    {% elseif note.note == 5 %}
+
+                        {% for i in range(0, 4, 1) %}
+                            <i class="fa-solid fa-star"></i>
+                        {% endfor %}
+
+                    {% else %}
+
+                        {% for i in range(1, note.note, 1) %}
+                            <i class="fa-solid fa-star"></i>
+                        {% endfor %}
+
+                        {% for i in range(note.note + 1, 5, 1) %}
+                            <i class="fa-regular fa-star"></i>
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% else %}
+                
+                    {% for i in range(0, 4, 1) %}
+                        <i class="fa-solid fa-star" style="color: #a0a0a0"></i>
+                    {% endfor %}
+
+                {% endif %}
+            </div>
         </div>
     </div>
     <div class="comment_title_content">

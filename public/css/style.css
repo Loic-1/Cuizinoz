@@ -1037,6 +1037,17 @@ footer {
           text-decoration: underline;
         }
       }
+
+      & .comment_note {
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+
+        & i {
+          font-size: 20px;
+          color: var(--primary-button-color);
+        }
+      }
     }
 
     border: 1px solid red;

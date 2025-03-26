@@ -115,29 +115,30 @@
 </div>
 </div>
 <div class="detail_comments_container">
-    {% for comment in recipe.comments %}
-        {% include "components/_commentCard.html.twig" %}
+
+    {% for comment in comments %}
+        {% include "components/_commentCard.html.twig" with { comment: comment|first, note: comment|last } %}
     {% endfor %}
 
     <a href="{{ path('list_comments_recipe', { recipe: recipe.id }) }}"><i class="fa-regular fa-message"></i> Tous les commentaires ({{ recipe.comments|length }})</a>
 
     {% if app.user %}
 
-    {{ form_errors(addNoteForm) }}
-    {{ form_start(addNoteForm) }}
-    {{ form_row(addNoteForm.note) }}
+        {{ form_errors(addNoteForm) }}
+        {{ form_start(addNoteForm) }}
+        {{ form_row(addNoteForm.note) }}
 
-    <button type="submit">Noter</button>
-    {{ form_end(addNoteForm) }}
+        <button type="submit">Noter</button>
+        {{ form_end(addNoteForm) }}
 
 
-    {{ form_errors(addCommentForm) }}
-    {{ form_start(addCommentForm) }}
-    {{ form_row(addCommentForm.title) }}
-    {{ form_row(addCommentForm.content) }}
+        {{ form_errors(addCommentForm) }}
+        {{ form_start(addCommentForm) }}
+        {{ form_row(addCommentForm.title) }}
+        {{ form_row(addCommentForm.content) }}
 
-    <button type="submit">Poster commentaire</button>
-    {{ form_end(addCommentForm) }}
+        <button type="submit">Poster commentaire</button>
+        {{ form_end(addCommentForm) }}
     {% endif %}
 </div>
 
