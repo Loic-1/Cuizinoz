@@ -1,0 +1,28 @@
+<div class="comment_card">
+    <div class="comment_photo_infos">
+        <figure>
+            <a href="{{ path('detail_user', { user: comment.user.id }) }}">
+                <img
+                    src="https://placehold.co/400x600/EEE/31343C"
+                    alt="Photo de {{ comment.user.pseudo }}"
+                >
+            </a>
+        </figure>
+        <div class="comment_infos">
+            <p>
+                <a href="{{ path('detail_user', { user: comment.user.id }) }}">                
+                    {{ comment.user.pseudo }}
+                </a>
+                <br>
+                {{ comment.creationDateFr }}
+            </p>
+            {% include "components/_stars.html.twig" with { recipe: comment.recipe } %}
+        </div>
+    </div>
+    <div class="comment_title_content">
+        <h3>{{ comment.title }}</h3>
+        <p class="comment_content">
+            {{ comment.content }}
+        </p>
+    </div>
+</div>

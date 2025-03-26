@@ -116,18 +116,10 @@
 </div>
 <div class="detail_comments_container">
     {% for comment in recipe.comments %}
-    <div class="detail_comment">
-        <h3>{{ comment.title }}</h3>
-        <p class="detail_comment_content">{{ comment.content }}</p>
-        <p>
-            <a href="{{ path('detail_user', { user: comment.user.id }) }}">                
-                {{ comment.user.pseudo }}<!--
-            --></a>,
-            {{ comment.creationDateFr }}
-        </p>
-        <p>NOTE</p>
-    </div>
+        {% include "components/_commentCard.html.twig" %}
     {% endfor %}
+
+    <a href="{{ path('list_comments_recipe', { recipe: recipe.id }) }}"><i class="fa-regular fa-message"></i> Tous les commentaires ({{ recipe.comments|length }})</a>
 
     {% if app.user %}
 

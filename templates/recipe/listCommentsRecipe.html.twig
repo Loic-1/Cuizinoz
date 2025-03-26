@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{# {% block stylesheets %}
+
+  <link rel="stylesheet" href="{{ asset('css/listRecipe.css') }}" />
+
+{% endblock %} #}
+
+{% block javascripts %}
+
+  {{ parent() }}
+  <script src="{{ asset('js/script.js') }}"></script>
+
+{% endblock %}
+
+{% block meta_description %}
+
+  <meta name="description" content="{{ metaDescription }}">
+
+{% endblock meta_description %}
+
+{% block title %}Commentaires {{ recipe.name }} | Cuizinoz{% endblock %}
+
+{% block body %}
+  
+<div class="wrapper">
+    <div class="comments">
+
+        <h1>Commentaires sur {{ recipe.name }}</h1>
+        <p>{{ comments|length }} commentaires</p>
+        
+        <div class="comment_container">
+            
+            {% for comment in comments %}
+                <!-- div.comment_card -->
+                {% include "components/_commentCard.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="pagination">
+        {{ knp_pagination_render(comments) }}
+    </div>
+</div>
+{% endblock %}

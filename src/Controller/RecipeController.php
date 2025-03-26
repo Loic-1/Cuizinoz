@@ -19,6 +19,7 @@ use App\Service\PictureService;
 use App\Repository\RecipeRepository;
 use App\Service\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -254,12 +255,34 @@ class RecipeController extends AbstractController
             // Récupération du contenu du PDF
             $output = $domPdf->output();
 
-            // Retourne une réponse Symfony avec le PDF
+            // Renvoie une réponse Symfony avec le PDF
             return new Response($output, 200, [
                 'Content-Type' => 'application/pdf',
-                // 'Content-Disposition' => 'inline; filename="recipePdf.pdf"',
                 'Content-Disposition' => 'inline; filename="' . $recipe->getName() . ' Cuizinoz.pdf"',
             ]);
+        }
+    }
+
+    #[Route('/recipe/{recipe}/comments', name: 'list_comments_recipe')]
+    public function listCommentsRecipe(Recipe $recipe = null, PaginatorInterface $paginator, Request $request)
+    {
+        if ($recipe) {
+
+            $comments = $paginator->paginate(
+                $recipe->getComments(),
+                $request->query->getInt('page', 1),
+                5,
+            );
+
+            $metaDescription = "Vous aimez cuisiner ? Découvrez les avis des utilisateurs sur la recette « " . $recipe->getName() . " » et partagez le vôtre en la notant et en commentant !";
+
+            return $this->render('recipe/listCommentsRecipe.html.twig', [
+                'recipe' => $recipe,
+                'comments' => $comments,
+                'metaDescription' => $metaDescription,
+            ]);
+        } else {
+            return $this->redirectToRoute('app_home');
         }
     }
 }
