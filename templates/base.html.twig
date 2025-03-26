@@ -51,20 +51,24 @@
       </a>
 
       <nav class="header_links_nav" id="menu">
-        {# <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_menu_img">
+        <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_menu_img">
           <img
             src="{{ asset('assets/headerLogo.png') }}"
             alt="Logo Cuizinoz renvoyant vers la page d'accueil"
           />
-        </a> #}
+        </a>
 
-        <a href="{{ path('app_recipe') }}"> Recettes </a>
+        <a href="{{ path('app_recipe') }}"><i class="fa-solid fa-book-open menu_link_btn"></i> Recettes </a>
         <span> | </span>
-        <a href="{{ path('list_compilation') }}"> Collections </a>
+        <a href="{{ path('list_compilation') }}"><i class="fa-solid fa-bookmark menu_link_btn"></i> Collections </a>
         <span> | </span>
-        <a href="{{ path('list_category') }}"> Catégories </a>
+        <a href="{{ path('list_category') }}"><i class="fa-solid fa-table-list menu_link_btn"></i> Catégories </a>
         <span> | </span>
-        <a href="{{ path('random_recipe') }}"> Recette aléatoire </a>
+        <a href="{{ path('random_recipe') }}"><i class="fa-solid fa-shuffle menu_link_btn"></i> Recette aléatoire </a>
+        <div class="link_create_recipe">
+          <span> | </span>
+          <a href="{{ path('create_recipe') }}"><i class="fa-solid fa-plus menu_link_btn"></i> Créer une recette </a>
+        </div>
 
         {% if not app.user %}
 
@@ -83,10 +87,11 @@
             <i class="fa-solid fa-heart"></i>
           </a>
 
-          <a href="{{ path('create_recipe') }}" title="Créer une recette">
-            <i class="fa-solid fa-plus"></i>
-            <!-- Créer une recette -->
-          </a>
+          <div class="btn_create_recipe">
+            <a href="{{ path('create_recipe') }}" title="Créer une recette">
+              <i class="fa-solid fa-plus"></i>
+            </a>
+          </div>
 
           <a href="{{ path('detailOwn_user') }}" title="Votre profil">
             <i class="fa-solid fa-user"></i>

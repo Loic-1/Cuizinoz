@@ -203,6 +203,18 @@ header {
     /* .header_menu_img {
       display: none;
     } */
+
+    & .link_create_recipe {
+      display: none;
+    }
+
+    & .menu_link_btn {
+      display: none;
+    }
+
+    & .header_menu_img {
+      display: none;
+    }
   }
 
   & .header_links_btn {
@@ -224,7 +236,7 @@ header {
     }
 
     & .menu_buttons {
-      /* display: none; */
+      display: none;
     }
   }
 }
@@ -986,9 +998,11 @@ footer {
     background-color: bisque;
   }
 
-  /* HEADER */
+  .wrapper {
+    padding: 0;
+  }
 
-  /* MENU BURGER (TEMP) */
+  /* HEADER */
 
   header {
     position: fixed;
@@ -1014,30 +1028,40 @@ footer {
         display: none;
       }
 
-      & .menu_buttons {
-        /* display: block; */
-      }
-
       & a {
+        display: flex;
+        gap: 5px;
+
         text-shadow: 0.5px 0.5px rgb(29, 28, 27, 0.5),
           1px 1px rgb(29, 28, 27, 0.25);
       }
+
+      & .link_create_recipe {
+        display: block;
+      }
+
+      & .menu_link_btn {
+        display: block;
+
+        font-size: 1rem;
+        color: var(--primary-button-color);
+      }
+
+      & .header_menu_img {
+        display: block;
+      }
+    }
+
+    & .header_links_btn {
+      & .menu_buttons {
+        display: block;
+      }
+
+      & .btn_create_recipe {
+        display: none;
+      }
     }
   }
-
-  .wrapper {
-    padding: 0;
-  }
-
-  footer {
-    margin-bottom: 100px;
-  }
-
-  .addRecipe_btn {
-    display: none;
-  }
-
-  /**/
 
   /* HOMEPAGE */
 
@@ -1064,10 +1088,15 @@ footer {
     filter: brightness(0.3);
   }
 
+  .addRecipe_btn {
+    display: none;
+  }
+
   /* FOOTER */
 
   footer {
     padding: 100px 100px 100px 150px;
+    margin-bottom: 100px;
   }
 }
 
