@@ -56,3 +56,9 @@ openMenuBtn.addEventListener("click", function () {
   closeMenuBtn.classList.remove("hidden");
   openMenuBtn.classList.add("hidden");
 });
+
+document.querySelectorAll('.rating input').forEach(radio => {
+  radio.addEventListener('change', () => {
+      console.log(`Selected rating: ${radio.value}`);
+  });
+});
