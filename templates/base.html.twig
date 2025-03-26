@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block meta_description %}
-
       <!-- meta-description content goes here -->
-
     {% endblock meta_description %}
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" href="{{
-      asset("assets/logoCuizinoz50x50.png")
-    }}"> 
+    <title>
+      {% block title %}Welcome!{% endblock title %}
+    </title>
+    <link rel="icon" href="{{ asset("assets/logoCuizinoz50x50.png") }}"> 
     
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -31,12 +29,18 @@
         href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
       />
 
-      {# NoUISlider #}
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.css" integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      {# NoUISlider CSS #}
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.css"
+        integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
 
       <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
-    {% endblock %} 
+    {% endblock stylesheets %} 
     
    
   </head>
@@ -72,9 +76,9 @@
 
         {% if not app.user %}
 
-        <a href="{{ path('app_login') }}">Connexion</a>
-        <span>|</span>
-        <a href="{{ path('app_register') }}">Enregistrement</a>
+          <a href="{{ path('app_login') }}">Connexion</a>
+          <span>|</span>
+          <a href="{{ path('app_register') }}">Enregistrement</a>
 
         {% endif %}
       </nav>
@@ -104,7 +108,6 @@
         {% endif %}
 
         <div class="menu_buttons">
-          {# <i class="fa-solid fa-align-right hidden" id="header-close-menu-btn"></i> #}
           <i class="fa-solid fa-indent hidden" id="header-close-menu-btn"></i>
           <i class="fa-solid fa-align-justify" id="header-open-menu-btn"></i>
         </div>
@@ -121,7 +124,6 @@
 
         <div class="footer_column_text">
           <address>
-            <!-- Need to detect if on mobile -->
             <a href="tel:01 23 45 67 89">
               +33 1 23 45 67 89
             </a>
@@ -148,31 +150,28 @@
           <a href="#">À propos de nous</a>
           <a href="#">Écologie</a>
           <a href="#">Carrières</a>
-          <!-- Make view for this -->
           <a href="#">CGU</a>
-          <!-- Make view for this -->
           <a href="#">Politique de confidentialité</a>
           <a href="#">Accessibilité</a>
         </div>
       </div>
     </footer>
     
-{% block javascripts %}
-{#     
-    {{ encore_entry_link_tags('app') }}
-    {{ encore_entry_script_tags('app') }} #}
+    {% block javascripts %}
+        
+      {# NoUISlider script #}
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"
+        integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      >
+      </script>
 
-    {# {{ encore_entry_script_tags('app') | replace('src=' : 'defer src=') | raw}} #}
-    {#
-    <script src="{{ asset('js/script.js') }}"></script>
-    #}
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js" integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    {% block importmap %}{{
-      importmap("app")
-    }}{% endblock %} 
-  
-  {% endblock %}
+      {% block importmap %}
+        {{ importmap("app") }}
+      {% endblock importmap %} 
+      
+    {% endblock javascripts %}
   </body>
 </html>
