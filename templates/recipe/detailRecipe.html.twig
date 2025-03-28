@@ -68,7 +68,7 @@
         <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
         <p>Catégorie: {{ recipe.category.name }}</p>
 
-        <p><strong>{{ recipe.averageNote }}/5</strong> ({{ recipe.notes|length }} votes)</p>
+        <p><strong><span id="note-container">{{ recipe.averageNote }}</span>/5</strong> (<span id="vote-count">{{ recipe.notes|length }}</span> votes)</p>
 
         <p>Ingrédients requis: <br>
         <ul>
@@ -83,24 +83,58 @@
         {% if app.user %}
 
         <div class="detail_actions_container">
-            <a href="{{ path('add_favorite', { user: app.user.id, recipe: recipe.id }) }}">
-                <i class="fa-regular fa-heart"></i>
-            </a>
+
+            {% if recipe.isFavorite(recipe, app.user) %}
+
+                <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                Retirer des favoris
+
+            {% else %}
+
+                <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                Ajouter aux favoris
+
+            {% endif %}
 
             {% if app.user.id == recipe.user.id %}
-            <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
-                <i class="fa-solid fa-pen-nib"></i>
-            </a>
+
+                <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    Modifier la recette
+                </a>
+
             {% endif %}
 
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url(path('detail_recipe', { recipe: recipe.id })) }}" target="_blank">
-              Partager sur facebook
-              <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-facebook"></i>
+                Partager sur facebook
             </a>
 
             <a href="{{ path('download_recipe', { recipe: recipe.id }) }}" target="_blank">
-                test pdf
+                <i class="fa-solid fa-file-pdf"></i>
+                Convertir en pdf
             </a>
+
+            {% if app.user %}
+            
+                <fieldset class="rating" data-recipeid="{{ recipe.id }}">
+                    <input type="radio" id="star5" name="rating" value="5" />
+                    <label class="full" for="star5" title="5 stars"></label>
+                    
+                    <input type="radio" id="star4" name="rating" value="4" />
+                    <label class="full" for="star4" title="4 stars"></label>
+                    
+                    <input type="radio" id="star3" name="rating" value="3" />
+                    <label class="full" for="star3" title="3 stars"></label>
+                    
+                    <input type="radio" id="star2" name="rating" value="2" />
+                    <label class="full" for="star2" title="2 stars"></label>
+                    
+                    <input type="radio" id="star1" name="rating" value="1" />
+                    <label class="full" for="star1" title="1 star"></label>
+                </fieldset>
+            
+            {% endif %}
 
             <div>
                 {% for compilation in app.user.compilations %}
@@ -109,7 +143,7 @@
                     <button class="compilation_add_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}>Ajouter</button>
                 {% endfor %}
             </div>
-
+            
         </div>
         {% endif %}
     </div>
@@ -124,32 +158,6 @@
     <a href="{{ path('list_comments_recipe', { recipe: recipe.id }) }}"><i class="fa-regular fa-message"></i> Tous les commentaires ({{ recipe.comments|length }})</a>
 
     {% if app.user %}
-
-        {{ form_errors(addNoteForm) }}
-        {{ form_start(addNoteForm) }}
-        {{ form_row(addNoteForm.note) }}
-
-        <button type="submit">Noter</button>
-        {{ form_end(addNoteForm) }}
-
-
-        <fieldset class="rating">
-            <input type="radio" id="star5" name="rating" value="5" />
-            <label class="full" for="star5" title="5 stars"></label>
-        
-            <input type="radio" id="star4" name="rating" value="4" />
-            <label class="full" for="star4" title="4 stars"></label>
-        
-            <input type="radio" id="star3" name="rating" value="3" />
-            <label class="full" for="star3" title="3 stars"></label>
-        
-            <input type="radio" id="star2" name="rating" value="2" />
-            <label class="full" for="star2" title="2 stars"></label>
-        
-            <input type="radio" id="star1" name="rating" value="1" />
-            <label class="full" for="star1" title="1 star"></label>
-        </fieldset>
-
 
         {{ form_errors(addCommentForm) }}
         {{ form_start(addCommentForm) }}

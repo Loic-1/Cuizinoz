@@ -3,6 +3,9 @@ import "./styles/app.css";
 
 console.log("load assets/app.js");
 
+// const apiUrl = "http://127.0.0.1:8000";
+const apiUrl = "http://localhost:8000";
+
 const slider = document.getElementById("note-slider");
 
 if (slider) {
@@ -57,8 +60,34 @@ openMenuBtn.addEventListener("click", function () {
   openMenuBtn.classList.add("hidden");
 });
 
-document.querySelectorAll('.rating input').forEach(radio => {
-  radio.addEventListener('change', () => {
-      console.log(`Selected rating: ${radio.value}`);
+// note recipe
+const noteContainer = document.getElementById("note-container");
+
+const voteCount = document.getElementById("vote-count");
+
+document.querySelectorAll(".rating input").forEach((radio) => {
+  radio.addEventListener("change", () => {
+    const note = radio.value;
+
+    console.log(`note: ${note}`);
+
+    const recipeId = document.querySelector(".rating").dataset.recipeid;
+
+    console.log(`recipeId: ${recipeId}`);
+
+    fetch(`${apiUrl}/recipe/${recipeId}/note/${note}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        console.log("noteContainer", noteContainer.innerText);
+
+        if (!data.modified) {
+          voteCount.innerText = parseInt(voteCount.innerText, 10) + 1;
+        }
+
+        noteContainer.innerText = "fdvbdfg";
+      })
+      .catch((err) => console.error("Failed to note recipe:\n", err));
   });
 });
