@@ -671,9 +671,8 @@ header {
 
 .compilation_container {
   display: grid;
-  grid-template-columns: repeat(4, 200px);
-  column-gap: 50px;
-  row-gap: 60px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 75px;
 
   justify-content: center;
   padding: 100px 200px 50px 200px;
@@ -681,28 +680,72 @@ header {
   & .compilation_card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
     gap: 15px;
 
-    padding: 15px 0px 15px 0px;
+    padding: 20px 15px;
 
-    border-radius: 10px;
+    width: 200px;
+    aspect-ratio: 1/1.4;
 
-    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 7px;
 
-    & .compilation_detail_link {
-      color: var(--primary-font-color);
+    background-color: var(--secondary-background-color);
 
-      & .compilation_infos_container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+    color: var(--tertiary-font-color);
+
+    & a {
+      font-family: var(--roboto-serif-italic-font-family);
+      color: var(--tertiary-font-color);
+
+      &:hover {
+        text-decoration: underline;
       }
+    }
 
-      & .compilation_save_link {
-        color: black;
+    & .compilation_infos_container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      & .compilation_detail_link {
+        font-size: var(--roboto-h3-font-size);
+        font-weight: var(--roboto-h3-font-weight);
+
+        text-align: center;
+
+        padding: 0 0 10px 0;
+      }
+    }
+
+    & .compilation_actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      & i {
+        font-size: var(--action-font-size);
+        color: var(--primary-background-color);
+      }
+    }
+
+    &:nth-child(odd) {
+      transform: rotate(5deg);
+
+      transition: 0.2s ease-in-out;
+
+      &:hover {
+        transform: rotate(0deg);
+      }
+    }
+  
+    &:nth-child(even) {
+      transform: rotate(-5deg);
+
+      transition: 0.2s ease-in-out;
+      
+      &:hover {
+        transform: rotate(0deg);
       }
     }
   }
@@ -711,12 +754,11 @@ header {
 /* COMMENT */
 
 .comments {
-
   display: flex;
   flex-direction: column;
   gap: 50px;
 
-  padding: 50px 0 ;
+  padding: 50px 0;
 
   & h1 {
     text-align: center;
@@ -1080,9 +1122,7 @@ footer {
   }
 }
 
-
 /* STAR RATING */
-
 
 /* Styling */
 .rating {
@@ -1090,43 +1130,43 @@ footer {
   width: fit-content;
 }
 
-.rating > input { 
-  display: none; 
-} 
+.rating > input {
+  display: none;
+}
 
-.rating > label:before { 
+.rating > label:before {
   margin: 5px;
   font-size: 1.25em;
-  font-family: "Font Awesome 6 Free"; 
+  font-family: "Font Awesome 6 Free";
   font-weight: 900;
   display: inline-block;
   content: "\f005"; /* solid star */
 }
 
-.rating > label { 
+.rating > label {
   color: grey;
-  float: right; 
+  float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
 .rating > input:checked ~ label, /* Show gold star when clicked */
 .rating:not(:checked) > label:hover, /* Hover current star */
-.rating:not(:checked) > label:hover ~ label { 
-  color: var(--primary-button-color);  
+.rating:not(:checked) > label:hover ~ label {
+  color: var(--primary-button-color);
 } /* Hover previous stars in list */
 
 .rating > input:checked + label:hover, /* Hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* Lighten current selection */
-.rating > input:checked ~ label:hover ~ label { 
-  color: var(--secondary-button-color);  
+.rating > input:checked ~ label:hover ~ label {
+  color: var(--secondary-button-color);
 }
 
 /* FIL D'ARIANE */
 
 .breadcrumb {
   padding: 20px 100px;
-  
+
   & ol {
     display: flex;
     flex-wrap: wrap;
@@ -1134,7 +1174,7 @@ footer {
     margin: 0;
     padding: 0;
     align-items: end;
-    
+
     & li:not(:last-child)::after {
       display: inline-block;
       margin: 0 0.25rem;
@@ -1142,7 +1182,6 @@ footer {
     }
   }
 }
-  
 
 /* RESPONSIVENESS */
 

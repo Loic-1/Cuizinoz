@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -167,6 +168,13 @@ class Compilation
     public function getCreationDate(): ?\DateTimeInterface
     {
         return $this->creationDate;
+    }
+
+    public function getCreationDateFr(): ?string
+    {
+        return ($this->creationDate->diff(new DateTime())->format("%a") > 0
+            ? $this->creationDate->format("d/m/Y")
+            : "aujourd'hui, " . $this->creationDate->format("H:i"));
     }
 
     public function setCreationDate(\DateTimeInterface $creationDate): static
