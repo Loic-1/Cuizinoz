@@ -1122,6 +1122,27 @@ footer {
   color: var(--secondary-button-color);  
 }
 
+/* FIL D'ARIANE */
+
+.breadcrumb {
+  padding: 20px 100px;
+  
+  & ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: end;
+    
+    & li:not(:last-child)::after {
+      display: inline-block;
+      margin: 0 0.25rem;
+      content: "/";
+    }
+  }
+}
+  
 
 /* RESPONSIVENESS */
 

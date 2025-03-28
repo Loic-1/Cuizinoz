@@ -23,6 +23,13 @@
 
 {% block body %}
 <div class="wrapper">
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li><a href="{{ path('app_home') }}">Accueil</a></li>
+      <li><span aria-current="page">{{ category.name }}</span></li>
+    </ol>
+  </nav>
+
   <h1 class="h2_200_p">{{category.name ~ "s"}}</h1>
 
   {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}  

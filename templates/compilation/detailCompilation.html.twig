@@ -23,6 +23,14 @@
 {% block body %}
 
 <div class="wrapper">
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li><a href="{{ path('app_home') }}">Accueil</a></li>
+      <li><a href="{{ path('list_compilation') }}">Collections</a></li>
+      <li><span aria-current="page">{{ compilation.name }}</span></li>
+    </ol>
+  </nav>
+
   <h1 class="p-l_200-p p-t_50-p">{{ compilation.name }}</h1>
 
   {% for tag in compilation.tags %}

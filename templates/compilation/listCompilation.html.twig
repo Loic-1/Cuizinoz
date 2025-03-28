@@ -17,6 +17,13 @@
 {% block body %}
 
 <div class="wrapper">
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li><a href="{{ path('app_home') }}">Accueil</a></li>
+      <li><span aria-current="page">Collections du site</span></li>
+    </ol>
+  </nav>
+
   <h1 class="p-l_200-p p-t_50-p">Les collections du site</h1>
 
   <div class="compilation_container">
