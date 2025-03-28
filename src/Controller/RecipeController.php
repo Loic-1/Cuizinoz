@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RecipeController extends AbstractController
 {
@@ -219,7 +220,7 @@ class RecipeController extends AbstractController
             }
 
             $commentsData = [];
-            foreach($recipe->getComments() as $comment) {
+            foreach ($recipe->getComments() as $comment) {
                 $commentsData[] = [
                     "comment" => $comment,
                     "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $recipe)
@@ -285,7 +286,7 @@ class RecipeController extends AbstractController
         if ($recipe) {
 
             $commentsData = [];
-            foreach($recipe->getComments() as $comment) {
+            foreach ($recipe->getComments() as $comment) {
                 $commentsData[] = [
                     "comment" => $comment,
                     "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $recipe)
@@ -307,6 +308,59 @@ class RecipeController extends AbstractController
             ]);
         } else {
             return $this->redirectToRoute('app_home');
+        }
+    }
+
+    #[Route('/recipe/{recipe}/note/{notation}', name: 'note_recipe')]
+    public function noteRecipe(Recipe $recipe = null, int $notation, NoteRepository $noteRepository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return new JsonResponse(['error' => 'User not found'], 404);
+        }
+
+        if (!$recipe) {
+            return new JsonResponse(['error' => 'Recipe not found'], 404);
+        }
+
+        // vérifier que le DOM n'a pas été modifié
+        if ($notation > 5 || $notation < 0) {
+            return new JsonResponse(['error' => 'Note not valid'], 400);
+        }
+
+        // première note de l'utilisateur sur cette recette => on ajoute
+        if (!$noteRepository->findUserNoteOnRecipeOrNull($user->getId(), $recipe->getId())) {
+
+            $note = new Note();
+            $note->setUser($user);
+            $note->setRecipe($recipe);
+            $note->setNote($notation);
+
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return new JsonResponse([
+                'success' => 'Note creation was succesful',
+                'modified' => false,
+                'avg' => $recipe->getAverageNote(),
+            ], 200);
+        }
+        // pas la première note de l'utilisateur sur cette recette => on modifie
+        else {
+            // récupération du user déjà existant
+            $note = $noteRepository->findUserNoteOnRecipeOrNull($user->getId(), $recipe->getId());
+
+            $note->setNote($notation);
+
+            $entityManager->persist($note);
+            $entityManager->flush();
+
+            return new JsonResponse([
+                'success' => 'Note modification was succesful',
+                'modified' => true,
+                'avg' => $recipe->getAverageNote(),
+            ], 200);
         }
     }
 }

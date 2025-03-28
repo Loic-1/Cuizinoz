@@ -1080,6 +1080,49 @@ footer {
   }
 }
 
+
+/* STAR RATING */
+
+
+/* Styling */
+.rating {
+  border: none;
+  width: fit-content;
+}
+
+.rating > input { 
+  display: none; 
+} 
+
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: "Font Awesome 6 Free"; 
+  font-weight: 900;
+  display: inline-block;
+  content: "\f005"; /* solid star */
+}
+
+.rating > label { 
+  color: grey;
+  float: right; 
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+.rating > input:checked ~ label, /* Show gold star when clicked */
+.rating:not(:checked) > label:hover, /* Hover current star */
+.rating:not(:checked) > label:hover ~ label { 
+  color: var(--primary-button-color);  
+} /* Hover previous stars in list */
+
+.rating > input:checked + label:hover, /* Hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* Lighten current selection */
+.rating > input:checked ~ label:hover ~ label { 
+  color: var(--secondary-button-color);  
+}
+
+
 /* RESPONSIVENESS */
 
 /* plus haut: quand width > 1536px */
