@@ -76,7 +76,7 @@ class Comment
     {
         return ($this->creationDate->diff(new DateTime())->format("%a") > 0
             ? $this->creationDate->format("d/m/Y à H:i")
-            : "aujourd'hui à " . $this->creationDate->format("h:i"));
+            : "aujourd'hui à " . $this->creationDate->format("H:i"));
     }
 
     public function setCreationDate(\DateTimeInterface $creationDate): static
@@ -109,18 +109,4 @@ class Comment
 
         return $this;
     }
-
-    // public function findUserNoteOnRecipeOrNull(User $user, Recipe $recipe)
-    // {
-    //     if ($user && $recipe) {
-
-    //         $entityManager = $this->;
-
-    //         return $this->
-
-    //         return ($noteRepository->findUserNoteOnRecipeOrNull($user->getId(), $recipe->getId()));
-    //     } else {
-    //         return null;
-    //     }
-    // }
 }

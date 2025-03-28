@@ -199,26 +199,6 @@ class RecipeController extends AbstractController
                 ]);
             }
 
-            $note = new Note();
-
-            $noteForm = $this->createForm(NoteType::class, $note);
-            $noteForm->handleRequest($request);
-
-            if ($noteForm->isSubmitted() && $noteForm->isValid()) {
-
-                $note = $noteForm->getData();
-
-                $note->setUser($this->getUser());
-                $note->setRecipe($recipe);
-
-                $entityManager->persist($note);
-                $entityManager->flush();
-
-                return $this->redirectToRoute('detail_recipe', [
-                    'recipe' => $recipe->getId()
-                ]);
-            }
-
             $commentsData = [];
             foreach ($recipe->getComments() as $comment) {
                 $commentsData[] = [
@@ -238,7 +218,6 @@ class RecipeController extends AbstractController
             return $this->render('recipe/detailRecipe.html.twig', [
                 'recipe' => $recipe,
                 'addCommentForm' => $commentForm,
-                'addNoteForm' => $noteForm,
                 'avgNote' => $avgNote,
                 'comments' => $comments,
                 'metaDescription' => $metaDescription,
