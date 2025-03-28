@@ -23,6 +23,12 @@
 {% block body %}
 
 <div class="wrapper">
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+        <ol>
+            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li><span aria-current="page">Favoris</span></li>
+        </ol>
+    </nav>
 
     <h1>Vos favoris</h1>
 

@@ -24,6 +24,13 @@
 {% block body %}
 
 <div class="wrapper">
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+        <ol>
+          <li><a href="{{ path('app_home') }}">Accueil</a></li>
+          <li><a href="{{ path('app_recipe') }}">Liste recettes</a></li>
+          <li><span aria-current="page">{{ recipe.name }}</span></li>
+        </ol>
+    </nav>
     
     <h1 class="h2_200_p">{{ recipe.name }}</h1>
 

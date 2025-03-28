@@ -16,28 +16,33 @@
 
 {% block body %}
 <div class="wrapper">
+    <nav aria-label="Breadcrumb" class="breadcrumb">
+        <ol>
+            <li><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li><span aria-current="page">Catégories</span></li>
+        </ol>
+    </nav>
 
-<h1>Catégories du site</h1>
+    <h1>Catégories du site</h1>
 
-<div class="category_container">
-    
-    {% for category in categories %}
+    <div class="category_container">
+        
+        {% for category in categories %}
 
-    <div class="category_card">
-        <figure class="recipe_image_container">
+        <div class="category_card">
+            <figure class="recipe_image_container">
 
-            <a href="{{ path('detail_category', { category: category.id }) }}">
-                <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
-            </a>
+                <a href="{{ path('detail_category', { category: category.id }) }}">
+                    <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
+                </a>
 
-        </figure>
+            </figure>
 
-        <h3>{{ category.name }}</h3>
+            <h3>{{ category.name }}</h3>
+        </div>
+
+        {% endfor %}
+        
     </div>
-
-    {% endfor %}
-    
-</div>
-
 </div>
 {% endblock %}

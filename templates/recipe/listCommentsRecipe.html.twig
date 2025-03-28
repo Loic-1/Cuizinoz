@@ -24,24 +24,32 @@
 {% block body %}
   
 <div class="wrapper">
-    <div class="comments">
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <ol>
+      <li><a href="{{ path('app_home') }}">Accueil</a></li>
+      <li><a href="{{ path('app_recipe') }}">Recettes</a></li>
+      <li><a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">{{ recipe.name }}</a></li>
+      <li><span aria-current="page">Commentaires</span></li>
+    </ol>
+  </nav>
 
-      <h1>Commentaires sur {{ recipe.name }}</h1>
+  <div class="comments">
+    <h1>Commentaires sur {{ recipe.name }}</h1>
 
-      <p>{{ recipe.comments|length }} commentaires</p>
-      
-      <div class="comment_container">
-          
-        {% for comment in comments %}
-            <!-- div.comment_card -->
-            {% include "components/_commentCard.html.twig" with { comment: comment|first, note: comment|last } %}
-        {% endfor %}
+    <p>{{ recipe.comments|length }} commentaires</p>
+    
+    <div class="comment_container">
+        
+      {% for comment in comments %}
+          <!-- div.comment_card -->
+          {% include "components/_commentCard.html.twig" with { comment: comment|first, note: comment|last } %}
+      {% endfor %}
 
-      </div>
     </div>
+  </div>
 
-    <div class="pagination">
-        {{ knp_pagination_render(comments) }}
-    </div>
+  <div class="pagination">
+      {{ knp_pagination_render(comments) }}
+  </div>
 </div>
 {% endblock %}
