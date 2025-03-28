@@ -340,7 +340,11 @@ class RecipeController extends AbstractController
             $entityManager->persist($note);
             $entityManager->flush();
 
-            return new JsonResponse(['success' => 'Note creation was succesful', 'modified' => false], 200);
+            return new JsonResponse([
+                'success' => 'Note creation was succesful',
+                'modified' => false,
+                'avg' => $recipe->getAverageNote(),
+            ], 200);
         }
         // pas la première note de l'utilisateur sur cette recette => on modifie
         else {
@@ -352,7 +356,11 @@ class RecipeController extends AbstractController
             $entityManager->persist($note);
             $entityManager->flush();
 
-            return new JsonResponse(['success' => 'Note modification was succesful', 'modified' => true], 200);
+            return new JsonResponse([
+                'success' => 'Note modification was succesful',
+                'modified' => true,
+                'avg' => $recipe->getAverageNote(),
+            ], 200);
         }
     }
 }

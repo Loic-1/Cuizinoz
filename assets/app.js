@@ -60,7 +60,7 @@ openMenuBtn.addEventListener("click", function () {
   openMenuBtn.classList.add("hidden");
 });
 
-// note recipe
+/* note recipe */
 const noteContainer = document.getElementById("note-container");
 
 const voteCount = document.getElementById("vote-count");
@@ -80,13 +80,13 @@ document.querySelectorAll(".rating input").forEach((radio) => {
       .then((data) => {
         console.log(data);
 
-        console.log("noteContainer", noteContainer.innerText);
+        console.log("avg: ", data.avg);
+
+        noteContainer.innerText = data.avg;
 
         if (!data.modified) {
           voteCount.innerText = parseInt(voteCount.innerText, 10) + 1;
         }
-
-        noteContainer.innerText = "fdvbdfg";
       })
       .catch((err) => console.error("Failed to note recipe:\n", err));
   });
