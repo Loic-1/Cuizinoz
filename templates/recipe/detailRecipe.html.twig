@@ -27,149 +27,147 @@
     
     <h1 class="h2_200_p">{{ recipe.name }}</h1>
 
-{# <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas encore de photo">
-#}
+    <div class="detail_recipe_container">
 
-<div class="detail_recipe_container">
+        <div class="carousel">
+            <section id="main-carousel" class="splide" aria-label="Beautiful Images">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for photo in recipe.photos %}
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
 
-    <div class="carousel">
-        <section id="main-carousel" class="splide" aria-label="Beautiful Images">
-            <div class="splide__track">
-                <ul class="splide__list">
-                    {% for photo in recipe.photos %}
-                    <li class="splide__slide">
-                        <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
+            <section id="thumbnail-carousel" class="splide"
+                aria-label="The carousel with thumbnails. Selecting a thumbnail will change the Beautiful Gallery carousel.">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for photo in recipe.photos %}
+                        <li class="splide__slide">
+                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+        </div>
 
-        <section id="thumbnail-carousel" class="splide"
-            aria-label="The carousel with thumbnails. Selecting a thumbnail will change the Beautiful Gallery carousel.">
-            <div class="splide__track">
-                <ul class="splide__list">
-                    {% for photo in recipe.photos %}
-                    <li class="splide__slide">
-                        <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
-    </div>
+        <div class="detail_info_container">
+            <p>Par
+                <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+                    {{ recipe.user.pseudo }}
+                </a>
+            </p>
+            <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
+            <p>Catégorie: {{ recipe.category.name }}</p>
 
-    <div class="detail_info_container">
-        <p>Par
-            <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-                {{ recipe.user.pseudo }}
-            </a>
-        </p>
-        <p>Temps de préparation: {{ recipe.preparationTime }} minutes</p>
-        <p>Catégorie: {{ recipe.category.name }}</p>
+            <p><strong><span id="note-container">{{ recipe.averageNote }}</span>/5</strong> (<span id="vote-count">{{ recipe.notes|length }}</span> votes)</p>
 
-        <p><strong><span id="note-container">{{ recipe.averageNote }}</span>/5</strong> (<span id="vote-count">{{ recipe.notes|length }}</span> votes)</p>
+            <p>Ingrédients requis: <br>
+            <ul>
+                {% for contain in recipe.contains %}
 
-        <p>Ingrédients requis: <br>
-        <ul>
-            {% for contain in recipe.contains %}
+                <li>{{ contain.ingredient.name ~ " " ~ contain.quantity ~ " " ~ contain.ingredient.unit}}</li>
+                {% endfor %}
+            </ul>
+            </p>
+            <p>Instructions de préparation: <br>
+                {{ recipe.instructions }}</p>
+            {% if app.user %}
 
-            <li>{{ contain.ingredient.name ~ " " ~ contain.quantity ~ " " ~ contain.ingredient.unit}}</li>
-            {% endfor %}
-        </ul>
-        </p>
-        <p>Instructions de préparation: <br>
-            {{ recipe.instructions }}</p>
-        {% if app.user %}
+            <div class="detail_actions_container">
 
-        <div class="detail_actions_container">
+                {% if recipe.isFavorite(recipe, app.user) %}
 
-            {% if recipe.isFavorite(recipe, app.user) %}
+                    <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                    Retirer des favoris
 
-                <i class="fa-solid fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-                Retirer des favoris
+                {% else %}
 
-            {% else %}
+                    <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
+                    Ajouter aux favoris
 
-                <i class="fa-regular fa-heart heart-favorite-btn" data-recipe={{ recipe.id }}></i>
-                Ajouter aux favoris
+                {% endif %}
 
-            {% endif %}
+                {% if app.user.id == recipe.user.id %}
 
-            {% if app.user.id == recipe.user.id %}
+                    <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        Modifier la recette
+                    </a>
 
-                <a href="{{ path('edit_recipe', { recipe: recipe.id }) }}">
-                    <i class="fa-solid fa-pen-nib"></i>
-                    Modifier la recette
+                {% endif %}
+
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url(path('detail_recipe', { recipe: recipe.id })) }}" target="_blank">
+                    <i class="fa-brands fa-facebook"></i>
+                    Partager sur facebook
                 </a>
 
-            {% endif %}
+                <a href="{{ path('download_recipe', { recipe: recipe.id }) }}" target="_blank">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Convertir en pdf
+                </a>
 
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url(path('detail_recipe', { recipe: recipe.id })) }}" target="_blank">
-                <i class="fa-brands fa-facebook"></i>
-                Partager sur facebook
-            </a>
+                {% if app.user %}
+                
+                    <fieldset class="rating" data-recipeid="{{ recipe.id }}">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label class="full" for="star5" title="5 stars"></label>
+                        
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label class="full" for="star4" title="4 stars"></label>
+                        
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label class="full" for="star3" title="3 stars"></label>
+                        
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label class="full" for="star2" title="2 stars"></label>
+                        
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label class="full" for="star1" title="1 star"></label>
+                    </fieldset>
+                
+                {% endif %}
 
-            <a href="{{ path('download_recipe', { recipe: recipe.id }) }}" target="_blank">
-                <i class="fa-solid fa-file-pdf"></i>
-                Convertir en pdf
-            </a>
-
-            {% if app.user %}
-            
-                <fieldset class="rating" data-recipeid="{{ recipe.id }}">
-                    <input type="radio" id="star5" name="rating" value="5" />
-                    <label class="full" for="star5" title="5 stars"></label>
-                    
-                    <input type="radio" id="star4" name="rating" value="4" />
-                    <label class="full" for="star4" title="4 stars"></label>
-                    
-                    <input type="radio" id="star3" name="rating" value="3" />
-                    <label class="full" for="star3" title="3 stars"></label>
-                    
-                    <input type="radio" id="star2" name="rating" value="2" />
-                    <label class="full" for="star2" title="2 stars"></label>
-                    
-                    <input type="radio" id="star1" name="rating" value="1" />
-                    <label class="full" for="star1" title="1 star"></label>
-                </fieldset>
-            
-            {% endif %}
-
-            <div>
-                {% for compilation in app.user.compilations %}
-                    {{ compilation.name }}
-                    {# <a href="{{ path('add_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">Ajouter</a> #}
-                    <button class="compilation_add_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}>Ajouter</button>
-                {% endfor %}
+                <div>
+                    {% for compilation in app.user.compilations %}
+                        {{ compilation.name }}
+                        {# <a href="{{ path('add_recipe_compilation', {compilation: compilation.id, recipe: recipe.id}) }}">Ajouter</a> #}
+                        <button class="compilation_add_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}>Ajouter</button>
+                    {% endfor %}
+                </div>
+                
             </div>
-            
+            {% endif %}
         </div>
+    </div>
+
+    <div class="detail_comments_container">
+
+        {% for comment in comments %}
+            {% include "components/_commentCard.html.twig" with { comment: comment|first, note: comment|last } %}
+        {% endfor %}
+
+        <a href="{{ path('list_comments_recipe', { recipe: recipe.id }) }}"><i class="fa-regular fa-message"></i> Tous les commentaires ({{ recipe.comments|length }})</a>
+
+        {% if app.user %}
+
+            {{ form_errors(addCommentForm) }}
+            {{ form_start(addCommentForm) }}
+            {{ form_row(addCommentForm.title) }}
+            {{ form_row(addCommentForm.content) }}
+
+            <button type="submit">Poster commentaire</button>
+            {{ form_end(addCommentForm) }}
         {% endif %}
     </div>
-</div>
-</div>
-<div class="detail_comments_container">
 
-    {% for comment in comments %}
-        {% include "components/_commentCard.html.twig" with { comment: comment|first, note: comment|last } %}
-    {% endfor %}
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 
-    <a href="{{ path('list_comments_recipe', { recipe: recipe.id }) }}"><i class="fa-regular fa-message"></i> Tous les commentaires ({{ recipe.comments|length }})</a>
-
-    {% if app.user %}
-
-        {{ form_errors(addCommentForm) }}
-        {{ form_start(addCommentForm) }}
-        {{ form_row(addCommentForm.title) }}
-        {{ form_row(addCommentForm.content) }}
-
-        <button type="submit">Poster commentaire</button>
-        {{ form_end(addCommentForm) }}
-    {% endif %}
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         var main = new Splide("#main-carousel", {
@@ -200,6 +198,5 @@
         thumbnails.mount();
       });
     </script>
-
 </div>
 {% endblock %}
