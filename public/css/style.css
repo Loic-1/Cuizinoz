@@ -1183,6 +1183,13 @@ footer {
     padding: 0;
     align-items: end;
 
+    & li a{
+      font-family: var(--roboto-serif-italic-font-family);
+
+      color: var(--primary-font-color);
+      text-decoration: underline;
+    }
+
     & li:not(:last-child)::after {
       display: inline-block;
       margin: 0 0.25rem;
