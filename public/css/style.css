@@ -675,7 +675,7 @@ header {
   gap: 75px;
 
   justify-content: center;
-  padding: 100px 200px 50px 200px;
+  padding: 100px 50px 50px 50px;
 
   & .compilation_card {
     display: flex;
@@ -690,7 +690,15 @@ header {
 
     border-radius: 7px;
 
-    background-color: var(--secondary-background-color);
+    /* background-color: var(--secondary-background-color); */
+
+    background: 
+		  radial-gradient(farthest-side at -33.33% 50%,#0000 52%,var(--secondary-button-color) 54% 57%,#0000 59%) 0 calc(64px/2),
+		  radial-gradient(farthest-side at 50% 133.33%,#0000 52%, var(--secondary-button-color) 54% 57%,#0000 59%) calc(64px/2) 0,
+		  radial-gradient(farthest-side at 133.33% 50%,#0000 52%, var(--secondary-button-color) 54% 57%,#0000 59%),
+		  radial-gradient(farthest-side at 50% -33.33%,#0000 52%, var(--secondary-button-color) 54% 57%,#0000 59%),
+		  var(--secondary-background-color);
+	  background-size: calc(64px/4.667) 64px,64px calc(64px/4.667);
 
     color: var(--tertiary-font-color);
 
@@ -738,12 +746,12 @@ header {
         transform: rotate(0deg);
       }
     }
-  
+
     &:nth-child(even) {
       transform: rotate(-5deg);
 
       transition: 0.2s ease-in-out;
-      
+
       &:hover {
         transform: rotate(0deg);
       }

@@ -80,14 +80,14 @@
     {% endfor %}
   </div>
 
-{% if app.user %}
+  {% if app.user %}
 
-<a href="{{ path('create_recipe') }}" class="addRecipe_btn">
-  <i class="fa-regular fa-plus"></i>
-  <span>Créer une recette</span>
-</a>
+    <a href="{{ path('create_recipe') }}" class="addRecipe_btn">
+      <i class="fa-regular fa-plus"></i>
+      <span>Créer une recette</span>
+    </a>
 
-{% endif %}
+  {% endif %}
 
 </div>
 
