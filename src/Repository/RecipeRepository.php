@@ -76,8 +76,10 @@ class RecipeRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('r')
-            ->select('c', 'r')
-            ->join('r.category', 'c');
+            ->select('c', 'r', 'AVG(n.note) as HIDDEN avgNote')
+            ->join('r.category', 'c')
+            ->leftJoin('r.notes', 'n')
+            ->groupBy('r.id');
 
         if (!empty($search->q)) {
             $query = $query
@@ -87,13 +89,13 @@ class RecipeRepository extends ServiceEntityRepository
 
         if (!empty($search->noteMin)) {
             $query = $query
-                ->andWhere('r.id >= :noteMin')
+                ->having('AVG(n.note) >= :noteMin')
                 ->setParameter('noteMin', $search->noteMin);
         }
 
         if (!empty($search->noteMax)) {
             $query = $query
-                ->andWhere('r.id <= :noteMax')
+                ->andHaving('AVG(n.note) <= :noteMax')
                 ->setParameter('noteMax', $search->noteMax);
         }
 
@@ -123,7 +125,9 @@ class RecipeRepository extends ServiceEntityRepository
         }
 
         $query = $query->getQuery();
-        return $this->paginator->paginate($query, $search->page, 12);
+        return $this->paginator->paginate($query, $search->page, 12, [
+            'wrap-queries' => true,
+        ]);
     }
 
     public function findBestRecipesByUserId($userId, $limit)
