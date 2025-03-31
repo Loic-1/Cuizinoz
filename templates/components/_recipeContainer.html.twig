@@ -7,7 +7,7 @@
     <div class="recipe_container">
         {% for recipe in recipes %}
         
-            <div class="recipe_card">
+            <div class="recipe_card" id="recipe-card-{{ recipe.id }}" data-context="{{ context }}">
 
                 <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
                 <figure class="recipe_image_container">
@@ -47,6 +47,7 @@
                     {% if app.user %}
                 
                         <div class="recipe_actions">
+                            {{ dump(recipe.isFavorite(recipe, app.user)) }}
                             {% if recipe.isFavorite(recipe, app.user) %}
                             
                                 <i

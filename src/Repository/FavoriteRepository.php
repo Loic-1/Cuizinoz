@@ -17,37 +17,51 @@ class FavoriteRepository extends ServiceEntityRepository
         parent::__construct($registry, Favorite::class);
     }
 
-    public function findFavorites($user_id) {
-        
+    public function findFavorites($user_id)
+    {
+
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
         $qb->select('f')
-        ->from('App\Entity\Favorite', 'f')
-        ->where('f.user = :user_id')
-        ->orderBy('f.registerDate', 'DESC')
-        ->setParameter('user_id', $user_id)
+            ->from('App\Entity\Favorite', 'f')
+            ->where('f.user = :user_id')
+            ->orderBy('f.registerDate', 'DESC')
+            ->setParameter('user_id', $user_id)
         ;
 
         $query = $qb->getQuery();
         return $query->getResult();
     }
 
-    public function isUnique($recipeId, $userId) {
+    public function isUnique($recipeId, $userId)
+    {
 
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
 
         $qb->select('f')
-        ->from('App\Entity\Favorite', 'f')
-        ->where('f.recipe = :recipeId')
-        ->andWhere('f.user = :userId')
-        ->setParameter('recipeId', $recipeId)
-        ->setParameter('userId', $userId)
+            ->from('App\Entity\Favorite', 'f')
+            ->where('f.recipe = :recipeId')
+            ->andWhere('f.user = :userId')
+            ->setParameter('recipeId', $recipeId)
+            ->setParameter('userId', $userId)
         ;
 
         $query = $qb->getQuery();
         return $query->getResult();
+    }
+
+    public function findFavoriteByUserIdAndRecipeId($userId, $recipeId)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.user = :userId')
+            ->andWhere('f.recipe = :recipeId')
+            ->setParameter('userId', $userId)
+            ->setParameter('recipeId', $recipeId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
     //    /**

@@ -581,7 +581,7 @@ header {
     gap: 15px;
 
     & .recipe_image_container {
-      position: relative;
+      /* position: relative; */
 
       overflow: hidden;
 
@@ -592,9 +592,9 @@ header {
       border-radius: 10px;
 
       & img {
-        position: absolute;
+        /* position: absolute;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%); */
 
         height: 100%;
         width: 100%;
@@ -604,7 +604,7 @@ header {
       }
 
       &:hover img {
-        transform: translateX(-50%) scale(1.1);
+        transform: /*translateX(-50%)*/ scale(1.1);
       }
     }
 

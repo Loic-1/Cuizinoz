@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FavoriteController extends AbstractController
 {
-    // Renvoir tous les favoris du user actuel
+    // Renvoie tous les favoris du user actuel
     #[Route('/favorite', name: 'app_favorite')]
     public function listOwnFavorites(FavoriteRepository $favoriteRepository, RecipeRepository $recipeRepository, Request $request): Response
     {
@@ -70,34 +70,7 @@ class FavoriteController extends AbstractController
         }
     }
 
-    // Permet de rajouter un favorite liant user à recipe
-    // #[Route('favorite/edit/addFavorite/{user}/{recipe}', name: 'add_favorite')]
-    // public function addFavorite(Recipe $recipe = null, User $user = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
-    // {
-    //     if ($recipe && $user) {
-
-    //         if (count($favoriteRepository->isUnique($recipe->getId())) == 0) {
-
-    //             $favorite = new Favorite();
-
-    //             $favorite->setUser($user);
-    //             $favorite->setRecipe($recipe);
-    //             $favorite->setRegisterDate(new DateTime());
-
-    //             $entityManager->persist($favorite);
-    //             $entityManager->flush();
-
-    //             return $this->redirectToRoute("app_recipe");
-    //         }
-
-    //         return $this->redirectToRoute("app_favorite", [
-    //             "user" => $user->getId()
-    //         ]);
-    //     } else {
-    //         return $this->redirectToRoute('app_home');
-    //     }
-    // }
-
+    // Rajoute la recette en paramètre aux favoris de l'utilisateur actuel
     #[Route('favorite/edit/addFavorite/{recipe}', name: 'add_favorite', methods: ["POST"])]
     public function addFavorite(Recipe $recipe, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -127,29 +100,9 @@ class FavoriteController extends AbstractController
         return new JsonResponse(["success" => "favorite creation was successful"], 200);
     }
 
-    // Permet de supprimer un favorite en fonction du user et de la recipe
-    // #[Route('favorite/edit/removeFavorite/{user}/{recipe}/{favorite}', name: 'remove_favorite')]
-    // public function removeFavorite(Recipe $recipe = null, User $user = null, Favorite $favorite = null, FavoriteRepository $favoriteRepository, EntityManagerInterface $entityManager)
-    // {
-    //     if ($user && $recipe && $favorite) {
-
-    //         $user->removeFavorite($favorite);
-    //         $recipe->removeFavorite($favorite);
-
-    //         $entityManager->persist($user);
-    //         $entityManager->persist($recipe);
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute("app_favorite", [
-    //             "user" => $user->getId()
-    //         ]);
-    //     } else {
-    //         return $this->redirectToRoute('app_home');
-    //     }
-    // }
-
-    #[Route('favorite/edit/removeFavorite/{recipe}/{favorite}', name: 'remove_favorite')]
-    public function removeFavorite(Recipe $recipe = null, Favorite $favorite = null, EntityManagerInterface $entityManager): JsonResponse
+    // Supprime la recette en paramètre des favoris de l'utilisateur actuel
+    #[Route('favorite/edit/removeFavorite/{recipe}', name: 'remove_favorite')]
+    public function removeFavorite(Recipe $recipe = null, EntityManagerInterface $entityManager, FavoriteRepository $favoriteRepository): JsonResponse
     {
         $user = $this->getUser();
 
@@ -157,9 +110,7 @@ class FavoriteController extends AbstractController
             return new JsonResponse(["error" => "user not found"], 404);
         }
 
-        if ($user != $favorite->getUser()) {
-            return new JsonResponse(['error' => 'user not owner of favorite'], 403);
-        }
+        $favorite = $favoriteRepository->findFavoriteByUserIdAndRecipeId($user->getId(), $recipe->getId());
 
         if (!$recipe || !$favorite) {
             return new JsonResponse(['error' => 'recipe or favorite not found'], 404);
