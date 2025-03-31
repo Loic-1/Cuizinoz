@@ -89,9 +89,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'user', orphanRemoval: false)] // Si User meurt, alors ses recettes ne mourront pas
     private Collection $recipes;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $alt = null;
-
     /**
      * @var Collection<int, self>
      */
@@ -441,18 +438,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $recipe->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(?string $alt): static
-    {
-        $this->alt = $alt;
 
         return $this;
     }
