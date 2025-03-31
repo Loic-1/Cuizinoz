@@ -472,7 +472,7 @@ header {
       /* width: fit-content; */
 
       background: #fafafa;
-      
+
       text-align: center;
     }
 
@@ -485,6 +485,10 @@ header {
 
     & .swiper-button {
       color: var(--primary-button-color);
+    }
+
+    & .swiper-pagination-bullet {
+      background-color: var(--primary-button-color);
     }
   }
 }
