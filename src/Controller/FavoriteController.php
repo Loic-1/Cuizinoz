@@ -26,13 +26,14 @@ class FavoriteController extends AbstractController
     {
         $user = $this->getUser();
 
+        // dd($user->getFavoritesRecipes());
+
         $data = new SearchData();
         $data->page = $request->get('page', 1);
         $filterForm = $this->createForm(SearchType::class, $data);
         $filterForm->handleRequest($request);
 
-        $recipes = $recipeRepository->findSearch($data);
-        // $recipes = $favoriteRepository->findSearch($data);
+        $recipes = $recipeRepository->findSearch($data, $user, true);
 
         $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes vos recettes favorites sur Cuizinoz et gérez-les facilement : retirez celles que vous ne souhaitez plus !";
 

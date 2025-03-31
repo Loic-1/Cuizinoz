@@ -71,7 +71,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSearch(SearchData $search, $userId = null): PaginationInterface
+    public function findSearch(SearchData $search, $user = null, bool $favorite = false): PaginationInterface
     {
         $query = $this
             ->createQueryBuilder('r')
@@ -102,10 +102,16 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
-        if ($userId) {
+        if ($user) {
             $query = $query
                 ->andWhere('r.user = :userId')
-                ->setParameter('userId', $userId);
+                ->setParameter('userId', $user->getId());
+        }
+
+        if ($favorite) {
+            $query = $query
+                ->andWhere('r.id IN (:userFavorites)')
+                ->setParameter('userFavorites', $user->getFavoritesRecipes());
         }
 
         $query = $query->getQuery();

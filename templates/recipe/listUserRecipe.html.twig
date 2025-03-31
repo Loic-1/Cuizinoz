@@ -33,7 +33,7 @@
 
   <h1>Recettes {{ user.pseudo }}</h1>
 
-  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}
+  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm, context: 'all' } only %}
   
 </div>
 

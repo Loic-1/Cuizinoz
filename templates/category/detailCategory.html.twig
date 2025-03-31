@@ -32,7 +32,7 @@
 
   <h1 class="h2_200_p">{{category.name ~ "s"}}</h1>
 
-  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm } only %}  
+  {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm, context: 'all' } only %}  
 
 </div>
 {% endblock body %}

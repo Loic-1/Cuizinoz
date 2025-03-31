@@ -39,7 +39,7 @@ class RecipeController extends AbstractController
             $filterForm = $this->createForm(SearchType::class, $data);
             $filterForm->handleRequest($request);
 
-            $recipes = $recipeRepository->findSearch($data, $user->getId());
+            $recipes = $recipeRepository->findSearch($data, $user);
 
             $metaDescription = "Vous aimez cuisiner ? Découvrez toutes les recettes de " . $user->getPseudo() . " sur Cuizinoz, filtrez-les par catégorie, note ou nom, et explorez-les pour trouver l'inspiration !";
 

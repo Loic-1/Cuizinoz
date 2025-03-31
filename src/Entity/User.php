@@ -330,6 +330,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->favorites;
     }
 
+    public function getFavoritesRecipes()
+    {
+        $favoriteRecipeData = [];
+
+        foreach($this->favorites as $favorite)
+        {
+            // $favoriteRecipeData[] = [
+            //     'favorite' => $favorite,
+            //     'recipe' => $favorite->getRecipe(),
+            // ];
+            array_push($favoriteRecipeData, $favorite->getRecipe());
+        }
+
+        return $favoriteRecipeData;
+    }
+
     public function addFavorite(Favorite $favorite): static
     {
         if (!$this->favorites->contains($favorite)) {

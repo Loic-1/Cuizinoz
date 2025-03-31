@@ -47,7 +47,6 @@
                     {% if app.user %}
                 
                         <div class="recipe_actions">
-                            {{ dump(recipe.isFavorite(recipe, app.user)) }}
                             {% if recipe.isFavorite(recipe, app.user) %}
                             
                                 <i
