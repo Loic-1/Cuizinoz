@@ -62,6 +62,12 @@
                                 ></i>
 
                             {% endif %}
+
+                            {% if context == 'compilationDetail' %}
+                                {% if app.user == compilation.user %}
+                                    <i class="fa-solid fa-minus remove_compilation_recipe_btn" data-compilation={{ compilation.id }} data-recipe={{ recipe.id }}></i>
+                                {% endif %}
+                            {% endif %}
                         </div>
 
                     {% endif %}
