@@ -30,19 +30,21 @@
                 </a>
 
                 <div class="recipe_infos_container">
-                <strong>{{ recipe.name }}</strong>
-                <p>
-                    Une recette de
-                    <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
-                    {{ recipe.user.pseudo }}
+                    <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
+                        <strong>{{ recipe.name }}</strong>
                     </a>
-                </p>
-                
-                {% include "components/_stars.html.twig" with { recipe: recipe } only %}
+                    <p>
+                        Une recette de
+                        <a href="{{ path('detail_user', { user: recipe.user.id }) }}">
+                        {{ recipe.user.pseudo }}
+                        </a>
+                    </p>
+                    
+                    {% include "components/_stars.html.twig" with { recipe: recipe } only %}
 
-                <a href="{{ path('detail_category', { category: recipe.category.id }) }}">
-                    {{ recipe.category.name }}
-                </a>
+                    <a href="{{ path('detail_category', { category: recipe.category.id }) }}">
+                        {{ recipe.category.name }}
+                    </a>
                 
                     {% if app.user %}
                 

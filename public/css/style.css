@@ -620,6 +620,10 @@ header {
       font-size: var(--roboto-text-font-size);
       font-weight: var(--roboto-text-font-weight);
 
+      & strong {
+        font-family: var(--roboto-standard-font-family);
+      }
+
       & a {
         font-family: var(--roboto-serif-italic-font-family);
         color: var(--primary-font-color);
