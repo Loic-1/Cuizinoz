@@ -112,36 +112,27 @@
 
   <section class="home_section_4">
     <h2>À la mode</h2>
-    <div class="home_section_4_comment_container">
-      {% if comments|length > 0 %} {% for comment in comments %}
+    {% if comments|length > 0 %}
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+        
+          {% for comment in comments %}
 
-      <div class="home_section_4_comment_card">
-        <p class="home_section_4_comment_title">{{ comment.title }}</p>
-        <p>
-          Dans
-          <a href="{{ path('detail_recipe', { recipe: comment.recipe.id }) }}">
-            <span class="home_section_4_recipe">
-              {{ comment.recipe.name }}
-            </span>
-          </a>
-        </p>
-        <p class="home_section_4_comment_content">{{ comment.content }}</p>
-        <span>
-          <a href="{{ path('detail_user', { user: comment.user.id }) }}">
-            <span class="home_section_4_user">{{
-              comment.user.pseudo
-            }}</span></a
-          >,
-          {{ comment.creationDateFr }}
-        </span>
+            <div class="swiper-slide">
+              {% include "components/_commentCard.html.twig" with {comment: comment|first, note: comment|last} %}
+            </div>
+
+          {% endfor %}    
+          
+        </div>
+        <div class="swiper-button-next swiper-button"></div>
+        <div class="swiper-button-prev swiper-button"></div>
+        <div class="swiper-pagination"></div>
       </div>
 
-      {% endfor %} {% else %}
-
+    {% else %}
       <h3>Pas de commentaires</h3>
-
-      {% endif %}
-    </div>
+    {% endif %}
   </section>
 
   <section class="home_section5">

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
+use App\Repository\NoteRepository;
 use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ class HomeController extends AbstractController
 {
     // Renvoie un assortiment de recipe, comment et une liste de toutes les category
     #[Route('/', name: 'app_home')]
-    public function listUsers(RecipeRepository $recipeRepository, CommentRepository $commentRepository, CategoryRepository $categoryRepository): Response
+    public function listUsers(RecipeRepository $recipeRepository, CommentRepository $commentRepository, NoteRepository $nr, CategoryRepository $categoryRepository): Response
     {
         // Recettes à la une (trié en fonction de la note [et du nombre de commentaires], définir un max(par défaut: 6))
 
@@ -21,7 +22,15 @@ class HomeController extends AbstractController
 
         // Derniers commentaires (définir un max(par défaut: 6))
 
-        $comments = $commentRepository->findBy([], ["creationDate" => "DESC"], 4);
+        $comments = $commentRepository->findBy([], ["creationDate" => "DESC"], 6);
+
+        foreach($comments as $comment)
+        {   
+            $commentsData[] = [
+                "comment" => $comment,
+                "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $comment->getRecipe())
+            ];
+        }
 
         // Catégories (pas de limite car peu de catégories)
 
@@ -31,7 +40,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'recipes' => $recipes,
-            'comments' => $comments,
+            'comments' => $commentsData,
             'categories' => $categories,
             'metaDescription' => $metaDescription,
         ]);
