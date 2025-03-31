@@ -163,7 +163,7 @@ class CompilationController extends AbstractController
             $filterForm = $this->createForm(SearchType::class, $data);
             $filterForm->handleRequest($request);
 
-            $recipes = $recipeRepository->findSearch($data);
+            $recipes = $recipeRepository->findSearch($data, null, false, $compilation);
 
             $metaDescription = "Vous aimez cuisiner ? Retrouvez toutes les recettes dans la collection « " . $compilation->getName() . " », et filtrez-les selon votre convenance grâce à notre filtre performant !";
 

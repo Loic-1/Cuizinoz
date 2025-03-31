@@ -4,10 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use App\Data\SearchData;
+use App\Entity\Compilation;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Recipe>
@@ -71,7 +72,7 @@ class RecipeRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSearch(SearchData $search, $user = null, bool $favorite = false): PaginationInterface
+    public function findSearch(SearchData $search, $user = null, bool $favorite = false, Compilation $compilation = null): PaginationInterface
     {
         $query = $this
             ->createQueryBuilder('r')
@@ -112,6 +113,13 @@ class RecipeRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('r.id IN (:userFavorites)')
                 ->setParameter('userFavorites', $user->getFavoritesRecipes());
+        }
+
+        if ($compilation)
+        {
+            $query = $query
+                ->andWhere('r.id IN (:compilationRecipes)')
+                ->setParameter('compilationRecipes', $compilation->getRecipes());
         }
 
         $query = $query->getQuery();

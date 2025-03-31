@@ -26,8 +26,6 @@ class FavoriteController extends AbstractController
     {
         $user = $this->getUser();
 
-        // dd($user->getFavoritesRecipes());
-
         $data = new SearchData();
         $data->page = $request->get('page', 1);
         $filterForm = $this->createForm(SearchType::class, $data);
