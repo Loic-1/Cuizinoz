@@ -1214,6 +1214,60 @@ footer {
   }
 }
 
+/* FORMS */
+
+form {
+  width: fit-content;
+  height: fit-content;
+  padding: 25px 15px;
+
+  &>div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    &>label {
+      margin-left: 5px;
+    }
+
+    &>input, select {
+      font-size: var(--roboto-text-font-size);
+      
+      padding: 3px;
+    }
+    
+    &>textarea {
+      min-height: 200px;
+      min-width: 500px;
+
+      font-family: var(--roboto-standard-font-family);
+      font-size: var(--roboto-text-font-size);
+    }
+
+    &>#recipe_category>label:not(:last-child) {
+      margin-right: 15px;
+    }
+
+    &>#recipe_category>input:not(:last-child) {
+      margin-right: 2px;
+    }
+  }
+
+  &>div:not(:last-child){
+    padding-bottom: 10px;
+  }
+
+  &>button {
+    background-color: var(--primary-button-color);
+
+    color: var(--tertiary-font-color);
+
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+  }
+  border: 1px solid black;
+}
+
 /* RESPONSIVENESS */
 
 /* plus haut: quand width > 1536px */

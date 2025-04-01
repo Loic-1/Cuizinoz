@@ -13,17 +13,17 @@
                 <figure class="recipe_image_container">
                     {% if recipe.photos|length > 0 %}
                     
-                    <img
-                        src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
-                        alt="Photo de {{ recipe.name }}"
-                    />
+                        <img
+                            src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
+                            alt="Photo de {{ recipe.name }}"
+                        />
                     
                     {% else %}
                     
-                    <img
-                        src={{ asset('assets/Question_mark_alternate.svg') }}
-                        alt="Pas encore de photo"
-                    />
+                        <img
+                            src="{{ asset('assets/Question_mark_alternate.svg') }}"
+                            alt="Pas encore de photo"
+                        />
                     
                     {% endif %}
                 </figure>
