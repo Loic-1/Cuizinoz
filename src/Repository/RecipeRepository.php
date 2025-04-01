@@ -105,11 +105,11 @@ class RecipeRepository extends ServiceEntityRepository
                 ->setParameter('categories', $search->categories);
         }
 
-        if ($user) {
-            $query = $query
-                ->andWhere('r.user = :userId')
-                ->setParameter('userId', $user->getId());
-        }
+        // if ($user) {
+        //     $query = $query
+        //         ->andWhere('r.user = :userId')
+        //         ->setParameter('userId', $user->getId());
+        // }
 
         if ($favorite) {
             $query = $query

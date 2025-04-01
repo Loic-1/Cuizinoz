@@ -21,13 +21,13 @@
 
   <div class="h2_200_p">
     {{ form_errors(editRecipeForm) }}
-    {{ form_start(editRecipeForm) }}
-    {{ form_row(editRecipeForm.name) }}
-    {{ form_row(editRecipeForm.preparationTime) }}
-    {{ form_row(editRecipeForm.instructions) }}
-    {{ form_row(editRecipeForm.category) }}
+    {{ form_start(editRecipeForm, {'method': 'POST', 'action': path('edit_recipe', { recipe: recipe.id })}) }}
+      {{ form_row(editRecipeForm.name) }}
+      {{ form_row(editRecipeForm.preparationTime) }}
+      {{ form_row(editRecipeForm.instructions) }}
+      {{ form_row(editRecipeForm.category) }}
 
-    <button type="submit">Modifier recette</button>
+      <button type="submit">Modifier recette</button>
 
     {{ form_end(editRecipeForm) }}
   </div>

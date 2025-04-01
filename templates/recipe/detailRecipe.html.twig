@@ -164,11 +164,11 @@
         {% if app.user %}
 
             {{ form_errors(addCommentForm) }}
-            {{ form_start(addCommentForm) }}
+            {{ form_start(addCommentForm, {'method': 'POST', 'action': path('detail_recipe', {'recipe': recipe.id})}) }}
             {{ form_row(addCommentForm.title) }}
-            {{ form_row(addCommentForm.content) }}
+                {{ form_row(addCommentForm.content) }}
 
-            <button type="submit">Poster commentaire</button>
+                <button type="submit">Poster commentaire</button>
             {{ form_end(addCommentForm) }}
         {% endif %}
     </div>

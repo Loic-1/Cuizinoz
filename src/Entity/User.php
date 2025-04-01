@@ -336,10 +336,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         foreach($this->favorites as $favorite)
         {
-            // $favoriteRecipeData[] = [
-            //     'favorite' => $favorite,
-            //     'recipe' => $favorite->getRecipe(),
-            // ];
             array_push($favoriteRecipeData, $favorite->getRecipe());
         }
 

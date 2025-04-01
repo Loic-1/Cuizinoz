@@ -16,7 +16,7 @@
 
   <div class="addRecipeForm">
     {{ form_errors(addRecipeForm) }}
-    {{ form_start(addRecipeForm) }}
+    {{ form_start(addRecipeForm, {'method': 'POST', 'action': path('create_recipe')}) }}
 
     {# ces "form_row" ne sont pas obligatoires, étant donné que RecipeType
     définit déjà tous les attributs nécessaires, mais on peut mettre en forme le
