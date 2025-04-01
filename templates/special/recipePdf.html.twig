@@ -11,17 +11,15 @@
         text-align: center;
       }
 
-      .figure_and_description {
-        display: flex;
+      /* IMAGE, INFOS */
+
+      td {
+        vertical-align: top;
       }
 
       .figure_and_description>figure {
         width: 250px;
         height: 250px;
-
-        overflow: hidden;
-
-        border-radius: 5px;
       }
 
       .figure_and_description>figure>img {
@@ -30,18 +28,22 @@
         object-fit: cover;
       }
 
-      .figure_and_description ul>li {
-        list-style-type: circle;
-        color: red;
+      .figure_and_description>.description>ul>li {
+        width: 100%;
+        text-wrap: wrap;
       }
+
+      /* INSTRUCTIONS */
 
       .instructions {
-      padding: 10px;
-
-        & p {
-            text-align: justify;
-          }
+        padding: 10px;
       }
+
+      .instructions>p {
+        text-align: justify;
+      }
+
+      /* FOOTER */
 
       footer {
         position: absolute;
@@ -59,28 +61,35 @@
       {{ recipe.name }}
     </h1>
 
-    <section class="figure_and_description">
-      <figure>
-        <img src="data:image/png;base64,{{ image }}" alt="Photo de {{ recipe.name }}">
-      </figure>
-      
-      <div class="description">
-        <p>
-          <strong>Temps de préparation :</strong><!----> {{ recipe.preparationTime }} minutes
-        </p>
-        <p>
-          <strong>Catégorie :</strong><!----> {{ recipe.category }}
-        </p>
-        <p>
-          <strong>Ingrédients requis :</strong><br>
-          <ul>
-            <li><strong>5</strong> Lorem ipsum, dolor sit amet</li>
-            <li><strong>3</strong> Lorem ipsum, dolor sit amet</li>
-            <li><strong>2</strong> Lorem ipsum, dolor sit amet</li>
-          </ul>
-        </p>
-      </div>
-    </section>
+    <table class="figure_and_description">
+      <tr>
+        <td>
+          <figure>
+            <img src="data:image/png;base64,{{ image }}" alt="Photo de {{ recipe.name }}">
+          </figure>
+        </td>
+        <td>
+          <div class="description">
+            <p>
+              <strong>Temps de préparation :</strong><!----> {{ recipe.preparationTime }} minutes
+            </p>
+            <p>
+              <strong>Catégorie :</strong><!----> {{ recipe.category }}
+            </p>
+            <p>
+              <strong>Ingrédients requis :</strong><br>
+              <ul>
+                <li><strong>5</strong> Lorem ipsum, dolor sit amet</li>
+                <li><strong>3</strong> Lorem ipsum, dolor sit amet</li>
+                <li><strong>20</strong> Lorem ipsum, dolor sit amet</li>
+                <li><strong>1</strong> Lorem ipsum, dolor sit amet</li>
+                <li><strong>nb unit</strong> Lorem ipsum, dolor sit amet</li>
+              </ul>
+            </p>
+          </div>
+        </td>
+      </tr>
+    </table>
     
     <section class="instructions">
       <p>
