@@ -840,9 +840,8 @@ header {
 .detail_comments_container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 50px;
-
-  padding: 50px 200px;
 }
 
 .detail_comment {
@@ -1116,7 +1115,7 @@ footer {
       }
     }
 
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
 
   & .comment_title_content {
@@ -1142,7 +1141,7 @@ footer {
       overflow-y: auto;
     }
 
-    border: 1px solid green;
+    /* border: 1px solid green; */
   }
 }
 
@@ -1238,7 +1237,7 @@ form {
     
     &>textarea {
       min-height: 200px;
-      min-width: 500px;
+      min-width: 800px;
 
       font-family: var(--roboto-standard-font-family);
       font-size: var(--roboto-text-font-size);
@@ -1263,9 +1262,22 @@ form {
     color: var(--tertiary-font-color);
 
     padding: 0.5rem 1rem;
+    margin-left: 5px;
+
     border-radius: 10px;
+
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+      outline: 1px solid var(--secondary-button-color);
+    }
+
+    &:active {
+      transform: scale(0.99);
+    }
   }
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 /* RESPONSIVENESS */

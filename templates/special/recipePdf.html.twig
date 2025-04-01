@@ -3,17 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" />
     <title>{{ recipe.name }}</title>
+
+    <style>
+
+      h1 {
+        text-align: center;
+      }
+
+      .figure_and_description {
+        display: flex;
+      }
+
+      .figure_and_description>figure {
+        width: 250px;
+        height: 250px;
+
+        overflow: hidden;
+
+        border-radius: 5px;
+      }
+
+      .figure_and_description>figure>img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .figure_and_description ul>li {
+        list-style-type: circle;
+        color: red;
+      }
+
+      .instructions {
+      padding: 10px;
+
+        & p {
+            text-align: justify;
+          }
+      }
+
+      footer {
+        position: absolute;
+        bottom: 0;
+
+        width: 100%;
+        
+        text-align: center;
+      }
+
+    </style>
   </head>
   <body>
-    <h1 style="text-align: center;">
+    <h1>
       {{ recipe.name }}
     </h1>
 
-    <section class="figure_and_description" style="background-color: magenta;">
+    <section class="figure_and_description">
       <figure>
-        <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}" />
+        <img src="data:image/png;base64,{{ image }}" alt="Photo de {{ recipe.name }}">
       </figure>
       
       <div class="description">
@@ -25,18 +73,22 @@
         </p>
         <p>
           <strong>Ingrédients requis :</strong><br>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quidem, placeat molestias! Recusandae aliquam necessitatibus assumenda illum, qui asperiores sequi soluta! Veritatis eveniet nobis eos dignissimos consequuntur? Provident corporis maiores quaerat.
+          <ul>
+            <li><strong>5</strong> Lorem ipsum, dolor sit amet</li>
+            <li><strong>3</strong> Lorem ipsum, dolor sit amet</li>
+            <li><strong>2</strong> Lorem ipsum, dolor sit amet</li>
+          </ul>
         </p>
       </div>
     </section>
     
-    <section class="instructions" style="background-color: cyan;">
+    <section class="instructions">
       <p>
         {{ recipe.instructions }}
       </p>
     </section>
       
-      <footer style="position: absolute; bottom: 0; width: 100%; text-align: center;">
+      <footer>
         &copy; Cuizinoz {{ "now"|date("Y") }}
       </footer>
   </body>

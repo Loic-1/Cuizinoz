@@ -27,11 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            if (
-              document.getElementById("recipe-card-" + recipeId).dataset
-                .context == "favorites"
-            ) {
-              document.getElementById("recipe-card-" + recipeId).remove();
+            if (document.getElementById("recipe-card-" + recipeId)) {
+              if (document.getElementById("recipe-card-" + recipeId).dataset.context == "favorites") {
+                document.getElementById("recipe-card-" + recipeId).remove();
+              }
             }
             heart.classList.remove("fa-solid");
             heart.classList.add("fa-regular");

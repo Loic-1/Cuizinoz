@@ -15,6 +15,7 @@ use App\Data\SearchData;
 use App\Form\RecipeType;
 use App\Form\SearchType;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Repository\NoteRepository;
 use App\Service\PictureService;
 use App\Repository\RecipeRepository;
@@ -173,7 +174,7 @@ class RecipeController extends AbstractController
 
     // Renvoie la recipe spécifiée, permet de publier un comment pour la recipe
     #[Route('/recipe/{recipe}', name: 'detail_recipe')]
-    public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager, NoteRepository $nr, PaginatorInterface $paginator): Response
+    public function detailRecipe(Recipe $recipe = null, Request $request, EntityManagerInterface $entityManager, NoteRepository $nr, CommentRepository $cr, PaginatorInterface $paginator): Response
     {
         if ($recipe) {
 
@@ -200,18 +201,13 @@ class RecipeController extends AbstractController
             }
 
             $commentsData = [];
-            foreach ($recipe->getComments() as $comment) {
+            $comments = $cr->findBy(['recipe' => $recipe->getId()], ['creationDate' => 'DESC'], 3);
+            foreach ($comments as $comment) {
                 $commentsData[] = [
                     "comment" => $comment,
                     "note" => $nr->findUserNoteOnRecipeOrNull($comment->getUser(), $recipe)
                 ];
             }
-
-            $comments = $paginator->paginate(
-                $commentsData,
-                $request->query->getInt('page', 1),
-                5,
-            );
 
             $metaDescription = "Vous aimez cuisiner ? Découvrez la recette « " . $recipe->getName() . " » en détail, ses photos, ses instructions, ses commentaires et sa note, commentez et notez !";
 
@@ -219,7 +215,7 @@ class RecipeController extends AbstractController
                 'recipe' => $recipe,
                 'addCommentForm' => $commentForm,
                 'avgNote' => $avgNote,
-                'comments' => $comments,
+                'comments' => $commentsData,
                 'metaDescription' => $metaDescription,
             ]);
         } else {
@@ -231,24 +227,31 @@ class RecipeController extends AbstractController
     public function downloadRecipe(Recipe $recipe = null)
     {
         if ($recipe) {
-            // options pdf
+
+            // get image et encoder en base 64
+            // $imgPath = $_SERVER['DOCUMENT_ROOT'] . 'assets' . DIRECTORY_SEPARATOR . 'headerLogo.png';
+            $imgPath = $_SERVER['DOCUMENT_ROOT'] . 'uploads' . DIRECTORY_SEPARATOR . 'gallery' . DIRECTORY_SEPARATOR . $recipe->getPhotos()[0]->getName();
+            $imageBase64 = base64_encode(file_get_contents($imgPath));
+            // dd($imgPath, $imageBase64);
+
+            // définir options
             $pdfOptions = new Options();
             $pdfOptions->set('defaultFont', 'Arial');
 
-            // instance DomPdf avec options custom
             $domPdf = new Dompdf($pdfOptions);
 
-            // définit template et paramètres
             $html = $this->renderView('special/recipePdf.html.twig', [
                 'recipe' => $recipe,
+                'image' => $imageBase64,
             ]);
 
-            // charge template
+            // définition stylesheet
+            // $html .= '<link type="text/css" href="{{ asset(css/pdf.css) }}" rel="stylesheet" />';
+
             $domPdf->loadHtml($html);
 
             $domPdf->render();
 
-            // Récupération du contenu du PDF
             $output = $domPdf->output();
 
             // Renvoie une réponse Symfony avec le PDF
@@ -256,6 +259,9 @@ class RecipeController extends AbstractController
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'inline; filename="' . $recipe->getName() . ' Cuizinoz.pdf"',
             ]);
+        } else {
+
+            return $this->redirectToRoute('app_home');
         }
     }
 
