@@ -1220,22 +1220,23 @@ form {
   height: fit-content;
   padding: 25px 15px;
 
-  &>div{
+  & > div {
     display: flex;
     flex-direction: column;
     gap: 5px;
 
-    &>label {
+    & > label {
       margin-left: 5px;
     }
 
-    &>input, select {
+    & > input,
+    select {
       font-size: var(--roboto-text-font-size);
-      
+
       padding: 3px;
     }
-    
-    &>textarea {
+
+    & > textarea {
       min-height: 200px;
       min-width: 800px;
 
@@ -1243,20 +1244,20 @@ form {
       font-size: var(--roboto-text-font-size);
     }
 
-    &>#recipe_category>label:not(:last-child) {
+    & > #recipe_category > label:not(:last-child) {
       margin-right: 15px;
     }
 
-    &>#recipe_category>input:not(:last-child) {
+    & > #recipe_category > input:not(:last-child) {
       margin-right: 2px;
     }
   }
 
-  &>div:not(:last-child){
+  & > div:not(:last-child) {
     padding-bottom: 10px;
   }
 
-  &>button {
+  & > button {
     background-color: var(--primary-button-color);
 
     color: var(--tertiary-font-color);
@@ -1303,9 +1304,19 @@ form {
 
   /* HOMEPAGE */
 
+  .home_section_4 {
+    padding: 100px 50px 50px 50px;
+  }
+
   .home_section5 .home_section_5_category_container {
     display: grid;
     grid-template-columns: repeat(2, 250px);
+  }
+
+  .comment_card {
+    & .comment_title_content {
+      width: 500px;
+    }
   }
 }
 
@@ -1407,6 +1418,20 @@ form {
     filter: brightness(0.3);
   }
 
+  .comment_card {
+    flex-direction: column;
+
+    & .comment_photo_infos {
+      flex-direction: row;
+
+      width: fit-content;
+    }
+
+    & .comment_title_content {
+      width: 500px;
+    }
+  }
+
   .addRecipe_btn {
     display: none;
   }
@@ -1448,13 +1473,26 @@ form {
   }
 
   .home_section_4 {
-    padding: 50px 50px 0px 50px;
+    padding: 50px 20px 0px 20px;
   }
 
   .home_section5 .home_section_5_category_container {
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .comment_card {
+    & .comment_title_content {
+      width: 300px;
+
+      & p {
+        display: -webkit-box;
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
+        overflow-y: auto;
+      }
+    }
   }
 
   /* FOOTER */
@@ -1485,5 +1523,11 @@ form {
     & .header_links_btn {
       gap: 30px;
     }
+  }
+
+  /* HOMEPAGE */
+
+  .home_section_4 {
+    display: none;
   }
 }
