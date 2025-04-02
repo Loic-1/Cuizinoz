@@ -2,16 +2,19 @@
   font-family: "Roboto-Standard";
   src: url("../fonts/Roboto/Roboto-VariableFont_wdth\,wght.ttf")
     format("truetype");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Roboto-Serif-Italic";
   src: url("../fonts/Roboto_Serif/RobotoSerif-Italic-VariableFont_GRAD\,opsz\,wdth\,wght.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Satisfy";
   src: url("../fonts/Satisfy/Satisfy-Regular.ttf");
+  font-display: swap;
 }
 
 @keyframes up-down {
@@ -794,7 +797,7 @@ header {
         height: 100%;
         width: 100%;
         object-fit: cover;
-        
+
         transition: 0.1s ease-in-out;
       }
 
