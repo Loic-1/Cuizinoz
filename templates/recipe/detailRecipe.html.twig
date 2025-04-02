@@ -42,7 +42,7 @@
                     <ul class="splide__list">
                         {% for photo in recipe.photos %}
                         <li class="splide__slide">
-                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
+                            <img loading="lazy" src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
                         </li>
                         {% endfor %}
                     </ul>
@@ -55,7 +55,7 @@
                     <ul class="splide__list">
                         {% for photo in recipe.photos %}
                         <li class="splide__slide">
-                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
+                            <img loading="lazy" src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
                         </li>
                         {% endfor %}
                     </ul>

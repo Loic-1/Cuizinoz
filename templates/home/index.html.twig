@@ -20,7 +20,7 @@
   <section class="home_section_1">
     <figure class="home_section_1_background_image">
       <img
-        {# src="{{ asset('assets/homepage_banner.jpg') }}" #}
+        fetchpriority="high"
         src="{{ asset('assets/homepage_banner.webp') }}"
         alt="Bannière du site Cuizinoz, montrant un plat de ragoût"
       />
@@ -28,6 +28,7 @@
     <div class="home_section_1_overlay">
       <figure class="home_section_1_foreground_image">
         <img
+          loading="lazy"
           {# src="{{ asset('assets/homepageBannerForeground.png') }}" #}
           src="{{ asset('assets/homepageBannerForeground.webp') }}"
           alt="Toque de cuisinier survolant l'image de couverture"
@@ -58,6 +59,7 @@
             title="{{ recipe.name }}"
           >
             <img
+              loading="lazy"
               src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
               alt="Photo de {{ recipe.name }}"
             />
@@ -70,6 +72,7 @@
             title="{{ recipe.name }}"
           >
             <img
+              loading="lazy"
               src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
               alt="Pas encore de photo"
             />
@@ -151,6 +154,7 @@
             title="{{ category.name }}"
           >
             <img
+              loading="lazy"
               src="{{ category.photo }}"
               alt="Photo de {{ category.name }}"
             />

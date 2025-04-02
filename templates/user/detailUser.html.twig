@@ -36,11 +36,11 @@
         <figure class="detail_user_photo_container">
             {% if user.profilePicture %}
 
-                <img src="{{ user.profilePicture }}" alt={{ "Photo de profil " ~ user.pseudo }} class="detail_user_photo">
+                <img loading="lazy" src="{{ user.profilePicture }}" alt={{ "Photo de profil " ~ user.pseudo }} class="detail_user_photo">
 
             {% else %}
 
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas de photo de profil" class="detail_user_photo">
+                <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg" alt="Pas de photo de profil" class="detail_user_photo">
 
             {% endif %}
         </figure>
@@ -130,13 +130,13 @@
                     {% if recipe.photos|length > 0 %}
         
                     <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                        <img src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}">{# {{ recipe.photos|first.url }} #}
+                        <img loading="lazy" src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}" alt="Photo de {{ recipe.name }}">{# {{ recipe.photos|first.url }} #}
                     </a>
         
                     {% else %}
         
                     <a href="{{ path('detail_recipe', { recipe: recipe.id }) }}">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
+                        <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Question_mark_alternate.svg"
                             alt="Pas encore de photo">
                     </a>
         

@@ -33,7 +33,7 @@
                 <figure class="category_image_container">
 
                     <a href="{{ path('detail_category', { category: category.id }) }}">
-                        <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
+                        <img loading="lazy" src="{{ category.photo }}" alt="Photo de {{ category.name }}">
                     </a>
 
                 </figure>
