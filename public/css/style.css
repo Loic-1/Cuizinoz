@@ -781,36 +781,48 @@ header {
   position: relative;
 
   & .category_card {
-    position: relative;
+    width: 100%;
+    display: flex;
 
-    width: 50%;
-    
-    & figure{
-      width: 100%;
+    & figure {
+      width: 50%;
       aspect-ratio: 1 / 1;
 
+      overflow: hidden;
+
       & img {
-        width: 100%;
         height: 100%;
+        width: 100%;
         object-fit: cover;
+        
+        transition: 0.1s ease-in-out;
+      }
+
+      &:hover img {
+        cursor: pointer;
+        transform: scale(1.05);
       }
     }
 
-    & h3 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    & .category_name_container {
+      width: 50%;
 
-      font-size: var(--roboto-h3-font-size);
-      font-weight: var(--roboto-h3-font-weight);
-      color: var(--tertiary-font-color);
+      text-align: center;
+
+      & h3 {
+        /* background-color: red; */
+        height: 100%;
+        color: var(--primary-font-color);
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
   & .category_card:nth-child(even) {
-    position: absolute;
-    right: 0;
+    flex-direction: row-reverse;
   }
 }
 

@@ -9,7 +9,7 @@
 {% block javascripts %}
 
     {{ parent() }}
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}" defer></script>
 
 {% endblock %}
 
@@ -42,7 +42,7 @@
                     <ul class="splide__list">
                         {% for photo in recipe.photos %}
                         <li class="splide__slide">
-                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
                         </li>
                         {% endfor %}
                     </ul>
@@ -55,7 +55,7 @@
                     <ul class="splide__list">
                         {% for photo in recipe.photos %}
                         <li class="splide__slide">
-                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="">
+                            <img src="{{ asset('uploads/gallery/' ~ photo.name) }}" alt="Photo de {{ recipe.name }}">
                         </li>
                         {% endfor %}
                     </ul>
@@ -173,9 +173,9 @@
         {% endif %}
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" defer></script>
 
-    <script>
+    <script defer>
       document.addEventListener("DOMContentLoaded", function () {
         var main = new Splide("#main-carousel", {
           type: "fade",
