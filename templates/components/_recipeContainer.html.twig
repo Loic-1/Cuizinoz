@@ -14,6 +14,7 @@
                     {% if recipe.photos|length > 0 %}
                     
                         <img
+                            loading="lazy"
                             src="{{ asset('uploads/gallery/' ~ recipe.photos|first.name) }}"
                             alt="Photo de {{ recipe.name }}"
                         />
@@ -21,6 +22,7 @@
                     {% else %}
                     
                         <img
+                            loading="lazy"
                             src="{{ asset('assets/Question_mark_alternate.svg') }}"
                             alt="Pas encore de photo"
                         />

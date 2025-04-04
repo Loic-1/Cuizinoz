@@ -11,7 +11,7 @@
     <title>
       {% block title %}Welcome!{% endblock title %}
     </title>
-    <link rel="icon" href="{{ asset("assets/logoCuizinoz50x50.png") }}"> 
+    <link rel="icon" href="{{ asset("assets/logoCuizinoz.svg") }}"> 
     
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -54,7 +54,8 @@
     <header>
       <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_img">
         <img
-          src="{{ asset('assets/headerLogo.png') }}"
+          fetchpriority="high"
+          src="{{ asset('assets/headerLogo.svg') }}"
           alt="Logo Cuizinoz renvoyant vers la page d'accueil"
         />
       </a>
@@ -62,6 +63,7 @@
       <nav class="header_links_nav" id="menu">
         <a href="{{ path('app_home') }}" title="Retour à l'accueil" class="header_menu_img">
           <img
+            loading="lazy"
             src="{{ asset('assets/headerLogo.png') }}"
             alt="Logo Cuizinoz renvoyant vers la page d'accueil"
           />
@@ -170,15 +172,16 @@
         integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg=="
         crossorigin="anonymous"
         referrerpolicy="no-referrer"
+        defer
         >
       </script>
-      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 
       {% block importmap %}
         {{ importmap("app") }}
       {% endblock importmap %} 
         
-      <script>
+      <script defer>
         var swiper = new Swiper(".mySwiper", {
           slidesPerView: 1,
           spaceBetween: 30,

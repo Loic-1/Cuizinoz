@@ -29,17 +29,20 @@
         
         {% for category in categories %}
 
-        <div class="category_card">
-            <figure class="recipe_image_container">
+            <div class="category_card">
+                <figure class="category_image_container">
 
-                <a href="{{ path('detail_category', { category: category.id }) }}">
-                    <img src="{{ category.photo }}" alt="Photo de {{ category.name }}">
-                </a>
+                    <a href="{{ path('detail_category', { category: category.id }) }}">
+                        <img loading="lazy" src="{{ category.photo }}" alt="Photo de {{ category.name }}">
+                    </a>
 
-            </figure>
-
-            <h3>{{ category.name }}</h3>
-        </div>
+                </figure>
+                <div class="category_name_container">
+                    <a href="{{ path('detail_category', { category: category.id }) }}">
+                        <h3>{{ category.name ~ "s" }}</h3>
+                    </a>
+                </div>
+            </div>
 
         {% endfor %}
         
