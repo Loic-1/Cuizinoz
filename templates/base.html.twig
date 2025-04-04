@@ -131,13 +131,22 @@
 
         <div class="footer_column_text">
           <address>
-            <a href="tel:01 23 45 67 89">
-              +33 1 23 45 67 89
-            </a>
+
+            <span id="tel"></span>
+            <script defer>
+              const tel = "+33 1 23 45 67 89"
+              document.getElementById("tel").innerHTML = `<a href="tel:${tel}">${tel}</a>`
+            </script>
+
           </address>
-          <a href="mailto:contact@cuizinoz.fr">
-            contact@cuizinoz.fr
-          </a>
+
+          <span id="email"></span>
+          <script defer>
+            const user = "contact"
+            const domain = "cuizinoz.fr"
+            document.getElementById("email").innerHTML = `<a href="mailto:${user}@${domain}">${user}@${domain}</a>`
+          </script>
+
         </div>
       </div>
 
