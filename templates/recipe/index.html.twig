@@ -31,8 +31,8 @@
     </ol>
   </nav>
 
-  <h1>Nos recettes</h1>
-    
+  <h1 class="p-l_200-p">Nos recettes</h1>
+  
   {% include "components/_recipeContainer.html.twig" with { recipes: recipes, filterForm: filterForm, context: 'all' } only %}  
 
   {% if app.user %}

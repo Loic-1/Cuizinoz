@@ -15,7 +15,7 @@
 {% block title %}Nos recettes{% endblock %} 
 
 {% block body %}
-<div class="wrapper">
+<div class="wrapper" style="display: flex; flex-direction: column; align-items: center;">
     <nav aria-label="Breadcrumb" class="breadcrumb">
         <ol>
             <li><a href="{{ path('app_home') }}">Accueil</a></li>
@@ -25,7 +25,7 @@
 
     <h1>Catégories du site</h1>
 
-    <div class="category_container">
+    <div class="category_container" style="width: 80%;">
         
         {% for category in categories %}
 
